@@ -181,14 +181,34 @@ def run_verification(
     return 0
 
 
+def load_dotenv(filepath: str = ".env") -> None:
+    """Load key-value pairs from a .env file into os.environ if not already set."""
+    if not os.path.exists(filepath):
+        return
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    key, val = line.split("=", 1)
+                    key = key.strip()
+                    val = val.strip().strip("'\"")
+                    if key and key not in os.environ:
+                        os.environ[key] = val
+    except Exception:
+        pass
+
+
 def main() -> int:
+    load_dotenv()
+
     parser = argparse.ArgumentParser(description="Live integration test for SystemLens PostgresAdapter")
-    parser.add_argument("--dsn", type=str, default=os.getenv("DATABASE_URL"), help="PostgreSQL DSN")
-    parser.add_argument("--host", type=str, default="localhost")
-    parser.add_argument("--port", type=int, default=5432)
-    parser.add_argument("--dbname", type=str, help="Database name")
-    parser.add_argument("--user", type=str, help="Database user")
-    parser.add_argument("--password", type=str, help="Database password")
+    parser.add_argument("--dsn", type=str, default=os.getenv("DATABASE_URL"), help="PostgreSQL DSN (default: $DATABASE_URL)")
+    parser.add_argument("--host", type=str, default=os.getenv("PGHOST", "localhost"), help="PostgreSQL host (default: $PGHOST or localhost)")
+    parser.add_argument("--port", type=int, default=int(os.getenv("PGPORT", "5432")), help="PostgreSQL port (default: $PGPORT or 5432)")
+    parser.add_argument("--dbname", type=str, default=os.getenv("PGDATABASE"), help="Database name (default: $PGDATABASE)")
+    parser.add_argument("--user", type=str, default=os.getenv("PGUSER"), help="Database user (default: $PGUSER)")
+    parser.add_argument("--password", type=str, default=os.getenv("PGPASSWORD"), help="Database password (default: $PGPASSWORD)")
     parser.add_argument("--schema", action="append", dest="schemas", help="Target schema (repeatable)")
     parser.add_argument("--setup-demo", action="store_true", help="Set up and test against a temporary demo schema")
     parser.add_argument("--keep-demo", action="store_true", help="Do not tear down the demo schema after testing")
@@ -204,7 +224,7 @@ def main() -> int:
             pwd = f":{args.password}" if args.password else ""
             dsn = f"postgresql://{args.user}{pwd}@{args.host}:{args.port}/{args.dbname}"
         else:
-            print("Error: Provide --dsn or (--dbname and --user), or set DATABASE_URL.", file=sys.stderr)
+            print("Error: Provide --dsn or (--dbname and --user), or set DATABASE_URL in .env.", file=sys.stderr)
             return 1
 
     schemas = args.schemas

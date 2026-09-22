@@ -2,13 +2,34 @@
 
 import argparse
 import json
+import os
 import sys
 from typing import Optional
 
 from systemlens.adapters.postgres import PostgresAdapter
 
 
+def load_dotenv(filepath: str = ".env") -> None:
+    """Load key-value pairs from a .env file into os.environ if not already set."""
+    if not os.path.exists(filepath):
+        return
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    key, val = line.split("=", 1)
+                    key = key.strip()
+                    val = val.strip().strip("'\"")
+                    if key and key not in os.environ:
+                        os.environ[key] = val
+    except Exception:
+        pass
+
+
 def main(args: Optional[list[str]] = None) -> int:
+    load_dotenv()
+
     parser = argparse.ArgumentParser(
         prog="systemlens",
         description="SystemLens: Cross-layer dependency tracing & blast radius analyzer",
@@ -23,34 +44,38 @@ def main(args: Optional[list[str]] = None) -> int:
     pg_parser.add_argument(
         "--dsn",
         type=str,
-        help="PostgreSQL connection DSN (e.g. postgresql://user:pass@localhost:5432/dbname)",
+        default=os.getenv("DATABASE_URL"),
+        help="PostgreSQL connection DSN (default: $DATABASE_URL)",
     )
     pg_parser.add_argument(
         "--host",
         type=str,
-        default="localhost",
-        help="PostgreSQL host (default: localhost)",
+        default=os.getenv("PGHOST", "localhost"),
+        help="PostgreSQL host (default: $PGHOST or localhost)",
     )
     pg_parser.add_argument(
         "--port",
         type=int,
-        default=5432,
-        help="PostgreSQL port (default: 5432)",
+        default=int(os.getenv("PGPORT", "5432")),
+        help="PostgreSQL port (default: $PGPORT or 5432)",
     )
     pg_parser.add_argument(
         "--dbname",
         type=str,
-        help="PostgreSQL database name",
+        default=os.getenv("PGDATABASE"),
+        help="PostgreSQL database name (default: $PGDATABASE)",
     )
     pg_parser.add_argument(
         "--user",
         type=str,
-        help="PostgreSQL user",
+        default=os.getenv("PGUSER"),
+        help="PostgreSQL user (default: $PGUSER)",
     )
     pg_parser.add_argument(
         "--password",
         type=str,
-        help="PostgreSQL password",
+        default=os.getenv("PGPASSWORD"),
+        help="PostgreSQL password (default: $PGPASSWORD)",
     )
     pg_parser.add_argument(
         "--schema",
