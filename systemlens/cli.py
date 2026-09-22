@@ -65,11 +65,22 @@ def main(args: Optional[list[str]] = None) -> int:
         default="raw_schema.json",
         help="Output file path for raw schema JSON (default: raw_schema.json)",
     )
+    pg_parser.add_argument(
+        "--edges-output",
+        type=str,
+        default=None,
+        help="Optional output file path for extracted edges JSON",
+    )
+    pg_parser.add_argument(
+        "--nodes-output",
+        type=str,
+        default=None,
+        help="Optional output file path for extracted graph nodes JSON",
+    )
 
     parsed = parser.parse_args(args)
 
     if parsed.command == "ingest-postgres":
-        kwargs = {}
         if parsed.dsn:
             adapter = PostgresAdapter(dsn=parsed.dsn, schemas=parsed.schemas)
         else:
@@ -85,11 +96,23 @@ def main(args: Optional[list[str]] = None) -> int:
                 schemas=parsed.schemas,
             )
 
-        print(f"Connecting to PostgreSQL database and extracting schema...")
+        print("Connecting to PostgreSQL database and extracting schema...")
         catalog = adapter.dump_raw_schema(output_path=parsed.output)
         table_count = len(catalog.get("tables", {}))
         col_count = sum(len(t.get("columns", [])) for t in catalog.get("tables", {}).values())
         print(f"Extraction successful: {table_count} tables, {col_count} columns written to {parsed.output}")
+
+        if parsed.nodes_output:
+            nodes = adapter.extract_nodes()
+            with open(parsed.nodes_output, "w", encoding="utf-8") as f:
+                json.dump([n.to_dict() for n in nodes], f, indent=2)
+            print(f"Extracted {len(nodes)} nodes written to {parsed.nodes_output}")
+
+        if parsed.edges_output:
+            edges = adapter.extract_edges()
+            with open(parsed.edges_output, "w", encoding="utf-8") as f:
+                json.dump([e.to_dict() for e in edges], f, indent=2)
+            print(f"Extracted {len(edges)} edges written to {parsed.edges_output}")
 
     return 0
 
