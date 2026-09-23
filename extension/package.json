@@ -1,0 +1,37 @@
+{
+  "name": "systemlens",
+  "displayName": "SystemLens",
+  "description": "Cross-layer database dependency tracing and blast radius impact analysis.",
+  "version": "0.1.0",
+  "publisher": "systemlens",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onCommand:systemlens.whatTouchesThis"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "systemlens.whatTouchesThis",
+        "title": "What touches this?",
+        "category": "SystemLens"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.4.0"
+  }
+}

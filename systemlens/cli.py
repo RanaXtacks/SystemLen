@@ -409,6 +409,68 @@ def main(args: Optional[list[str]] = None) -> int:
             json.dump(unified, f, indent=2)
         print(f"\nUnified cross-layer graph written to {parsed.merged_graph_output}")
 
+    elif parsed.command == "impact":
+        if not os.path.exists(parsed.graph):
+            print(
+                f"Error: Graph file '{parsed.graph}' not found. "
+                "Run 'ingest-postgres' and 'analyze-python' first.",
+                file=sys.stderr,
+            )
+            return 1
+
+        engine = ImpactEngine.from_graph_file(parsed.graph)
+        result = engine.blast_radius(
+            target=parsed.target,
+            max_depth=parsed.depth,
+            min_confidence=parsed.min_confidence,
+        )
+
+        if parsed.output:
+            _ensure_parent_dir(parsed.output)
+            with open(parsed.output, "w", encoding="utf-8") as f:
+                json.dump(result.to_dict(), f, indent=2)
+
+        if parsed.as_json:
+            print(json.dumps(result.to_dict(), indent=2))
+        else:
+            print("=" * 65)
+            print(f"SystemLens Blast Radius Analysis for [{result.target_type}] '{result.target_name}'")
+            print("=" * 65)
+            print(f"Resolved Target ID: {result.target_id}")
+            print(f"Traversal Depth:    {result.max_depth}")
+            print(f"Total Impacted:     {result.total_impacted} entities")
+            print(f"  - Functions:      {len(result.impacted_functions)}")
+            print(f"  - Files:          {len(result.impacted_files)}")
+            print(f"  - Downstream DB:  {len(result.impacted_tables)}")
+            print("-" * 65)
+
+            if result.impacted_functions:
+                print("\nImpacted Functions (Ranked by Path Confidence):")
+                for fn in result.impacted_functions[:15]:
+                    conf_pct = f"{fn.confidence:.1%}"
+                    file_info = fn.metadata.get("file", "")
+                    line_info = f":{fn.metadata.get('lineno')}" if fn.metadata.get("lineno") else ""
+                    print(f"  [{conf_pct:>6}] {fn.name} ({file_info}{line_info}) [hop {fn.depth}]")
+
+            if result.impacted_files:
+                print("\nImpacted Files:")
+                for fl in result.impacted_files[:10]:
+                    conf_pct = f"{fl.confidence:.1%}"
+                    print(f"  [{conf_pct:>6}] {fl.name} [hop {fl.depth}]")
+
+            if result.impacted_tables:
+                print("\nImpacted Downstream Tables (FKs / Views):")
+                for tb in result.impacted_tables[:10]:
+                    conf_pct = f"{tb.confidence:.1%}"
+                    print(f"  [{conf_pct:>6}] {tb.name} [hop {tb.depth}]")
+
+            print("\nBlind Spots (Not Visible / Unanalyzed Boundaries):")
+            for bs in result.blind_spots:
+                severity = bs.get("severity", "info").upper()
+                msg = bs.get("message", "")
+                print(f"  * [{severity}] {msg}")
+            print("=" * 65)
+
     return 0
 
 

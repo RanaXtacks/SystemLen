@@ -65,11 +65,29 @@
   - Full test suite: 42/42 tests passing (0.27s)
 - [x] CLI Subcommand: `systemlens analyze-python` with `--src-dir`, `--schema-file`, `--nodes-output`, `--edges-output`, `--merged-graph-output`
 
-## Step 3 — Blast Radius Engine (Days 15–21) [PENDING]
-- [ ] Day 15: NetworkX DiGraph loader from unified `graph.json`
-- [ ] Day 16: Reachability BFS / Dijkstra traversal with depth bounding
-- [ ] Day 17: Multiplicative confidence path decay `c(path) = Π c(edge_i)`
-- [ ] Day 18: Path decay pruning & confidence floor cutoff
-- [ ] Day 19: Blast radius query API: `blast_radius(target_node, depth)`
-- [ ] Day 20: Step 3 Kill check: ground-truth path verification
-- [ ] Day 21: Test harness & CLI `blast-radius` command
+## Step 3 — Impact Query + VS Code Extension Shell (Days 15–18) [COMPLETED]
+- [x] Day 15: Query Engine Core (`systemlens/query/impact.py`)
+  - NetworkX DiGraph impact propagation modeling
+  - Reachability traversal up to depth `d`
+  - Multiplicative path confidence decay: `c(path) = Π c(edge_i)`
+  - Direct 1-hop and transitive 2-hop ranking
+- [x] Day 16: Blind-Spot Disclosure Formatting
+  - Mandatory disclosure object in every query result (never empty)
+  - Dynamic unresolved SQL count and affected function list
+  - Cross-service boundary disclosure
+  - Unreferenced database tables notice
+- [x] Day 17: VS Code Extension Shell (`extension/`)
+  - Extension manifest (`package.json`) registering `systemlens.whatTouchesThis`
+  - TypeScript compilation with `tsc`
+  - Packaged installable `.vsix` bundle (`systemlens-0.1.0.vsix`)
+  - High-aesthetic Webview UI (`webview.ts`) with dark mode, confidence pills, hop tags, and blind spot callouts
+- [x] Day 18: Step 3 Kill Check & Test Harness
+  - Comprehensive test suite in `tests/test_query.py` (7 tests)
+  - CLI subcommand: `systemlens impact` with `--target`, `--graph`, `--depth`, `--json`, `--output`
+  - End-to-end loop verified: schema scan -> graph -> query -> output
+  - Full test suite: 49/49 tests passing (0.60s)
+
+## Step 4 — The Actual Test & Real Benchmark (Days 19–21) [NEXT]
+- [ ] Day 19: Target selection & setup on a real open-source app
+- [ ] Day 20: Ground truth test cases selection with external domain expert
+- [ ] Day 21: Benchmark comparison: compute agreement rate, recall, and precision
