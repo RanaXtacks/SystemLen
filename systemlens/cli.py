@@ -12,6 +12,7 @@ from systemlens.graph import assemble_unified_graph
 from systemlens.inference.merge import compute_merge_stats, merge_edges
 from systemlens.inference.naming import infer_edges_from_naming
 from systemlens.models import Edge, Node, NodeType
+from systemlens.query.impact import ImpactEngine
 
 
 def _ensure_parent_dir(filepath: str | None) -> None:
@@ -206,6 +207,52 @@ def main(args: Optional[list[str]] = None) -> int:
         type=str,
         default="graph.json",
         help="Output file path for unified cross-layer graph JSON (default: graph.json)",
+    )
+
+    # Subcommand 4: impact (Step 3)
+    impact_parser = subparsers.add_parser(
+        "impact",
+        help="Query the blast radius of a table or entity across the unified cross-layer graph",
+    )
+    impact_parser.add_argument(
+        "--target",
+        "-t",
+        type=str,
+        required=True,
+        help="Name or ID of the database table or node to query (e.g. 'users', 'table:public.users')",
+    )
+    impact_parser.add_argument(
+        "--graph",
+        "-g",
+        type=str,
+        default="graph.json",
+        help="Path to the unified graph JSON file (default: graph.json)",
+    )
+    impact_parser.add_argument(
+        "--depth",
+        "-d",
+        type=int,
+        default=2,
+        help="Maximum reachability traversal depth (default: 2)",
+    )
+    impact_parser.add_argument(
+        "--min-confidence",
+        type=float,
+        default=0.0,
+        help="Minimum path confidence threshold to include (default: 0.0)",
+    )
+    impact_parser.add_argument(
+        "--json",
+        action="store_true",
+        dest="as_json",
+        help="Output raw JSON result to stdout",
+    )
+    impact_parser.add_argument(
+        "--output",
+        "-o",
+        type=str,
+        default=None,
+        help="Optional output file path to write the impact query JSON result",
     )
 
     parsed = parser.parse_args(args)
