@@ -145,18 +145,23 @@ class ImpactEngine:
             # Impact propagation direction:
             # If structural belongs_to (function -> file): function change impacts file
             if edge_type == EdgeType.STRUCTURAL_BELONGS_TO.value:
-                self.propagation_graph.add_edge(
-                    source,
-                    target,
-                    confidence=confidence,
-                    evidence=evidence,
-                    type=edge_type,
-                )
+                u, v = source, target
             else:
                 # Reference/dependency edge: target change impacts source (target -> source)
+                u, v = target, source
+
+            if self.propagation_graph.has_edge(u, v):
+                existing_conf = self.propagation_graph[u][v].get("confidence", 0.0)
+                if confidence > existing_conf:
+                    self.propagation_graph[u][v].update({
+                        "confidence": confidence,
+                        "evidence": evidence,
+                        "type": edge_type,
+                    })
+            else:
                 self.propagation_graph.add_edge(
-                    target,
-                    source,
+                    u,
+                    v,
                     confidence=confidence,
                     evidence=evidence,
                     type=edge_type,

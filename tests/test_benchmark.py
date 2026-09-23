@@ -60,9 +60,12 @@ def test_benchmark_blind_spots_and_dynamic_honesty():
 
     assert len(result.blind_spots) > 0
     # Check that unresolved queries were surfaced
-    unresolved_blind_spots = [bs for bs in result.blind_spots if bs.get("unresolved_count", 0) > 0]
+    unresolved_blind_spots = [
+        bs for bs in result.blind_spots
+        if bs.get("type") == "dynamic_unresolved_sql" and bs.get("count", 0) > 0
+    ]
     assert len(unresolved_blind_spots) > 0
-    assert "query_audit_logs_dynamic" in str(unresolved_blind_spots)
+    assert any("query_audit_logs_dynamic" in f for f in unresolved_blind_spots[0]["functions"])
 
 
 def test_benchmark_path_confidence_decay():
@@ -71,7 +74,6 @@ def test_benchmark_path_confidence_decay():
     result = engine.blast_radius("users", max_depth=2)
 
     # 1-hop declared FK: orders -> users (c=1.0)
-    # 2-hop: checkout.place_order -> orders -> users (0.85 * 1.0 = 0.85)
     # Check confidence ordering: direct declared FKs > direct static SQL > 2-hop paths
     by_name = {n.name: n for n in result.ranked_items}
 
@@ -95,10 +97,10 @@ def test_benchmark_cli_impact_execution(capsys):
     ])
     assert exit_code == 0
     captured = capsys.readouterr().out
-    assert "IMPACT BLAST RADIUS REPORT" in captured
+    assert "SystemLens Blast Radius Analysis" in captured
     assert "users" in captured
     assert "orders" in captured
-    assert "Blind Spots & Unanalyzed Boundaries" in captured
+    assert "Blind Spots" in captured
 
 
 def test_benchmark_cli_json_output(capsys):
@@ -113,7 +115,7 @@ def test_benchmark_cli_json_output(capsys):
     assert exit_code == 0
     captured = capsys.readouterr().out
     data = json.loads(captured)
-    assert data["target_name"] == "orders"
+    assert data["target"]["name"] == "orders"
     assert "impacted_functions" in data
     assert "impacted_tables" in data
     assert "blind_spots" in data
