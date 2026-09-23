@@ -7,9 +7,11 @@ import sys
 from typing import Optional
 
 from systemlens.adapters.postgres import PostgresAdapter
+from systemlens.adapters.python_ast import PythonASTAdapter
+from systemlens.graph import assemble_unified_graph
 from systemlens.inference.merge import compute_merge_stats, merge_edges
 from systemlens.inference.naming import infer_edges_from_naming
-from systemlens.models import Edge
+from systemlens.models import Edge, Node, NodeType
 
 
 def load_dotenv(filepath: str = ".env") -> None:
@@ -39,7 +41,7 @@ def main(args: Optional[list[str]] = None) -> int:
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    # Subcommand: ingest-postgres
+    # Subcommand 1: ingest-postgres
     pg_parser = subparsers.add_parser(
         "ingest-postgres",
         help="Introspect a PostgreSQL database schema and export raw catalog or nodes",
@@ -123,7 +125,7 @@ def main(args: Optional[list[str]] = None) -> int:
         help="Optional output file path for merged (declared + inferred) edges JSON",
     )
 
-    # Subcommand: infer-edges
+    # Subcommand 2: infer-edges
     infer_parser = subparsers.add_parser(
         "infer-edges",
         help="Infer candidate relational edges from column naming conventions in a raw schema file",
@@ -158,6 +160,44 @@ def main(args: Optional[list[str]] = None) -> int:
         "--deduplicate",
         action="store_true",
         help="Deduplicate inferred edges that overlap with declared FKs",
+    )
+
+    # Subcommand 3: analyze-python (Step 2)
+    ast_parser = subparsers.add_parser(
+        "analyze-python",
+        help="Statically analyze a Python codebase with AST for SQL queries, ORM calls, and dynamic queries",
+    )
+    ast_parser.add_argument(
+        "--src-dir",
+        "-s",
+        type=str,
+        default=".",
+        help="Path to the Python source directory or file to analyze (default: current directory)",
+    )
+    ast_parser.add_argument(
+        "--schema-file",
+        type=str,
+        default=None,
+        help="Optional raw schema JSON file to resolve table names and link schema nodes",
+    )
+    ast_parser.add_argument(
+        "--nodes-output",
+        type=str,
+        default=None,
+        help="Optional output file path for extracted code nodes JSON",
+    )
+    ast_parser.add_argument(
+        "--edges-output",
+        type=str,
+        default=None,
+        help="Optional output file path for extracted code edges JSON",
+    )
+    ast_parser.add_argument(
+        "--merged-graph-output",
+        "-o",
+        type=str,
+        default="graph.json",
+        help="Output file path for unified cross-layer graph JSON (default: graph.json)",
     )
 
     parsed = parser.parse_args(args)
@@ -249,6 +289,67 @@ def main(args: Optional[list[str]] = None) -> int:
                 with open(parsed.merged_output, "w", encoding="utf-8") as f:
                     json.dump([e.to_dict() for e in merged], f, indent=2)
                 print(f"Merged edges written to {parsed.merged_output}")
+
+    elif parsed.command == "analyze-python":
+        known_tables: list[str] = []
+        db_nodes: list[Node] = []
+        db_edges: list[Edge] = []
+
+        if parsed.schema_file and os.path.exists(parsed.schema_file):
+            with open(parsed.schema_file, "r", encoding="utf-8") as f:
+                catalog = json.load(f)
+            for tbl_full_name, t_info in catalog.get("tables", {}).items():
+                known_tables.append(tbl_full_name)
+                db_nodes.append(
+                    Node(
+                        id=f"table:{tbl_full_name}",
+                        type=NodeType.TABLE,
+                        name=t_info.get("name", tbl_full_name),
+                        source_system="postgres",
+                        metadata=t_info,
+                    )
+                )
+
+        adapter = PythonASTAdapter(root_dir=parsed.src_dir, known_tables=known_tables)
+        print(f"Analyzing Python codebase at '{parsed.src_dir}'...")
+        code_nodes = adapter.extract_nodes()
+        code_edges = adapter.extract_edges()
+
+        func_count = sum(1 for n in code_nodes if n.type == NodeType.FUNCTION)
+        file_count = sum(1 for n in code_nodes if n.type == NodeType.FILE)
+        print(f"Extracted {func_count} functions across {file_count} files.")
+
+        if parsed.nodes_output:
+            with open(parsed.nodes_output, "w", encoding="utf-8") as f:
+                json.dump([n.to_dict() for n in code_nodes], f, indent=2)
+            print(f"Code nodes written to {parsed.nodes_output}")
+
+        if parsed.edges_output:
+            with open(parsed.edges_output, "w", encoding="utf-8") as f:
+                json.dump([e.to_dict() for e in code_edges], f, indent=2)
+            print(f"Code edges written to {parsed.edges_output}")
+
+        unified = assemble_unified_graph(
+            db_nodes=db_nodes,
+            db_edges=db_edges,
+            code_nodes=code_nodes,
+            code_edges=code_edges,
+        )
+        metrics = unified["metrics"]
+        print("\nCross-Layer Dependency Metrics:")
+        print(f"  * Total Graph Nodes: {metrics['total_nodes']}")
+        print(f"  * Total Graph Edges: {metrics['total_edges']}")
+        c_db = metrics["code_to_db"]
+        print(f"  * Code-to-DB Calls: {c_db['total_access_calls']}")
+        print(f"    - Static SQL Literals: {c_db['static_sql_count']}")
+        print(f"    - ORM Calls:           {c_db['orm_call_count']}")
+        print(f"    - Dynamic Unresolved:  {c_db['dynamic_unresolved_count']} (ratio: {c_db['dynamic_unresolved_ratio']:.1%})")
+        if c_db["kill_check_warning"]:
+            print("  [WARNING] Dynamic unresolved ratio exceeds 40% threshold (disclosed honesty layer)!")
+
+        with open(parsed.merged_graph_output, "w", encoding="utf-8") as f:
+            json.dump(unified, f, indent=2)
+        print(f"\nUnified cross-layer graph written to {parsed.merged_graph_output}")
 
     return 0
 
