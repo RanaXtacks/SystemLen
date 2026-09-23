@@ -1,0 +1,2333 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/test_postgres_live.py",
+      "type": "file",
+      "name": "test_postgres_live.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "scripts/test_postgres_live.py",
+        "size_bytes": 10799
+      }
+    },
+    {
+      "id": "func:scripts/test_postgres_live.py:setup_demo_schema",
+      "type": "function",
+      "name": "setup_demo_schema",
+      "source_system": "python",
+      "metadata": {
+        "file": "scripts/test_postgres_live.py",
+        "lineno": 101,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:scripts/test_postgres_live.py:teardown_demo_schema",
+      "type": "function",
+      "name": "teardown_demo_schema",
+      "source_system": "python",
+      "metadata": {
+        "file": "scripts/test_postgres_live.py",
+        "lineno": 113,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:scripts/test_postgres_live.py:run_verification",
+      "type": "function",
+      "name": "run_verification",
+      "source_system": "python",
+      "metadata": {
+        "file": "scripts/test_postgres_live.py",
+        "lineno": 125,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:scripts/test_postgres_live.py:load_dotenv",
+      "type": "function",
+      "name": "load_dotenv",
+      "source_system": "python",
+      "metadata": {
+        "file": "scripts/test_postgres_live.py",
+        "lineno": 206,
+        "is_async": false,
+        "docstring": "Load key-value pairs from a .env file into os.environ if not already set."
+      }
+    },
+    {
+      "id": "func:scripts/test_postgres_live.py:main",
+      "type": "function",
+      "name": "main",
+      "source_system": "python",
+      "metadata": {
+        "file": "scripts/test_postgres_live.py",
+        "lineno": 224,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "file:systemlens/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "systemlens/__init__.py",
+        "size_bytes": 102
+      }
+    },
+    {
+      "id": "file:systemlens/adapters/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "systemlens/adapters/__init__.py",
+        "size_bytes": 290
+      }
+    },
+    {
+      "id": "file:systemlens/adapters/base.py",
+      "type": "file",
+      "name": "base.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "systemlens/adapters/base.py",
+        "size_bytes": 656
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/base.py:extract_nodes",
+      "type": "function",
+      "name": "extract_nodes",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/base.py",
+        "lineno": 13,
+        "is_async": false,
+        "docstring": "Extract and return list of graph nodes."
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/base.py:extract_edges",
+      "type": "function",
+      "name": "extract_edges",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/base.py",
+        "lineno": 18,
+        "is_async": false,
+        "docstring": "Extract and return list of graph edges."
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/base.py:extract_raw_catalog",
+      "type": "function",
+      "name": "extract_raw_catalog",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/base.py",
+        "lineno": 23,
+        "is_async": false,
+        "docstring": "Extract raw unlinked catalog data for inspection/export."
+      }
+    },
+    {
+      "id": "file:systemlens/adapters/postgres.py",
+      "type": "file",
+      "name": "postgres.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "systemlens/adapters/postgres.py",
+        "size_bytes": 17863
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/postgres.py:__init__",
+      "type": "function",
+      "name": "__init__",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/postgres.py",
+        "lineno": 24,
+        "is_async": false,
+        "docstring": "Initialize PostgresAdapter.\n\nArgs:\n    dsn: PostgreSQL DSN/URI string (e.g. \"postgresql://user:pass@host:5432/dbname\").\n    connection: An existing psycopg2 connection instance (useful for testing or connection pooling).\n    schemas: Specific schemas to target. If None, all non-system schemas are introspected.\n    conn_kwargs: Additional arguments passed to psycopg2.connect."
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/postgres.py:_get_connection",
+      "type": "function",
+      "name": "_get_connection",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/postgres.py",
+        "lineno": 45,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/postgres.py:extract_raw_catalog",
+      "type": "function",
+      "name": "extract_raw_catalog",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/postgres.py",
+        "lineno": 57,
+        "is_async": false,
+        "docstring": "Extract raw catalog dump of tables and columns from information_schema.\n\nArgs:\n    conn: Optional existing connection. If None, a connection is obtained\n          via self._get_connection().\n\nReturns:\n    Dictionary matching raw_schema.json structure."
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/postgres.py:_extract_foreign_keys",
+      "type": "function",
+      "name": "_extract_foreign_keys",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/postgres.py",
+        "lineno": 147,
+        "is_async": false,
+        "docstring": "Extract declared foreign key constraints from information_schema.\n\nHandles composite foreign keys by grouping column pairs by constraint.\nReturns a list of Edge objects with EdgeType.DECLARED_FK and confidence=1.0."
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/postgres.py:_extract_inheritance_and_partitions",
+      "type": "function",
+      "name": "_extract_inheritance_and_partitions",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/postgres.py",
+        "lineno": 249,
+        "is_async": false,
+        "docstring": "Query pg_catalog.pg_inherits and pg_class to discover table inheritance\nand partitioned tables.\n\nReturns:\n    Tuple of:\n    - inheritance_map: dict mapping child_full_name -> {parent_schema, parent_name, parent_full_name, is_partition, relationship}\n    - partitioned_parents: set of parent_full_names whose relkind == 'p'"
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/postgres.py:extract_nodes",
+      "type": "function",
+      "name": "extract_nodes",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/postgres.py",
+        "lineno": 337,
+        "is_async": false,
+        "docstring": "Convert extracted tables, views, and partitions into graph Node objects.\n\nAssigns:\n- NodeType.VIEW for views\n- NodeType.PARTITION for partition child tables\n- NodeType.TABLE for standard tables and partitioned parent tables"
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/postgres.py:extract_edges",
+      "type": "function",
+      "name": "extract_edges",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/postgres.py",
+        "lineno": 396,
+        "is_async": false,
+        "docstring": "Extract declared foreign key constraints and structural inheritance/partition edges.\n\nReturns:\n    List of Edge objects:\n    - EdgeType.DECLARED_FK (confidence=1.0)\n    - EdgeType.STRUCTURAL_BELONGS_TO (confidence=1.0)"
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/postgres.py:dump_raw_schema",
+      "type": "function",
+      "name": "dump_raw_schema",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/postgres.py",
+        "lineno": 437,
+        "is_async": false,
+        "docstring": "Extract and write raw schema to JSON file."
+      }
+    },
+    {
+      "id": "file:systemlens/adapters/python_ast.py",
+      "type": "file",
+      "name": "python_ast.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "systemlens/adapters/python_ast.py",
+        "size_bytes": 23756
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/python_ast.py:extract_tables_from_sql",
+      "type": "function",
+      "name": "extract_tables_from_sql",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/python_ast.py",
+        "lineno": 71,
+        "is_async": false,
+        "docstring": "Extract referenced table names from a raw SQL string using sqlparse.\n\nHandles SELECT, JOIN, INSERT INTO, UPDATE, DELETE FROM, subqueries,\nand schema-qualified table names (e.g. 'public.users' or 'users')."
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/python_ast.py:_extract_django_model_name",
+      "type": "function",
+      "name": "_extract_django_model_name",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/python_ast.py",
+        "lineno": 152,
+        "is_async": false,
+        "docstring": "Detect if an AST call expression originates from a Django ORM query,\ne.g. `User.objects.filter(...)`, `Order.objects.all().order_by(...)`.\nReturns the root model class name (e.g. 'User') or None."
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/python_ast.py:_is_subquery_identifier",
+      "type": "function",
+      "name": "_is_subquery_identifier",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/python_ast.py",
+        "lineno": 81,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/python_ast.py:_traverse_tokens",
+      "type": "function",
+      "name": "_traverse_tokens",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/python_ast.py",
+        "lineno": 88,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/python_ast.py:__init__",
+      "type": "function",
+      "name": "__init__",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/python_ast.py",
+        "lineno": 171,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/python_ast.py:_should_skip_dir",
+      "type": "function",
+      "name": "_should_skip_dir",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/python_ast.py",
+        "lineno": 191,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/python_ast.py:_iter_python_files",
+      "type": "function",
+      "name": "_iter_python_files",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/python_ast.py",
+        "lineno": 194,
+        "is_async": false,
+        "docstring": "Collect all relevant Python files in the source tree."
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/python_ast.py:_pre_scan_models",
+      "type": "function",
+      "name": "_pre_scan_models",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/python_ast.py",
+        "lineno": 209,
+        "is_async": false,
+        "docstring": "Scan all Python files to build a registry of ORM classes to table names:\n- SQLAlchemy: `__tablename__ = 'users'`\n- Django: `class Meta: db_table = 'users'`"
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/python_ast.py:resolve_model_to_table",
+      "type": "function",
+      "name": "resolve_model_to_table",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/python_ast.py",
+        "lineno": 241,
+        "is_async": false,
+        "docstring": "Resolve an ORM model name (e.g. 'User', 'OrderItem') to a table name.\nUses registry if known, otherwise converts PascalCase to snake_case plural."
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/python_ast.py:resolve_table_node_id",
+      "type": "function",
+      "name": "resolve_table_node_id",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/python_ast.py",
+        "lineno": 257,
+        "is_async": false,
+        "docstring": "Map a raw table name (e.g. 'users' or 'public.users') to its target node ID.\nIf table exists in database lookup, returns schema-qualified ID."
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/python_ast.py:extract_nodes",
+      "type": "function",
+      "name": "extract_nodes",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/python_ast.py",
+        "lineno": 267,
+        "is_async": false,
+        "docstring": "Extract all File and Function nodes across the Python codebase."
+      }
+    },
+    {
+      "id": "func:systemlens/adapters/python_ast.py:extract_edges",
+      "type": "function",
+      "name": "extract_edges",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/adapters/python_ast.py",
+        "lineno": 314,
+        "is_async": false,
+        "docstring": "Extract code-layer edges:\n- Structural edges: Function -> File\n- Static SQL edges: Function -> Table (0.85)\n- ORM call edges: Function -> Table (0.80)\n- Dynamic unresolved edges: Function -> table:unresolved (0.15)"
+      }
+    },
+    {
+      "id": "file:systemlens/cli.py",
+      "type": "file",
+      "name": "cli.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "systemlens/cli.py",
+        "size_bytes": 14316
+      }
+    },
+    {
+      "id": "func:systemlens/cli.py:_ensure_parent_dir",
+      "type": "function",
+      "name": "_ensure_parent_dir",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/cli.py",
+        "lineno": 17,
+        "is_async": false,
+        "docstring": "Ensure that the parent directory for a target file path exists."
+      }
+    },
+    {
+      "id": "func:systemlens/cli.py:load_dotenv",
+      "type": "function",
+      "name": "load_dotenv",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/cli.py",
+        "lineno": 25,
+        "is_async": false,
+        "docstring": "Load key-value pairs from a .env file into os.environ if not already set."
+      }
+    },
+    {
+      "id": "func:systemlens/cli.py:main",
+      "type": "function",
+      "name": "main",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/cli.py",
+        "lineno": 43,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "file:systemlens/graph.py",
+      "type": "file",
+      "name": "graph.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "systemlens/graph.py",
+        "size_bytes": 6100
+      }
+    },
+    {
+      "id": "func:systemlens/graph.py:assemble_unified_graph",
+      "type": "function",
+      "name": "assemble_unified_graph",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/graph.py",
+        "lineno": 15,
+        "is_async": false,
+        "docstring": "Assemble database and code elements into a unified cross-layer graph.\n\nResolves bare table references from code to qualified table nodes where possible.\nSurfaces unresolved dynamic queries as explicit nodes/edges (per tech.md honesty layer).\n\nReturns:\n    Dict representing graph.json with 'nodes', 'edges', and 'metrics'."
+      }
+    },
+    {
+      "id": "func:systemlens/graph.py:compute_cross_layer_metrics",
+      "type": "function",
+      "name": "compute_cross_layer_metrics",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/graph.py",
+        "lineno": 114,
+        "is_async": false,
+        "docstring": "Compute comprehensive cross-layer graph metrics, including the\nStep 2 Day 14 Kill Check dynamic query ratio."
+      }
+    },
+    {
+      "id": "file:systemlens/inference/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "systemlens/inference/__init__.py",
+        "size_bytes": 261
+      }
+    },
+    {
+      "id": "file:systemlens/inference/merge.py",
+      "type": "file",
+      "name": "merge.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "systemlens/inference/merge.py",
+        "size_bytes": 4412
+      }
+    },
+    {
+      "id": "func:systemlens/inference/merge.py:merge_edges",
+      "type": "function",
+      "name": "merge_edges",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/inference/merge.py",
+        "lineno": 19,
+        "is_async": false,
+        "docstring": "Merge declared FK edges with inferred naming edges.\n\nRules:\n- All declared edges are preserved (deterministic, base_weight=1.0).\n- When declared_fk AND inferred_naming both point to the same (source, target):\n  - Both edges record the agreement in their metadata.\n  - The declared edge is marked with `naming_agreement=True` and `naming_evidence`.\n  - The inferred edge is marked with `declared_agreement=True` and `agreement_bonus=1.0`.\n  - If deduplicate=True: the duplicate inferred edge is omitted.\n  - If deduplicate=False (default): both edge classes are retained in the merged list,\n    providing a unified edge set with distinguishable classes per Day 6 plan.\n- Inferred edges with no declared counterpart are kept with their original confidence.\n\nArgs:\n    declared_edges: Edges from PostgresAdapter.extract_edges()\n        (e.g., DECLARED_FK, STRUCTURAL_BELONGS_TO).\n    inferred_edges: Edges from infer_edges_from_naming().\n    deduplicate: If True, omit inferred edges that duplicate declared FKs.\n        If False (default), keep both distinguishable edge classes.\n\nReturns:\n    Merged list of edges."
+      }
+    },
+    {
+      "id": "func:systemlens/inference/merge.py:compute_merge_stats",
+      "type": "function",
+      "name": "compute_merge_stats",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/inference/merge.py",
+        "lineno": 75,
+        "is_async": false,
+        "docstring": "Compute statistics about the merge result for reporting and precision assessment.\n\nArgs:\n    declared_edges: List of declared edges.\n    inferred_edges: List of inferred edges.\n    merged_edges: Optional list of merged edges. If None, computed via merge_edges().\n\nReturns:\n    Dict with counts, agreements, inferred-only, declared-only, and agreement rates."
+      }
+    },
+    {
+      "id": "file:systemlens/inference/naming.py",
+      "type": "file",
+      "name": "naming.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "systemlens/inference/naming.py",
+        "size_bytes": 12112
+      }
+    },
+    {
+      "id": "func:systemlens/inference/naming.py:singularize",
+      "type": "function",
+      "name": "singularize",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/inference/naming.py",
+        "lineno": 88,
+        "is_async": false,
+        "docstring": "Convert a plural English noun to its singular form (best-effort)."
+      }
+    },
+    {
+      "id": "func:systemlens/inference/naming.py:pluralize",
+      "type": "function",
+      "name": "pluralize",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/inference/naming.py",
+        "lineno": 131,
+        "is_async": false,
+        "docstring": "Convert a singular English noun to its plural form (best-effort)."
+      }
+    },
+    {
+      "id": "func:systemlens/inference/naming.py:generate_candidate_table_names",
+      "type": "function",
+      "name": "generate_candidate_table_names",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/inference/naming.py",
+        "lineno": 159,
+        "is_async": false,
+        "docstring": "Given a stem extracted from a column (e.g., 'user' from 'user_id',\n'usr' from 'usr_id', 'shipping_address' from 'shipping_address_id'),\ngenerate candidate table names with confidence modifiers.\n\nReturns:\n    List of (candidate_name, confidence_modifier) tuples.\n    modifier = 1.0 for exact matches, 0.9 for fuzzy/partial/abbreviation matches."
+      }
+    },
+    {
+      "id": "func:systemlens/inference/naming.py:infer_edges_from_naming",
+      "type": "function",
+      "name": "infer_edges_from_naming",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/inference/naming.py",
+        "lineno": 231,
+        "is_async": false,
+        "docstring": "Scan all columns in the catalog and infer FK-like relationships from\nnaming conventions (e.g., 'user_id' -> 'users' table, 'usr_id' -> 'users').\n\nArgs:\n    catalog: Raw catalog dict with 'tables' key from extract_raw_catalog().\n    declared_fk_pairs: Optional set of (source_node_id, target_node_id) pairs\n        representing already-declared FKs, used to skip duplicate edges.\n\nReturns:\n    List of Edge objects with type=INFERRED_NAMING and scored confidence."
+      }
+    },
+    {
+      "id": "file:systemlens/models.py",
+      "type": "file",
+      "name": "models.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "systemlens/models.py",
+        "size_bytes": 3114
+      }
+    },
+    {
+      "id": "func:systemlens/models.py:to_dict",
+      "type": "function",
+      "name": "to_dict",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/models.py",
+        "lineno": 85,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:systemlens/models.py:from_dict",
+      "type": "function",
+      "name": "from_dict",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/models.py",
+        "lineno": 96,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:systemlens/models.py:__post_init__",
+      "type": "function",
+      "name": "__post_init__",
+      "source_system": "python",
+      "metadata": {
+        "file": "systemlens/models.py",
+        "lineno": 78,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "file:tests/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "tests/__init__.py",
+        "size_bytes": 29
+      }
+    },
+    {
+      "id": "file:tests/test_cli.py",
+      "type": "file",
+      "name": "test_cli.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "tests/test_cli.py",
+        "size_bytes": 5786
+      }
+    },
+    {
+      "id": "func:tests/test_cli.py:test_cli_ingest_postgres_mocked",
+      "type": "function",
+      "name": "test_cli_ingest_postgres_mocked",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_cli.py",
+        "lineno": 10,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_cli.py:test_cli_ingest_postgres_with_inference",
+      "type": "function",
+      "name": "test_cli_ingest_postgres_with_inference",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_cli.py",
+        "lineno": 69,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_cli.py:test_cli_infer_edges_command",
+      "type": "function",
+      "name": "test_cli_infer_edges_command",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_cli.py",
+        "lineno": 124,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "file:tests/test_inference.py",
+      "type": "file",
+      "name": "test_inference.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "tests/test_inference.py",
+        "size_bytes": 24730
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_pluralize_regular",
+      "type": "function",
+      "name": "test_pluralize_regular",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 34,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_pluralize_irregulars",
+      "type": "function",
+      "name": "test_pluralize_irregulars",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 41,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_pluralize_special_endings",
+      "type": "function",
+      "name": "test_pluralize_special_endings",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 49,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_singularize_regular",
+      "type": "function",
+      "name": "test_singularize_regular",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 62,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_singularize_irregulars",
+      "type": "function",
+      "name": "test_singularize_irregulars",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 69,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_singularize_special_endings",
+      "type": "function",
+      "name": "test_singularize_special_endings",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 77,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_generate_candidates_exact",
+      "type": "function",
+      "name": "test_generate_candidates_exact",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 90,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_generate_candidates_abbreviation",
+      "type": "function",
+      "name": "test_generate_candidates_abbreviation",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 98,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_generate_candidates_compound_role_prefix",
+      "type": "function",
+      "name": "test_generate_candidates_compound_role_prefix",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 109,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_generate_candidates_compound_abbreviation",
+      "type": "function",
+      "name": "test_generate_candidates_compound_abbreviation",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 121,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:enterprise_catalog",
+      "type": "function",
+      "name": "enterprise_catalog",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 134,
+        "is_async": false,
+        "docstring": "A realistic 22-table enterprise schema covering 25 foreign key relationships.\n\nIncludes:\n- Standard naming: user_id -> users, order_id -> orders\n- Irregular/inflected plurals: category_id -> categories\n- Abbreviations: usr_id -> users, prod_id -> products, acct_id -> accounts,\n  cust_id -> customers, dept_id -> departments, org_id -> organizations\n- Compound role-prefixes: shipping_address_id -> addresses, author_user_id -> users\n- Self-reference: parent_category_id -> categories\n- Negative cases: non-FK columns (conf_key, grid_id without grid table, metrics)"
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_spot_check_20_edges_kill_check",
+      "type": "function",
+      "name": "test_spot_check_20_edges_kill_check",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 358,
+        "is_async": false,
+        "docstring": "Day 4/5/6 Step 1 Kill Check:\nSpot check inferred edges against the hand-curated enterprise catalog.\nVerify:\n- Inferred edge count >= 20.\n- False positive rate < 30% (Kill check requirement). In fact, 0 false positives!\n- Precision is > 95%.\n- All expected relationships are discovered."
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_confidence_scores_exact_vs_fuzzy",
+      "type": "function",
+      "name": "test_confidence_scores_exact_vs_fuzzy",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 419,
+        "is_async": false,
+        "docstring": "Day 5 requirement:\nVerify that exact matches receive confidence 0.55 (0.55 * 1.0)\nand fuzzy/abbreviation/role-prefix matches receive confidence 0.495 (0.55 * 0.9)."
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_multi_schema_prioritizes_same_schema",
+      "type": "function",
+      "name": "test_multi_schema_prioritizes_same_schema",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 456,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_trivial_self_reference_suppressed",
+      "type": "function",
+      "name": "test_trivial_self_reference_suppressed",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 484,
+        "is_async": false,
+        "docstring": "`users.user_id` inside `users` table should NOT infer a self-loop."
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_hierarchical_self_reference_allowed",
+      "type": "function",
+      "name": "test_hierarchical_self_reference_allowed",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 499,
+        "is_async": false,
+        "docstring": "`categories.parent_category_id` SHOULD infer a self-loop."
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_merge_edges_with_agreement",
+      "type": "function",
+      "name": "test_merge_edges_with_agreement",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 520,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_merge_edges_with_deduplication",
+      "type": "function",
+      "name": "test_merge_edges_with_deduplication",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 574,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_inference.py:test_compute_merge_stats",
+      "type": "function",
+      "name": "test_compute_merge_stats",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_inference.py",
+        "lineno": 610,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "file:tests/test_models.py",
+      "type": "file",
+      "name": "test_models.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "tests/test_models.py",
+        "size_bytes": 2090
+      }
+    },
+    {
+      "id": "func:tests/test_models.py:test_node_creation_and_dict",
+      "type": "function",
+      "name": "test_node_creation_and_dict",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_models.py",
+        "lineno": 6,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_models.py:test_edge_creation_and_confidence_bounds",
+      "type": "function",
+      "name": "test_edge_creation_and_confidence_bounds",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_models.py",
+        "lineno": 28,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_models.py:test_base_weights_match_tech_spec",
+      "type": "function",
+      "name": "test_base_weights_match_tech_spec",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_models.py",
+        "lineno": 67,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "file:tests/test_postgres_adapter.py",
+      "type": "file",
+      "name": "test_postgres_adapter.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "tests/test_postgres_adapter.py",
+        "size_bytes": 14622
+      }
+    },
+    {
+      "id": "func:tests/test_postgres_adapter.py:test_extract_raw_catalog_mocked",
+      "type": "function",
+      "name": "test_extract_raw_catalog_mocked",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_postgres_adapter.py",
+        "lineno": 15,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_postgres_adapter.py:test_extract_foreign_keys_single_and_composite",
+      "type": "function",
+      "name": "test_extract_foreign_keys_single_and_composite",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_postgres_adapter.py",
+        "lineno": 114,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_postgres_adapter.py:test_extract_inheritance_and_partitions",
+      "type": "function",
+      "name": "test_extract_inheritance_and_partitions",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_postgres_adapter.py",
+        "lineno": 195,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_postgres_adapter.py:test_extract_edges_includes_structural_edges",
+      "type": "function",
+      "name": "test_extract_edges_includes_structural_edges",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_postgres_adapter.py",
+        "lineno": 286,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_postgres_adapter.py:test_combined_fk_and_partition_edges",
+      "type": "function",
+      "name": "test_combined_fk_and_partition_edges",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_postgres_adapter.py",
+        "lineno": 325,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_postgres_adapter.py:test_views_detection",
+      "type": "function",
+      "name": "test_views_detection",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_postgres_adapter.py",
+        "lineno": 369,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_postgres_adapter.py:__getitem__",
+      "type": "function",
+      "name": "__getitem__",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_postgres_adapter.py",
+        "lineno": 11,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "file:tests/test_python_ast.py",
+      "type": "file",
+      "name": "test_python_ast.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "tests/test_python_ast.py",
+        "size_bytes": 11104
+      }
+    },
+    {
+      "id": "func:tests/test_python_ast.py:test_extract_tables_simple_select",
+      "type": "function",
+      "name": "test_extract_tables_simple_select",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_python_ast.py",
+        "lineno": 36,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_python_ast.py:test_extract_tables_joins",
+      "type": "function",
+      "name": "test_extract_tables_joins",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_python_ast.py",
+        "lineno": 41,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_python_ast.py:test_extract_tables_insert",
+      "type": "function",
+      "name": "test_extract_tables_insert",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_python_ast.py",
+        "lineno": 54,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_python_ast.py:test_extract_tables_update",
+      "type": "function",
+      "name": "test_extract_tables_update",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_python_ast.py",
+        "lineno": 59,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_python_ast.py:test_extract_tables_delete",
+      "type": "function",
+      "name": "test_extract_tables_delete",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_python_ast.py",
+        "lineno": 64,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_python_ast.py:test_extract_tables_schema_qualified",
+      "type": "function",
+      "name": "test_extract_tables_schema_qualified",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_python_ast.py",
+        "lineno": 69,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_python_ast.py:test_extract_tables_subquery",
+      "type": "function",
+      "name": "test_extract_tables_subquery",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_python_ast.py",
+        "lineno": 75,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_python_ast.py:mock_codebase",
+      "type": "function",
+      "name": "mock_codebase",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_python_ast.py",
+        "lineno": 87,
+        "is_async": false,
+        "docstring": "Create a temporary Python project with raw SQL, SQLAlchemy, Django ORM, and dynamic queries."
+      }
+    },
+    {
+      "id": "func:tests/test_python_ast.py:test_extract_nodes",
+      "type": "function",
+      "name": "test_extract_nodes",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_python_ast.py",
+        "lineno": 147,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_python_ast.py:test_extract_structural_edges",
+      "type": "function",
+      "name": "test_extract_structural_edges",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_python_ast.py",
+        "lineno": 166,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_python_ast.py:test_extract_sql_and_orm_edges",
+      "type": "function",
+      "name": "test_extract_sql_and_orm_edges",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_python_ast.py",
+        "lineno": 178,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_python_ast.py:test_assemble_unified_graph",
+      "type": "function",
+      "name": "test_assemble_unified_graph",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_python_ast.py",
+        "lineno": 219,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "func:tests/test_python_ast.py:test_cli_analyze_python",
+      "type": "function",
+      "name": "test_cli_analyze_python",
+      "source_system": "python",
+      "metadata": {
+        "file": "tests/test_python_ast.py",
+        "lineno": 298,
+        "is_async": false,
+        "docstring": null
+      }
+    },
+    {
+      "id": "table:unresolved",
+      "type": "table",
+      "name": "<unresolved_dynamic_query>",
+      "source_system": "python",
+      "metadata": {
+        "is_unresolved": true,
+        "description": "Blind spot: dynamic query passed to execute() without static resolution"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "func:scripts/test_postgres_live.py:setup_demo_schema",
+      "target": "file:scripts/test_postgres_live.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in scripts/test_postgres_live.py:101",
+      "metadata": {
+        "lineno": 101,
+        "file": "scripts/test_postgres_live.py"
+      }
+    },
+    {
+      "source": "func:scripts/test_postgres_live.py:setup_demo_schema",
+      "target": "table:unresolved",
+      "type": "dynamic_unresolved",
+      "confidence": 0.15,
+      "evidence": "Dynamic unresolved query call (Name) in scripts/test_postgres_live.py:107",
+      "metadata": {
+        "lineno": 107,
+        "file": "scripts/test_postgres_live.py",
+        "arg_type": "Name",
+        "unresolved": true
+      }
+    },
+    {
+      "source": "func:scripts/test_postgres_live.py:teardown_demo_schema",
+      "target": "file:scripts/test_postgres_live.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in scripts/test_postgres_live.py:113",
+      "metadata": {
+        "lineno": 113,
+        "file": "scripts/test_postgres_live.py"
+      }
+    },
+    {
+      "source": "func:scripts/test_postgres_live.py:teardown_demo_schema",
+      "target": "table:unresolved",
+      "type": "dynamic_unresolved",
+      "confidence": 0.15,
+      "evidence": "Dynamic unresolved query call (Name) in scripts/test_postgres_live.py:119",
+      "metadata": {
+        "lineno": 119,
+        "file": "scripts/test_postgres_live.py",
+        "arg_type": "Name",
+        "unresolved": true
+      }
+    },
+    {
+      "source": "func:scripts/test_postgres_live.py:run_verification",
+      "target": "file:scripts/test_postgres_live.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in scripts/test_postgres_live.py:125",
+      "metadata": {
+        "lineno": 125,
+        "file": "scripts/test_postgres_live.py"
+      }
+    },
+    {
+      "source": "func:scripts/test_postgres_live.py:load_dotenv",
+      "target": "file:scripts/test_postgres_live.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in scripts/test_postgres_live.py:206",
+      "metadata": {
+        "lineno": 206,
+        "file": "scripts/test_postgres_live.py"
+      }
+    },
+    {
+      "source": "func:scripts/test_postgres_live.py:main",
+      "target": "file:scripts/test_postgres_live.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in scripts/test_postgres_live.py:224",
+      "metadata": {
+        "lineno": 224,
+        "file": "scripts/test_postgres_live.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/base.py:extract_nodes",
+      "target": "file:systemlens/adapters/base.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/base.py:13",
+      "metadata": {
+        "lineno": 13,
+        "file": "systemlens/adapters/base.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/base.py:extract_edges",
+      "target": "file:systemlens/adapters/base.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/base.py:18",
+      "metadata": {
+        "lineno": 18,
+        "file": "systemlens/adapters/base.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/base.py:extract_raw_catalog",
+      "target": "file:systemlens/adapters/base.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/base.py:23",
+      "metadata": {
+        "lineno": 23,
+        "file": "systemlens/adapters/base.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/postgres.py:__init__",
+      "target": "file:systemlens/adapters/postgres.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/postgres.py:24",
+      "metadata": {
+        "lineno": 24,
+        "file": "systemlens/adapters/postgres.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/postgres.py:_get_connection",
+      "target": "file:systemlens/adapters/postgres.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/postgres.py:45",
+      "metadata": {
+        "lineno": 45,
+        "file": "systemlens/adapters/postgres.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/postgres.py:extract_raw_catalog",
+      "target": "file:systemlens/adapters/postgres.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/postgres.py:57",
+      "metadata": {
+        "lineno": 57,
+        "file": "systemlens/adapters/postgres.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/postgres.py:extract_raw_catalog",
+      "target": "table:unresolved",
+      "type": "dynamic_unresolved",
+      "confidence": 0.15,
+      "evidence": "Dynamic unresolved query call (Name) in systemlens/adapters/postgres.py:88",
+      "metadata": {
+        "lineno": 88,
+        "file": "systemlens/adapters/postgres.py",
+        "arg_type": "Name",
+        "unresolved": true
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/postgres.py:extract_raw_catalog",
+      "target": "table:unresolved",
+      "type": "dynamic_unresolved",
+      "confidence": 0.15,
+      "evidence": "Dynamic unresolved query call (Name) in systemlens/adapters/postgres.py:125",
+      "metadata": {
+        "lineno": 125,
+        "file": "systemlens/adapters/postgres.py",
+        "arg_type": "Name",
+        "unresolved": true
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/postgres.py:_extract_foreign_keys",
+      "target": "file:systemlens/adapters/postgres.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/postgres.py:147",
+      "metadata": {
+        "lineno": 147,
+        "file": "systemlens/adapters/postgres.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/postgres.py:_extract_foreign_keys",
+      "target": "table:unresolved",
+      "type": "dynamic_unresolved",
+      "confidence": 0.15,
+      "evidence": "Dynamic unresolved query call (Name) in systemlens/adapters/postgres.py:188",
+      "metadata": {
+        "lineno": 188,
+        "file": "systemlens/adapters/postgres.py",
+        "arg_type": "Name",
+        "unresolved": true
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/postgres.py:_extract_inheritance_and_partitions",
+      "target": "file:systemlens/adapters/postgres.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/postgres.py:249",
+      "metadata": {
+        "lineno": 249,
+        "file": "systemlens/adapters/postgres.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/postgres.py:_extract_inheritance_and_partitions",
+      "target": "table:unresolved",
+      "type": "dynamic_unresolved",
+      "confidence": 0.15,
+      "evidence": "Dynamic unresolved query call (Name) in systemlens/adapters/postgres.py:286",
+      "metadata": {
+        "lineno": 286,
+        "file": "systemlens/adapters/postgres.py",
+        "arg_type": "Name",
+        "unresolved": true
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/postgres.py:_extract_inheritance_and_partitions",
+      "target": "table:unresolved",
+      "type": "dynamic_unresolved",
+      "confidence": 0.15,
+      "evidence": "Dynamic unresolved query call (Name) in systemlens/adapters/postgres.py:328",
+      "metadata": {
+        "lineno": 328,
+        "file": "systemlens/adapters/postgres.py",
+        "arg_type": "Name",
+        "unresolved": true
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/postgres.py:extract_nodes",
+      "target": "file:systemlens/adapters/postgres.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/postgres.py:337",
+      "metadata": {
+        "lineno": 337,
+        "file": "systemlens/adapters/postgres.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/postgres.py:extract_edges",
+      "target": "file:systemlens/adapters/postgres.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/postgres.py:396",
+      "metadata": {
+        "lineno": 396,
+        "file": "systemlens/adapters/postgres.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/postgres.py:dump_raw_schema",
+      "target": "file:systemlens/adapters/postgres.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/postgres.py:437",
+      "metadata": {
+        "lineno": 437,
+        "file": "systemlens/adapters/postgres.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/python_ast.py:extract_tables_from_sql",
+      "target": "file:systemlens/adapters/python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/python_ast.py:71",
+      "metadata": {
+        "lineno": 71,
+        "file": "systemlens/adapters/python_ast.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/python_ast.py:_extract_django_model_name",
+      "target": "file:systemlens/adapters/python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/python_ast.py:152",
+      "metadata": {
+        "lineno": 152,
+        "file": "systemlens/adapters/python_ast.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/python_ast.py:_is_subquery_identifier",
+      "target": "file:systemlens/adapters/python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/python_ast.py:81",
+      "metadata": {
+        "lineno": 81,
+        "file": "systemlens/adapters/python_ast.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/python_ast.py:_traverse_tokens",
+      "target": "file:systemlens/adapters/python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/python_ast.py:88",
+      "metadata": {
+        "lineno": 88,
+        "file": "systemlens/adapters/python_ast.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/python_ast.py:__init__",
+      "target": "file:systemlens/adapters/python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/python_ast.py:171",
+      "metadata": {
+        "lineno": 171,
+        "file": "systemlens/adapters/python_ast.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/python_ast.py:_should_skip_dir",
+      "target": "file:systemlens/adapters/python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/python_ast.py:191",
+      "metadata": {
+        "lineno": 191,
+        "file": "systemlens/adapters/python_ast.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/python_ast.py:_iter_python_files",
+      "target": "file:systemlens/adapters/python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/python_ast.py:194",
+      "metadata": {
+        "lineno": 194,
+        "file": "systemlens/adapters/python_ast.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/python_ast.py:_pre_scan_models",
+      "target": "file:systemlens/adapters/python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/python_ast.py:209",
+      "metadata": {
+        "lineno": 209,
+        "file": "systemlens/adapters/python_ast.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/python_ast.py:resolve_model_to_table",
+      "target": "file:systemlens/adapters/python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/python_ast.py:241",
+      "metadata": {
+        "lineno": 241,
+        "file": "systemlens/adapters/python_ast.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/python_ast.py:resolve_table_node_id",
+      "target": "file:systemlens/adapters/python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/python_ast.py:257",
+      "metadata": {
+        "lineno": 257,
+        "file": "systemlens/adapters/python_ast.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/python_ast.py:extract_nodes",
+      "target": "file:systemlens/adapters/python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/python_ast.py:267",
+      "metadata": {
+        "lineno": 267,
+        "file": "systemlens/adapters/python_ast.py"
+      }
+    },
+    {
+      "source": "func:systemlens/adapters/python_ast.py:extract_edges",
+      "target": "file:systemlens/adapters/python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/adapters/python_ast.py:314",
+      "metadata": {
+        "lineno": 314,
+        "file": "systemlens/adapters/python_ast.py"
+      }
+    },
+    {
+      "source": "func:systemlens/cli.py:_ensure_parent_dir",
+      "target": "file:systemlens/cli.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/cli.py:17",
+      "metadata": {
+        "lineno": 17,
+        "file": "systemlens/cli.py"
+      }
+    },
+    {
+      "source": "func:systemlens/cli.py:load_dotenv",
+      "target": "file:systemlens/cli.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/cli.py:25",
+      "metadata": {
+        "lineno": 25,
+        "file": "systemlens/cli.py"
+      }
+    },
+    {
+      "source": "func:systemlens/cli.py:main",
+      "target": "file:systemlens/cli.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/cli.py:43",
+      "metadata": {
+        "lineno": 43,
+        "file": "systemlens/cli.py"
+      }
+    },
+    {
+      "source": "func:systemlens/graph.py:assemble_unified_graph",
+      "target": "file:systemlens/graph.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/graph.py:15",
+      "metadata": {
+        "lineno": 15,
+        "file": "systemlens/graph.py"
+      }
+    },
+    {
+      "source": "func:systemlens/graph.py:compute_cross_layer_metrics",
+      "target": "file:systemlens/graph.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/graph.py:114",
+      "metadata": {
+        "lineno": 114,
+        "file": "systemlens/graph.py"
+      }
+    },
+    {
+      "source": "func:systemlens/inference/merge.py:merge_edges",
+      "target": "file:systemlens/inference/merge.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/inference/merge.py:19",
+      "metadata": {
+        "lineno": 19,
+        "file": "systemlens/inference/merge.py"
+      }
+    },
+    {
+      "source": "func:systemlens/inference/merge.py:compute_merge_stats",
+      "target": "file:systemlens/inference/merge.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/inference/merge.py:75",
+      "metadata": {
+        "lineno": 75,
+        "file": "systemlens/inference/merge.py"
+      }
+    },
+    {
+      "source": "func:systemlens/inference/naming.py:singularize",
+      "target": "file:systemlens/inference/naming.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/inference/naming.py:88",
+      "metadata": {
+        "lineno": 88,
+        "file": "systemlens/inference/naming.py"
+      }
+    },
+    {
+      "source": "func:systemlens/inference/naming.py:pluralize",
+      "target": "file:systemlens/inference/naming.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/inference/naming.py:131",
+      "metadata": {
+        "lineno": 131,
+        "file": "systemlens/inference/naming.py"
+      }
+    },
+    {
+      "source": "func:systemlens/inference/naming.py:generate_candidate_table_names",
+      "target": "file:systemlens/inference/naming.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/inference/naming.py:159",
+      "metadata": {
+        "lineno": 159,
+        "file": "systemlens/inference/naming.py"
+      }
+    },
+    {
+      "source": "func:systemlens/inference/naming.py:infer_edges_from_naming",
+      "target": "file:systemlens/inference/naming.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/inference/naming.py:231",
+      "metadata": {
+        "lineno": 231,
+        "file": "systemlens/inference/naming.py"
+      }
+    },
+    {
+      "source": "func:systemlens/models.py:to_dict",
+      "target": "file:systemlens/models.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/models.py:47",
+      "metadata": {
+        "lineno": 47,
+        "file": "systemlens/models.py"
+      }
+    },
+    {
+      "source": "func:systemlens/models.py:from_dict",
+      "target": "file:systemlens/models.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/models.py:57",
+      "metadata": {
+        "lineno": 57,
+        "file": "systemlens/models.py"
+      }
+    },
+    {
+      "source": "func:systemlens/models.py:__post_init__",
+      "target": "file:systemlens/models.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/models.py:78",
+      "metadata": {
+        "lineno": 78,
+        "file": "systemlens/models.py"
+      }
+    },
+    {
+      "source": "func:systemlens/models.py:to_dict",
+      "target": "file:systemlens/models.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/models.py:85",
+      "metadata": {
+        "lineno": 85,
+        "file": "systemlens/models.py"
+      }
+    },
+    {
+      "source": "func:systemlens/models.py:from_dict",
+      "target": "file:systemlens/models.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in systemlens/models.py:96",
+      "metadata": {
+        "lineno": 96,
+        "file": "systemlens/models.py"
+      }
+    },
+    {
+      "source": "func:tests/test_cli.py:test_cli_ingest_postgres_mocked",
+      "target": "file:tests/test_cli.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_cli.py:10",
+      "metadata": {
+        "lineno": 10,
+        "file": "tests/test_cli.py"
+      }
+    },
+    {
+      "source": "func:tests/test_cli.py:test_cli_ingest_postgres_with_inference",
+      "target": "file:tests/test_cli.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_cli.py:69",
+      "metadata": {
+        "lineno": 69,
+        "file": "tests/test_cli.py"
+      }
+    },
+    {
+      "source": "func:tests/test_cli.py:test_cli_infer_edges_command",
+      "target": "file:tests/test_cli.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_cli.py:124",
+      "metadata": {
+        "lineno": 124,
+        "file": "tests/test_cli.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_pluralize_regular",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:34",
+      "metadata": {
+        "lineno": 34,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_pluralize_irregulars",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:41",
+      "metadata": {
+        "lineno": 41,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_pluralize_special_endings",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:49",
+      "metadata": {
+        "lineno": 49,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_singularize_regular",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:62",
+      "metadata": {
+        "lineno": 62,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_singularize_irregulars",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:69",
+      "metadata": {
+        "lineno": 69,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_singularize_special_endings",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:77",
+      "metadata": {
+        "lineno": 77,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_generate_candidates_exact",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:90",
+      "metadata": {
+        "lineno": 90,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_generate_candidates_abbreviation",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:98",
+      "metadata": {
+        "lineno": 98,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_generate_candidates_compound_role_prefix",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:109",
+      "metadata": {
+        "lineno": 109,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_generate_candidates_compound_abbreviation",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:121",
+      "metadata": {
+        "lineno": 121,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:enterprise_catalog",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:134",
+      "metadata": {
+        "lineno": 134,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_spot_check_20_edges_kill_check",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:358",
+      "metadata": {
+        "lineno": 358,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_confidence_scores_exact_vs_fuzzy",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:419",
+      "metadata": {
+        "lineno": 419,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_multi_schema_prioritizes_same_schema",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:456",
+      "metadata": {
+        "lineno": 456,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_trivial_self_reference_suppressed",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:484",
+      "metadata": {
+        "lineno": 484,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_hierarchical_self_reference_allowed",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:499",
+      "metadata": {
+        "lineno": 499,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_merge_edges_with_agreement",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:520",
+      "metadata": {
+        "lineno": 520,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_merge_edges_with_deduplication",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:574",
+      "metadata": {
+        "lineno": 574,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_inference.py:test_compute_merge_stats",
+      "target": "file:tests/test_inference.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_inference.py:610",
+      "metadata": {
+        "lineno": 610,
+        "file": "tests/test_inference.py"
+      }
+    },
+    {
+      "source": "func:tests/test_models.py:test_node_creation_and_dict",
+      "target": "file:tests/test_models.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_models.py:6",
+      "metadata": {
+        "lineno": 6,
+        "file": "tests/test_models.py"
+      }
+    },
+    {
+      "source": "func:tests/test_models.py:test_edge_creation_and_confidence_bounds",
+      "target": "file:tests/test_models.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_models.py:28",
+      "metadata": {
+        "lineno": 28,
+        "file": "tests/test_models.py"
+      }
+    },
+    {
+      "source": "func:tests/test_models.py:test_base_weights_match_tech_spec",
+      "target": "file:tests/test_models.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_models.py:67",
+      "metadata": {
+        "lineno": 67,
+        "file": "tests/test_models.py"
+      }
+    },
+    {
+      "source": "func:tests/test_postgres_adapter.py:test_extract_raw_catalog_mocked",
+      "target": "file:tests/test_postgres_adapter.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_postgres_adapter.py:15",
+      "metadata": {
+        "lineno": 15,
+        "file": "tests/test_postgres_adapter.py"
+      }
+    },
+    {
+      "source": "func:tests/test_postgres_adapter.py:test_extract_foreign_keys_single_and_composite",
+      "target": "file:tests/test_postgres_adapter.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_postgres_adapter.py:114",
+      "metadata": {
+        "lineno": 114,
+        "file": "tests/test_postgres_adapter.py"
+      }
+    },
+    {
+      "source": "func:tests/test_postgres_adapter.py:test_extract_inheritance_and_partitions",
+      "target": "file:tests/test_postgres_adapter.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_postgres_adapter.py:195",
+      "metadata": {
+        "lineno": 195,
+        "file": "tests/test_postgres_adapter.py"
+      }
+    },
+    {
+      "source": "func:tests/test_postgres_adapter.py:test_extract_edges_includes_structural_edges",
+      "target": "file:tests/test_postgres_adapter.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_postgres_adapter.py:286",
+      "metadata": {
+        "lineno": 286,
+        "file": "tests/test_postgres_adapter.py"
+      }
+    },
+    {
+      "source": "func:tests/test_postgres_adapter.py:test_combined_fk_and_partition_edges",
+      "target": "file:tests/test_postgres_adapter.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_postgres_adapter.py:325",
+      "metadata": {
+        "lineno": 325,
+        "file": "tests/test_postgres_adapter.py"
+      }
+    },
+    {
+      "source": "func:tests/test_postgres_adapter.py:test_views_detection",
+      "target": "file:tests/test_postgres_adapter.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_postgres_adapter.py:369",
+      "metadata": {
+        "lineno": 369,
+        "file": "tests/test_postgres_adapter.py"
+      }
+    },
+    {
+      "source": "func:tests/test_postgres_adapter.py:__getitem__",
+      "target": "file:tests/test_postgres_adapter.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_postgres_adapter.py:11",
+      "metadata": {
+        "lineno": 11,
+        "file": "tests/test_postgres_adapter.py"
+      }
+    },
+    {
+      "source": "func:tests/test_python_ast.py:test_extract_tables_simple_select",
+      "target": "file:tests/test_python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_python_ast.py:36",
+      "metadata": {
+        "lineno": 36,
+        "file": "tests/test_python_ast.py"
+      }
+    },
+    {
+      "source": "func:tests/test_python_ast.py:test_extract_tables_joins",
+      "target": "file:tests/test_python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_python_ast.py:41",
+      "metadata": {
+        "lineno": 41,
+        "file": "tests/test_python_ast.py"
+      }
+    },
+    {
+      "source": "func:tests/test_python_ast.py:test_extract_tables_insert",
+      "target": "file:tests/test_python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_python_ast.py:54",
+      "metadata": {
+        "lineno": 54,
+        "file": "tests/test_python_ast.py"
+      }
+    },
+    {
+      "source": "func:tests/test_python_ast.py:test_extract_tables_update",
+      "target": "file:tests/test_python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_python_ast.py:59",
+      "metadata": {
+        "lineno": 59,
+        "file": "tests/test_python_ast.py"
+      }
+    },
+    {
+      "source": "func:tests/test_python_ast.py:test_extract_tables_delete",
+      "target": "file:tests/test_python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_python_ast.py:64",
+      "metadata": {
+        "lineno": 64,
+        "file": "tests/test_python_ast.py"
+      }
+    },
+    {
+      "source": "func:tests/test_python_ast.py:test_extract_tables_schema_qualified",
+      "target": "file:tests/test_python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_python_ast.py:69",
+      "metadata": {
+        "lineno": 69,
+        "file": "tests/test_python_ast.py"
+      }
+    },
+    {
+      "source": "func:tests/test_python_ast.py:test_extract_tables_subquery",
+      "target": "file:tests/test_python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_python_ast.py:75",
+      "metadata": {
+        "lineno": 75,
+        "file": "tests/test_python_ast.py"
+      }
+    },
+    {
+      "source": "func:tests/test_python_ast.py:mock_codebase",
+      "target": "file:tests/test_python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_python_ast.py:87",
+      "metadata": {
+        "lineno": 87,
+        "file": "tests/test_python_ast.py"
+      }
+    },
+    {
+      "source": "func:tests/test_python_ast.py:test_extract_nodes",
+      "target": "file:tests/test_python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_python_ast.py:147",
+      "metadata": {
+        "lineno": 147,
+        "file": "tests/test_python_ast.py"
+      }
+    },
+    {
+      "source": "func:tests/test_python_ast.py:test_extract_structural_edges",
+      "target": "file:tests/test_python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_python_ast.py:166",
+      "metadata": {
+        "lineno": 166,
+        "file": "tests/test_python_ast.py"
+      }
+    },
+    {
+      "source": "func:tests/test_python_ast.py:test_extract_sql_and_orm_edges",
+      "target": "file:tests/test_python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_python_ast.py:178",
+      "metadata": {
+        "lineno": 178,
+        "file": "tests/test_python_ast.py"
+      }
+    },
+    {
+      "source": "func:tests/test_python_ast.py:test_assemble_unified_graph",
+      "target": "file:tests/test_python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_python_ast.py:219",
+      "metadata": {
+        "lineno": 219,
+        "file": "tests/test_python_ast.py"
+      }
+    },
+    {
+      "source": "func:tests/test_python_ast.py:test_cli_analyze_python",
+      "target": "file:tests/test_python_ast.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in tests/test_python_ast.py:298",
+      "metadata": {
+        "lineno": 298,
+        "file": "tests/test_python_ast.py"
+      }
+    }
+  ],
+  "metrics": {
+    "total_nodes": 106,
+    "total_edges": 96,
+    "node_breakdown": {
+      "file": 18,
+      "function": 87,
+      "table": 1
+    },
+    "edge_breakdown": {
+      "structural_belongs_to": 89,
+      "dynamic_unresolved": 7
+    },
+    "code_to_db": {
+      "total_access_calls": 7,
+      "static_sql_count": 0,
+      "orm_call_count": 0,
+      "dynamic_unresolved_count": 7,
+      "dynamic_unresolved_ratio": 1.0,
+      "kill_check_warning": true,
+      "tables_touched_count": 0,
+      "functions_touching_db_count": 0
+    }
+  }
+}

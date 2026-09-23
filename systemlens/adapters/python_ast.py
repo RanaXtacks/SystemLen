@@ -78,6 +78,13 @@ def extract_tables_from_sql(sql: str) -> list[str]:
     parsed = sqlparse.parse(sql)
     tables: list[str] = []
 
+    def _is_subquery_identifier(token: Any) -> Parenthesis | None:
+        if hasattr(token, "tokens"):
+            for sub in token.tokens:
+                if isinstance(sub, Parenthesis):
+                    return sub
+        return None
+
     def _traverse_tokens(tokens: Iterable[Any]) -> None:
         from_seen = False
         for token in tokens:
@@ -99,18 +106,26 @@ def extract_tables_from_sql(sql: str) -> list[str]:
             if from_seen:
                 if isinstance(token, IdentifierList):
                     for id_token in token.get_identifiers():
-                        t_name = id_token.get_real_name() or id_token.get_name() or str(id_token).split()[0]
-                        parent = id_token.get_parent_name()
+                        sub_paren = _is_subquery_identifier(id_token)
+                        if sub_paren:
+                            _traverse_tokens(sub_paren.tokens)
+                        else:
+                            t_name = id_token.get_real_name() or id_token.get_name() or str(id_token).split()[0]
+                            parent = id_token.get_parent_name()
+                            full = f"{parent}.{t_name}" if parent else t_name
+                            if full and full.upper() not in NON_TABLE_WORDS:
+                                tables.append(full)
+                    from_seen = False
+                elif isinstance(token, Identifier):
+                    sub_paren = _is_subquery_identifier(token)
+                    if sub_paren:
+                        _traverse_tokens(sub_paren.tokens)
+                    else:
+                        t_name = token.get_real_name() or token.get_name() or str(token).split()[0]
+                        parent = token.get_parent_name()
                         full = f"{parent}.{t_name}" if parent else t_name
                         if full and full.upper() not in NON_TABLE_WORDS:
                             tables.append(full)
-                    from_seen = False
-                elif isinstance(token, Identifier):
-                    t_name = token.get_real_name() or token.get_name() or str(token).split()[0]
-                    parent = token.get_parent_name()
-                    full = f"{parent}.{t_name}" if parent else t_name
-                    if full and full.upper() not in NON_TABLE_WORDS:
-                        tables.append(full)
                     from_seen = False
                 elif token.ttype is Keyword or token.ttype in DML:
                     from_seen = False

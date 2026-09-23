@@ -14,6 +14,14 @@ from systemlens.inference.naming import infer_edges_from_naming
 from systemlens.models import Edge, Node, NodeType
 
 
+def _ensure_parent_dir(filepath: str | None) -> None:
+    """Ensure that the parent directory for a target file path exists."""
+    if filepath:
+        parent = os.path.dirname(os.path.abspath(filepath))
+        if parent:
+            os.makedirs(parent, exist_ok=True)
+
+
 def load_dotenv(filepath: str = ".env") -> None:
     """Load key-value pairs from a .env file into os.environ if not already set."""
     if not os.path.exists(filepath):
@@ -320,11 +328,13 @@ def main(args: Optional[list[str]] = None) -> int:
         print(f"Extracted {func_count} functions across {file_count} files.")
 
         if parsed.nodes_output:
+            _ensure_parent_dir(parsed.nodes_output)
             with open(parsed.nodes_output, "w", encoding="utf-8") as f:
                 json.dump([n.to_dict() for n in code_nodes], f, indent=2)
             print(f"Code nodes written to {parsed.nodes_output}")
 
         if parsed.edges_output:
+            _ensure_parent_dir(parsed.edges_output)
             with open(parsed.edges_output, "w", encoding="utf-8") as f:
                 json.dump([e.to_dict() for e in code_edges], f, indent=2)
             print(f"Code edges written to {parsed.edges_output}")
@@ -347,6 +357,7 @@ def main(args: Optional[list[str]] = None) -> int:
         if c_db["kill_check_warning"]:
             print("  [WARNING] Dynamic unresolved ratio exceeds 40% threshold (disclosed honesty layer)!")
 
+        _ensure_parent_dir(parsed.merged_graph_output)
         with open(parsed.merged_graph_output, "w", encoding="utf-8") as f:
             json.dump(unified, f, indent=2)
         print(f"\nUnified cross-layer graph written to {parsed.merged_graph_output}")
