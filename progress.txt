@@ -1,0 +1,45 @@
+# SystemLens Implementation Progress
+
+## Step 0 — PostgreSQL Schema Ingest (Days 1–3) [COMPLETED]
+- [x] Day 1: Postgres adapter raw catalog extraction (`systemlens/adapters/postgres.py`)
+- [x] Day 2: Declared foreign key extraction with composite FK support
+- [x] Day 3: Views, partitioned tables (`pg_partitioned_table`), table inheritance (`pg_inherits`)
+- [x] Models: `Node`, `Edge`, `NodeType`, `EdgeType`, `BASE_WEIGHTS` (`systemlens/models.py`)
+- [x] CLI: `systemlens ingest-postgres` with `--nodes-output`, `--edges-output` (`systemlens/cli.py`)
+- [x] Live test script: `scripts/test_postgres_live.py` with `--setup-demo`
+
+## Step 1 — Inferred Relational Edges (Days 4–7) [COMPLETED]
+- [x] Day 4: Naming-convention relationship matcher (`systemlens/inference/naming.py`)
+  - Regex detection for `*_id` column patterns
+  - Full English-centric pluralization & singularization (irregulars, -ies, -ves, -ses, -s)
+  - Base weight confidence: `0.55` (`EdgeType.INFERRED_NAMING`)
+- [x] Day 5: Abbreviation dictionary & compound role-prefix matching
+  - Abbreviation expansion: `usr`, `acct`, `cust`, `org`, `dept`, `prod`, `cat`, etc.
+  - Role-prefixed compound columns: `shipping_address_id` -> `addresses`, `author_user_id` -> `users`
+  - Confidence modifier: `× 0.9` (`confidence = 0.495`) for fuzzy/abbreviation/role-prefix matches per `tech.md`
+  - Multi-schema disambiguation (prioritizes same-schema targets)
+  - Self-reference filtering: suppresses trivial self-loops (`users.user_id`), preserves hierarchical FKs (`categories.parent_category_id`)
+- [x] Day 6: Edge merge & agreement logic (`systemlens/inference/merge.py`)
+  - Agreement detection between `declared_fk` and `inferred_naming` pointing to same `(source, target)`
+  - Confirmation bonus annotated in metadata (`agreement_bonus=1.0`)
+  - Distinguishable edge classes retained in unified edge list
+  - Deduplication toggle (`deduplicate=True`)
+  - Precision & agreement reporting (`compute_merge_stats`)
+- [x] Day 6/7: Step 1 Kill Check & Hand-Checked Fixture
+  - 22-table enterprise fixture with 20+ hand-checked relational edges in `tests/test_inference.py`
+  - False positive rate = 0% (< 30% kill threshold passed)
+  - Precision estimate > 95%
+- [x] CLI & Integration:
+  - Subcommand `infer-edges` with `--schema-file`, `--declared-edges`, `--output`, `--merged-output`, `--deduplicate`
+  - Flags `--infer-naming`, `--inferred-edges-output`, `--merged-edges-output` added to `ingest-postgres`
+  - Updated live verification script `scripts/test_postgres_live.py`
+- [x] Test Suite: 30/30 unit & CLI tests passing (0.14s)
+
+## Step 2 — Python Static Analysis + Cross-Layer Link (Days 8–14) [PENDING]
+- [ ] Day 8: AST walker skeleton (`systemlens/adapters/python_ast.py`)
+- [ ] Day 9: Raw SQL string detection with `sqlparse` (`EdgeType.STATIC_SQL_STRING`, conf=0.85)
+- [ ] Day 10: Django / SQLAlchemy ORM pattern detection (`EdgeType.ORM_CALL`, conf=0.80)
+- [ ] Day 11: Cross-layer edge emission (code -> DB table)
+- [ ] Day 12: Dynamic / unresolved query fallback (`EdgeType.DYNAMIC_UNRESOLVED`, conf=0.15)
+- [ ] Day 13: Precision check on real 1,000+ line repo (Kill check: >= 75% precision)
+- [ ] Day 14: AST test harness & regression tests

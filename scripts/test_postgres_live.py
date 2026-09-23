@@ -1,7 +1,8 @@
-"""Integration test and live verification script for SystemLens PostgresAdapter.
+"""Integration test and live verification script for SystemLens PostgresAdapter and Inference.
 
 Can be run against any live PostgreSQL instance to verify schema extraction,
-foreign key resolution, views, table inheritance, and partitioned tables.
+foreign key resolution, views, table inheritance, partitioned tables,
+and Step 1 naming-convention relationship inference + edge merging.
 
 Usage:
   # Against an existing database:
@@ -23,6 +24,8 @@ except ImportError:
     psycopg2 = None  # type: ignore
 
 from systemlens.adapters.postgres import PostgresAdapter
+from systemlens.inference.merge import compute_merge_stats, merge_edges
+from systemlens.inference.naming import infer_edges_from_naming
 from systemlens.models import EdgeType, NodeType
 
 DEMO_SCHEMA_NAME = "systemlens_demo"
@@ -124,13 +127,14 @@ def run_verification(
     schema_output: str = "raw_schema.json",
     nodes_output: str = "nodes.json",
     edges_output: str = "edges.json",
+    merged_output: str = "merged_edges.json",
 ) -> int:
     print("=" * 60)
-    print("SystemLens PostgreSQL Introspection Verification")
+    print("SystemLens PostgreSQL Introspection & Inference Verification")
     print("=" * 60)
 
     # 1. Raw catalog
-    print("\n[1/3] Extracting raw catalog (tables & columns)...")
+    print("\n[1/4] Extracting raw catalog (tables & columns)...")
     catalog = adapter.dump_raw_schema(output_path=schema_output)
     tables = catalog.get("tables", {})
     table_count = len(tables)
@@ -139,7 +143,7 @@ def run_verification(
     print(f"  -> Dumped catalog to {schema_output}")
 
     # 2. Nodes
-    print("\n[2/3] Extracting graph nodes (with views & partitions)...")
+    print("\n[2/4] Extracting graph nodes (with views & partitions)...")
     nodes = adapter.extract_nodes()
     node_counts: dict[str, int] = {}
     for n in nodes:
@@ -154,26 +158,44 @@ def run_verification(
         json.dump([n.to_dict() for n in nodes], f, indent=2)
     print(f"  -> Dumped nodes to {nodes_output}")
 
-    # 3. Edges
-    print("\n[3/3] Extracting edges (declared FKs + structural edges)...")
-    edges = adapter.extract_edges()
+    # 3. Declared Edges
+    print("\n[3/4] Extracting declared edges (FKs + structural edges)...")
+    declared_edges = adapter.extract_edges()
     edge_counts: dict[str, int] = {}
-    for e in edges:
+    for e in declared_edges:
         t = e.type.value if hasattr(e.type, "value") else str(e.type)
         edge_counts[t] = edge_counts.get(t, 0) + 1
 
-    print(f"  -> Extracted {len(edges)} total edges:")
+    print(f"  -> Extracted {len(declared_edges)} total declared/structural edges:")
     for e_type, count in sorted(edge_counts.items()):
         print(f"     * {e_type.upper()}: {count}")
 
-    print("\nSample Edges:")
-    for edge in edges[:10]:
-        print(f"  [{edge.type.value}] {edge.source} -> {edge.target} (conf={edge.confidence})")
-        print(f"      Evidence: {edge.evidence}")
-
     with open(edges_output, "w", encoding="utf-8") as f:
-        json.dump([e.to_dict() for e in edges], f, indent=2)
-    print(f"\n  -> Dumped edges to {edges_output}")
+        json.dump([e.to_dict() for e in declared_edges], f, indent=2)
+    print(f"  -> Dumped declared edges to {edges_output}")
+
+    # 4. Inferred Edges & Merge
+    print("\n[4/4] Step 1 Inference: Inferring relational edges from naming...")
+    inferred_edges = infer_edges_from_naming(catalog)
+    print(f"  -> Inferred {len(inferred_edges)} relational edges from naming conventions:")
+    for edge in inferred_edges:
+        match_type = edge.metadata.get("match_type", "exact")
+        print(f"     * [{edge.type.value} / {match_type}] {edge.source} -> {edge.target} (conf={edge.confidence})")
+        print(f"       Evidence: {edge.evidence}")
+
+    # Merge declared and inferred edges
+    merged = merge_edges(declared_edges, inferred_edges)
+    stats = compute_merge_stats(declared_edges, inferred_edges, merged)
+    print(f"\n  -> Merge & Agreement Evaluation:")
+    print(f"     * Declared FKs:   {stats['total_declared_fk']}")
+    print(f"     * Inferred Edges: {stats['total_inferred']}")
+    print(f"     * Agreements:     {stats['agreements']} (rate: {stats['agreement_rate']:.1%})")
+    print(f"     * Inferred Only:  {stats['inferred_only']}")
+    print(f"     * Total Merged:   {stats['total_merged']}")
+
+    with open(merged_output, "w", encoding="utf-8") as f:
+        json.dump([e.to_dict() for e in merged], f, indent=2)
+    print(f"  -> Dumped merged graph edges to {merged_output}")
 
     print("\n" + "=" * 60)
     print("Verification Completed Successfully!")
@@ -202,7 +224,7 @@ def load_dotenv(filepath: str = ".env") -> None:
 def main() -> int:
     load_dotenv()
 
-    parser = argparse.ArgumentParser(description="Live integration test for SystemLens PostgresAdapter")
+    parser = argparse.ArgumentParser(description="Live integration test for SystemLens PostgresAdapter & Inference")
     parser.add_argument("--dsn", type=str, default=os.getenv("DATABASE_URL"), help="PostgreSQL DSN (default: $DATABASE_URL)")
     parser.add_argument("--host", type=str, default=os.getenv("PGHOST", "localhost"), help="PostgreSQL host (default: $PGHOST or localhost)")
     parser.add_argument("--port", type=int, default=int(os.getenv("PGPORT", "5432")), help="PostgreSQL port (default: $PGPORT or 5432)")
@@ -215,6 +237,7 @@ def main() -> int:
     parser.add_argument("--output", default="raw_schema.json", help="Output path for raw schema")
     parser.add_argument("--nodes-output", default="nodes.json", help="Output path for nodes")
     parser.add_argument("--edges-output", default="edges.json", help="Output path for edges")
+    parser.add_argument("--merged-output", default="merged_edges.json", help="Output path for merged edges")
 
     args = parser.parse_args()
 
@@ -239,6 +262,7 @@ def main() -> int:
             schema_output=args.output,
             nodes_output=args.nodes_output,
             edges_output=args.edges_output,
+            merged_output=args.merged_output,
         )
     finally:
         if args.setup_demo and not args.keep_demo:
