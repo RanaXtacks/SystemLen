@@ -2,8 +2,21 @@
   "name": "systemlens",
   "displayName": "SystemLens",
   "description": "Cross-layer database dependency tracing and blast radius impact analysis.",
-  "version": "0.1.0",
-  "publisher": "systemlens",
+  "version": "0.1.2",
+  "publisher": "SystemLens",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RanaXtacks/SystemLen"
+  },
+  "keywords": [
+    "postgresql",
+    "python",
+    "ast",
+    "impact-analysis",
+    "blast-radius",
+    "dependency-graph"
+  ],
   "engines": {
     "vscode": "^1.80.0"
   },
@@ -13,16 +26,47 @@
   ],
   "main": "./out/extension.js",
   "activationEvents": [
-    "onCommand:systemlens.whatTouchesThis"
+    "onStartupFinished"
   ],
   "contributes": {
     "commands": [
       {
         "command": "systemlens.whatTouchesThis",
         "title": "What touches this?",
-        "category": "SystemLens"
+        "category": "SystemLens",
+        "icon": "$(eye)"
       }
-    ]
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "systemlens.whatTouchesThis",
+          "group": "SystemLens@1"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "systemlens.whatTouchesThis",
+          "group": "navigation",
+          "when": "editorIsOpen"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "SystemLens",
+      "properties": {
+        "systemlens.graphPath": {
+          "type": "string",
+          "default": "graph.json",
+          "description": "Path to the generated graph.json file relative to workspace root."
+        },
+        "systemlens.defaultDepth": {
+          "type": "number",
+          "default": 2,
+          "description": "Default reachability traversal depth for blast radius queries."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",

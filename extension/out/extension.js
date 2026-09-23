@@ -15,7 +15,26 @@ function activate(context) {
             return;
         }
         const rootPath = workspaceFolders[0].uri.fsPath;
-        const graphPath = path.join(rootPath, "graph.json");
+        const config = vscode.workspace.getConfiguration("systemlens");
+        const configuredPath = config.get("graphPath", "graph.json");
+        const defaultDepth = config.get("defaultDepth", 2);
+        let graphPath = path.isAbsolute(configuredPath)
+            ? configuredPath
+            : path.join(rootPath, configuredPath);
+        // Search fallbacks if not found at default location
+        if (!fs.existsSync(graphPath)) {
+            const fallbacks = [
+                path.join(rootPath, "graph.json"),
+                path.join(rootPath, "benchmark", "benchmark_graph.json"),
+                path.join(rootPath, ".systemlens", "graph.json"),
+            ];
+            for (const fb of fallbacks) {
+                if (fs.existsSync(fb)) {
+                    graphPath = fb;
+                    break;
+                }
+            }
+        }
         let tableOptions = [];
         if (fs.existsSync(graphPath)) {
             try {
@@ -29,12 +48,33 @@ function activate(context) {
                 tableOptions = Array.from(new Set(tableOptions)).sort();
             }
             catch (e) {
-                console.error("Failed to read graph.json for table options", e);
+                console.error("Failed to read graph for table options", e);
+            }
+        }
+        // Detect selected word or symbol under cursor in active editor
+        const editor = vscode.window.activeTextEditor;
+        let initialValue = "";
+        if (editor) {
+            if (!editor.selection.isEmpty) {
+                initialValue = editor.document.getText(editor.selection).trim();
+            }
+            else {
+                const range = editor.document.getWordRangeAtPosition(editor.selection.active);
+                if (range) {
+                    const word = editor.document.getText(range).trim();
+                    if (tableOptions.some((t) => t.toLowerCase() === word.toLowerCase())) {
+                        initialValue = word;
+                    }
+                    else if (word && !word.includes(" ")) {
+                        initialValue = word;
+                    }
+                }
             }
         }
         const selected = await vscode.window.showInputBox({
             prompt: "Enter the table or entity name to analyze blast radius (e.g. 'users', 'orders')",
             placeHolder: tableOptions.length > 0 ? `e.g. ${tableOptions.slice(0, 3).join(", ")}` : "e.g. users",
+            value: initialValue,
         });
         if (!selected) {
             return;
@@ -45,7 +85,7 @@ function activate(context) {
             cancellable: false,
         }, async () => {
             return new Promise((resolve, reject) => {
-                const cmd = `uv run systemlens impact --target "${selected}" --graph "${graphPath}" --json`;
+                const cmd = `uv run systemlens impact --target "${selected}" --graph "${graphPath}" --depth ${defaultDepth} --json`;
                 (0, child_process_1.exec)(cmd, { cwd: rootPath }, (error, stdout, stderr) => {
                     let impactData = null;
                     if (!error && stdout) {
@@ -81,6 +121,13 @@ function activate(context) {
         });
     });
     context.subscriptions.push(disposable);
+    // Persistent Status Bar Button in bottom-right corner
+    const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+    statusBarItem.command = "systemlens.whatTouchesThis";
+    statusBarItem.text = "$(eye) SystemLens";
+    statusBarItem.tooltip = "SystemLens: What touches this? (Analyze Blast Radius)";
+    statusBarItem.show();
+    context.subscriptions.push(statusBarItem);
 }
 function computeSimpleFallbackImpact(target, graph) {
     const nodes = graph.nodes || [];
