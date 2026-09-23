@@ -352,6 +352,18 @@ class PythonASTAdapter:
                     # 2. Inspect calls inside this function
                     seen_calls: set[tuple[str, str, int]] = set()
 
+                    # Track local variables assigned string constants within this function
+                    local_str_vars: dict[str, str] = {}
+                    for stmt in ast.walk(node):
+                        if isinstance(stmt, ast.Assign):
+                            for target in stmt.targets:
+                                if (
+                                    isinstance(target, ast.Name)
+                                    and isinstance(stmt.value, ast.Constant)
+                                    and isinstance(stmt.value.value, str)
+                                ):
+                                    local_str_vars[target.id] = stmt.value.value
+
                     for sub_node in ast.walk(node):
                         if not isinstance(sub_node, ast.Call):
                             continue
@@ -365,9 +377,14 @@ class PythonASTAdapter:
                                 continue
                             first_arg = sub_node.args[0]
 
-                            # Static SQL string literal
+                            # Check for static SQL string: direct constant or local constant variable
+                            sql_str = None
                             if isinstance(first_arg, ast.Constant) and isinstance(first_arg.value, str):
                                 sql_str = first_arg.value
+                            elif isinstance(first_arg, ast.Name) and first_arg.id in local_str_vars:
+                                sql_str = local_str_vars[first_arg.id]
+
+                            if sql_str is not None:
                                 tables = extract_tables_from_sql(sql_str)
                                 for tbl in tables:
                                     target_node_id = self.resolve_table_node_id(tbl)

@@ -27,13 +27,32 @@ def parse_sql_schema_ddl(sql_text: str) -> dict[str, Any]:
     partitions: dict[str, str] = {}  # child -> parent
 
     # Normalize comments and clean sql
-    lines = []
+    clean_lines = []
     for line in sql_text.splitlines():
-        line = line.strip()
-        if line.startswith("--"):
-            continue
-        lines.append(line)
-    clean_sql = "\n".join(lines)
+        line = re.sub(r"--.*$", "", line).strip()
+        if line:
+            clean_lines.append(line)
+    clean_sql = "\n".join(clean_lines)
+
+    def _split_columns_respecting_parentheses(body: str) -> list[str]:
+        items: list[str] = []
+        current: list[str] = []
+        depth = 0
+        for char in body:
+            if char == "(":
+                depth += 1
+                current.append(char)
+            elif char == ")":
+                depth -= 1
+                current.append(char)
+            elif char == "," and depth == 0:
+                items.append("".join(current).strip())
+                current = []
+            else:
+                current.append(char)
+        if current:
+            items.append("".join(current).strip())
+        return [i for i in items if i]
 
     # 1. Parse Views
     view_matches = re.finditer(
@@ -93,7 +112,7 @@ def parse_sql_schema_ddl(sql_text: str) -> dict[str, Any]:
 
         # Parse column definitions and table-level constraints
         col_ordinal = 1
-        for raw_item in body.split(","):
+        for raw_item in _split_columns_respecting_parentheses(body):
             item = raw_item.strip()
             if not item:
                 continue
@@ -124,10 +143,11 @@ def parse_sql_schema_ddl(sql_text: str) -> dict[str, Any]:
                 continue
 
             # Column definition: name type [modifiers]
-            parts = item.split()
+            parts = item.split(None, 1)
             if len(parts) >= 2:
                 col_name = parts[0].strip('"`')
-                col_type = parts[1].lower()
+                raw_type = parts[1]
+                col_type = re.split(r"\s+(?:NOT\s+NULL|NULL|DEFAULT|PRIMARY|REFERENCES|UNIQUE|CHECK)", raw_type, maxsplit=1, flags=re.IGNORECASE)[0].strip().lower()
 
                 # Check inline REFERENCES
                 # e.g. organization_id INT REFERENCES public.organizations(id)
@@ -260,7 +280,7 @@ def build_benchmark_db_artifacts(
         )
 
     # Inferred Edges via Naming Conventions (c=0.55 or 0.495)
-    inferred_edges = infer_edges_from_naming(raw_catalog, declared_edges=declared_edges)
+    inferred_edges = infer_edges_from_naming(raw_catalog)
 
     # Merge Edges (confirmation bonus on agreement)
     merged_edges = merge_edges(declared_edges, inferred_edges)

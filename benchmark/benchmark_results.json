@@ -1,0 +1,243 @@
+{
+  "verdict": "PASSED_VALIDATION",
+  "metrics": {
+    "aggregate_recall": 1.0,
+    "aggregate_precision": 1.0,
+    "aggregate_agreement_rate": 1.0,
+    "total_expected": 47,
+    "total_true_positives": 47,
+    "total_false_negatives": 0,
+    "total_false_positives": 0,
+    "total_true_negatives": 20
+  },
+  "gates": {
+    "gate_1_recall_above_90": true,
+    "gate_2_precision_above_85": true,
+    "gate_3_agreement_above_85": true,
+    "gate_4_zero_silent_false_negatives": true,
+    "gate_5_blind_spots_guaranteed": true
+  },
+  "targets": [
+    {
+      "target": "users",
+      "target_id": "table:public.users",
+      "domain": "Authentication & Identity",
+      "expected_total": 14,
+      "true_positives": 14,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "true_negatives": 3,
+      "recall": 1.0,
+      "precision": 1.0,
+      "agreement_rate": 1.0,
+      "missed_functions": [],
+      "missed_tables": [],
+      "spurious_controls": [],
+      "blind_spots_disclosed": true,
+      "dynamic_unresolved_captured": false,
+      "impact_summary": {
+        "functions_found": 13,
+        "tables_found": 11,
+        "files_found": 3,
+        "total_impacted": 27
+      }
+    },
+    {
+      "target": "orders",
+      "target_id": "table:public.orders",
+      "domain": "Orders & Checkout",
+      "expected_total": 8,
+      "true_positives": 8,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "true_negatives": 3,
+      "recall": 1.0,
+      "precision": 1.0,
+      "agreement_rate": 1.0,
+      "missed_functions": [],
+      "missed_tables": [],
+      "spurious_controls": [],
+      "blind_spots_disclosed": true,
+      "dynamic_unresolved_captured": false,
+      "impact_summary": {
+        "functions_found": 4,
+        "tables_found": 2,
+        "files_found": 2,
+        "total_impacted": 8
+      }
+    },
+    {
+      "target": "invoices",
+      "target_id": "table:public.invoices",
+      "domain": "Billing & Invoicing",
+      "expected_total": 6,
+      "true_positives": 6,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "true_negatives": 3,
+      "recall": 1.0,
+      "precision": 1.0,
+      "agreement_rate": 1.0,
+      "missed_functions": [],
+      "missed_tables": [],
+      "spurious_controls": [],
+      "blind_spots_disclosed": true,
+      "dynamic_unresolved_captured": false,
+      "impact_summary": {
+        "functions_found": 4,
+        "tables_found": 2,
+        "files_found": 2,
+        "total_impacted": 8
+      }
+    },
+    {
+      "target": "products",
+      "target_id": "table:public.products",
+      "domain": "Catalog & Inventory",
+      "expected_total": 7,
+      "true_positives": 7,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "true_negatives": 3,
+      "recall": 1.0,
+      "precision": 1.0,
+      "agreement_rate": 1.0,
+      "missed_functions": [],
+      "missed_tables": [],
+      "spurious_controls": [],
+      "blind_spots_disclosed": true,
+      "dynamic_unresolved_captured": false,
+      "impact_summary": {
+        "functions_found": 5,
+        "tables_found": 2,
+        "files_found": 2,
+        "total_impacted": 9
+      }
+    },
+    {
+      "target": "audit_logs",
+      "target_id": "table:public.audit_logs",
+      "domain": "Audit & Compliance",
+      "expected_total": 3,
+      "true_positives": 3,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "true_negatives": 2,
+      "recall": 1.0,
+      "precision": 1.0,
+      "agreement_rate": 1.0,
+      "missed_functions": [],
+      "missed_tables": [],
+      "spurious_controls": [],
+      "blind_spots_disclosed": true,
+      "dynamic_unresolved_captured": false,
+      "impact_summary": {
+        "functions_found": 2,
+        "tables_found": 0,
+        "files_found": 1,
+        "total_impacted": 3
+      }
+    },
+    {
+      "target": "payment_methods",
+      "target_id": "table:public.payment_methods",
+      "domain": "Payments & Transactions",
+      "expected_total": 3,
+      "true_positives": 3,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "true_negatives": 2,
+      "recall": 1.0,
+      "precision": 1.0,
+      "agreement_rate": 1.0,
+      "missed_functions": [],
+      "missed_tables": [],
+      "spurious_controls": [],
+      "blind_spots_disclosed": true,
+      "dynamic_unresolved_captured": false,
+      "impact_summary": {
+        "functions_found": 2,
+        "tables_found": 1,
+        "files_found": 1,
+        "total_impacted": 4
+      }
+    },
+    {
+      "target": "shipments",
+      "target_id": "table:public.shipments",
+      "domain": "Fulfillment & Shipping",
+      "expected_total": 3,
+      "true_positives": 3,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "true_negatives": 2,
+      "recall": 1.0,
+      "precision": 1.0,
+      "agreement_rate": 1.0,
+      "missed_functions": [],
+      "missed_tables": [],
+      "spurious_controls": [],
+      "blind_spots_disclosed": true,
+      "dynamic_unresolved_captured": false,
+      "impact_summary": {
+        "functions_found": 2,
+        "tables_found": 0,
+        "files_found": 1,
+        "total_impacted": 3
+      }
+    },
+    {
+      "target": "subscriptions",
+      "target_id": "table:public.subscriptions",
+      "domain": "Subscriptions & Recurring Billing",
+      "expected_total": 3,
+      "true_positives": 3,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "true_negatives": 2,
+      "recall": 1.0,
+      "precision": 1.0,
+      "agreement_rate": 1.0,
+      "missed_functions": [],
+      "missed_tables": [],
+      "spurious_controls": [],
+      "blind_spots_disclosed": true,
+      "dynamic_unresolved_captured": false,
+      "impact_summary": {
+        "functions_found": 3,
+        "tables_found": 3,
+        "files_found": 1,
+        "total_impacted": 7
+      }
+    }
+  ],
+  "graph_metrics": {
+    "total_nodes": 53,
+    "total_edges": 94,
+    "node_breakdown": {
+      "view": 1,
+      "partition": 2,
+      "table": 20,
+      "file": 8,
+      "function": 22
+    },
+    "edge_breakdown": {
+      "declared_fk": 16,
+      "inferred_naming": 23,
+      "structural_belongs_to": 22,
+      "static_sql_string": 27,
+      "dynamic_unresolved": 1,
+      "orm_call": 5
+    },
+    "code_to_db": {
+      "total_access_calls": 33,
+      "static_sql_count": 27,
+      "orm_call_count": 5,
+      "dynamic_unresolved_count": 1,
+      "dynamic_unresolved_ratio": 0.0303,
+      "kill_check_warning": false,
+      "tables_touched_count": 17,
+      "functions_touching_db_count": 21
+    }
+  }
+}
