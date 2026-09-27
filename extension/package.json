@@ -2,7 +2,7 @@
   "name": "systemlens",
   "displayName": "SystemLens",
   "description": "Cross-layer database dependency tracing and blast radius impact analysis.",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publisher": "SystemLens",
   "license": "MIT",
   "repository": {
@@ -15,7 +15,8 @@
     "ast",
     "impact-analysis",
     "blast-radius",
-    "dependency-graph"
+    "dependency-graph",
+    "codelens"
   ],
   "engines": {
     "vscode": "^1.80.0"
@@ -26,15 +27,51 @@
   ],
   "main": "./out/extension.js",
   "activationEvents": [
-    "onStartupFinished"
+    "onStartupFinished",
+    "onView:systemlens-explorer"
   ],
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "systemlens-view-container",
+          "title": "SystemLens",
+          "icon": "$(eye)"
+        }
+      ]
+    },
+    "views": {
+      "systemlens-view-container": [
+        {
+          "id": "systemlens-explorer",
+          "name": "SystemLens Explorer",
+          "visibility": "visible"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "systemlens.whatTouchesThis",
         "title": "What touches this?",
         "category": "SystemLens",
         "icon": "$(eye)"
+      },
+      {
+        "command": "systemlens.showGraph",
+        "title": "Show Dependency Graph",
+        "category": "SystemLens",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "systemlens.refreshExplorer",
+        "title": "Refresh Explorer",
+        "category": "SystemLens",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "systemlens.analyzeTable",
+        "title": "Analyze Table Blast Radius",
+        "category": "SystemLens"
       }
     ],
     "menus": {
@@ -42,13 +79,34 @@
         {
           "command": "systemlens.whatTouchesThis",
           "group": "SystemLens@1"
+        },
+        {
+          "command": "systemlens.showGraph",
+          "group": "SystemLens@2"
         }
       ],
       "editor/title": [
         {
           "command": "systemlens.whatTouchesThis",
-          "group": "navigation",
+          "group": "navigation@1",
           "when": "editorIsOpen"
+        },
+        {
+          "command": "systemlens.showGraph",
+          "group": "navigation@2",
+          "when": "editorIsOpen"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "systemlens.refreshExplorer",
+          "when": "view == systemlens-explorer",
+          "group": "navigation@1"
+        },
+        {
+          "command": "systemlens.showGraph",
+          "when": "view == systemlens-explorer",
+          "group": "navigation@2"
         }
       ]
     },

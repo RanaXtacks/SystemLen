@@ -6,8 +6,15 @@ import os
 import sys
 from typing import Optional
 
+from systemlens.adapters.js_ast import JavaScriptASTAdapter
 from systemlens.adapters.postgres import PostgresAdapter
 from systemlens.adapters.python_ast import PythonASTAdapter
+from systemlens.ci import (
+    format_json_report,
+    format_markdown_report,
+    parse_git_diff,
+    run_ci_impact,
+)
 from systemlens.graph import assemble_unified_graph
 from systemlens.inference.merge import compute_merge_stats, merge_edges
 from systemlens.inference.naming import infer_edges_from_naming
@@ -42,6 +49,18 @@ def load_dotenv(filepath: str = ".env") -> None:
 
 
 def main(args: Optional[list[str]] = None) -> int:
+    # Ensure stdout/stderr handles UTF-8 (emojis and markdown) cleanly across platforms, especially Windows
+    if hasattr(sys.stdout, "reconfigure"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+    if hasattr(sys.stderr, "reconfigure"):
+        try:
+            sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+
     load_dotenv()
 
     parser = argparse.ArgumentParser(
@@ -209,6 +228,44 @@ def main(args: Optional[list[str]] = None) -> int:
         help="Output file path for unified cross-layer graph JSON (default: graph.json)",
     )
 
+    # Subcommand: analyze-js (Phase 3)
+    js_parser = subparsers.add_parser(
+        "analyze-js",
+        help="Statically analyze a JavaScript/TypeScript codebase for SQL queries, ORM calls, and dynamic queries",
+    )
+    js_parser.add_argument(
+        "--src-dir",
+        "-s",
+        type=str,
+        default=".",
+        help="Path to the JS/TS source directory or file to analyze (default: current directory)",
+    )
+    js_parser.add_argument(
+        "--schema-file",
+        type=str,
+        default=None,
+        help="Optional raw schema JSON file to resolve table names and link schema nodes",
+    )
+    js_parser.add_argument(
+        "--nodes-output",
+        type=str,
+        default=None,
+        help="Optional output file path for extracted code nodes JSON",
+    )
+    js_parser.add_argument(
+        "--edges-output",
+        type=str,
+        default=None,
+        help="Optional output file path for extracted code edges JSON",
+    )
+    js_parser.add_argument(
+        "--merged-graph-output",
+        "-o",
+        type=str,
+        default="graph.json",
+        help="Output file path for unified cross-layer graph JSON (default: graph.json)",
+    )
+
     # Subcommand 4: impact (Step 3)
     impact_parser = subparsers.add_parser(
         "impact",
@@ -253,6 +310,70 @@ def main(args: Optional[list[str]] = None) -> int:
         type=str,
         default=None,
         help="Optional output file path to write the impact query JSON result",
+    )
+
+    # Subcommand 5: ci-diff (PR & CI impact analysis)
+    ci_parser = subparsers.add_parser(
+        "ci-diff",
+        help="Analyze blast radius impact for changes in a PR or git diff range",
+    )
+    ci_parser.add_argument(
+        "--base",
+        type=str,
+        default="origin/main",
+        help="Base git ref or commit SHA (default: origin/main)",
+    )
+    ci_parser.add_argument(
+        "--head",
+        type=str,
+        default="HEAD",
+        help="Head git ref or commit SHA (default: HEAD)",
+    )
+    ci_parser.add_argument(
+        "--graph",
+        "-g",
+        type=str,
+        default="graph.json",
+        help="Path to the unified graph JSON file (default: graph.json)",
+    )
+    ci_parser.add_argument(
+        "--format",
+        "-f",
+        choices=["markdown", "json"],
+        default="markdown",
+        help="Output format: markdown or json (default: markdown)",
+    )
+    ci_parser.add_argument(
+        "--output",
+        "-o",
+        type=str,
+        default=None,
+        help="Optional output file path to write the CI diff report",
+    )
+    ci_parser.add_argument(
+        "--depth",
+        "-d",
+        type=int,
+        default=2,
+        help="Maximum reachability traversal depth for blast radius (default: 2)",
+    )
+    ci_parser.add_argument(
+        "--min-confidence",
+        type=float,
+        default=0.0,
+        help="Minimum path confidence threshold to include (default: 0.0)",
+    )
+    ci_parser.add_argument(
+        "--threshold",
+        type=int,
+        default=5,
+        help="Blast radius threshold for flagging high-risk tables (default: 5)",
+    )
+    ci_parser.add_argument(
+        "--changed-files",
+        nargs="*",
+        default=None,
+        help="Optional explicit list of changed files (bypasses git diff if provided)",
     )
 
     parsed = parser.parse_args(args)
@@ -409,6 +530,66 @@ def main(args: Optional[list[str]] = None) -> int:
             json.dump(unified, f, indent=2)
         print(f"\nUnified cross-layer graph written to {parsed.merged_graph_output}")
 
+    elif parsed.command == "analyze-js":
+        db_nodes: list[Node] = []
+        db_edges: list[Edge] = []
+
+        if parsed.schema_file and os.path.exists(parsed.schema_file):
+            with open(parsed.schema_file, "r", encoding="utf-8") as f:
+                catalog = json.load(f)
+            for tbl_full_name, t_info in catalog.get("tables", {}).items():
+                db_nodes.append(
+                    Node(
+                        id=f"table:{tbl_full_name}",
+                        type=NodeType.TABLE,
+                        name=t_info.get("name", tbl_full_name),
+                        source_system="postgres",
+                        metadata=t_info,
+                    )
+                )
+
+        adapter = JavaScriptASTAdapter(src_dir=parsed.src_dir, schema_file=parsed.schema_file)
+        print(f"Analyzing JavaScript/TypeScript codebase at '{parsed.src_dir}'...")
+        code_nodes = adapter.extract_nodes()
+        code_edges = adapter.extract_edges()
+
+        func_count = sum(1 for n in code_nodes if n.type == NodeType.FUNCTION)
+        file_count = sum(1 for n in code_nodes if n.type == NodeType.FILE)
+        print(f"Extracted {func_count} functions across {file_count} files.")
+
+        if parsed.nodes_output:
+            _ensure_parent_dir(parsed.nodes_output)
+            with open(parsed.nodes_output, "w", encoding="utf-8") as f:
+                json.dump([n.to_dict() for n in code_nodes], f, indent=2)
+            print(f"Code nodes written to {parsed.nodes_output}")
+
+        if parsed.edges_output:
+            _ensure_parent_dir(parsed.edges_output)
+            with open(parsed.edges_output, "w", encoding="utf-8") as f:
+                json.dump([e.to_dict() for e in code_edges], f, indent=2)
+            print(f"Code edges written to {parsed.edges_output}")
+
+        unified = assemble_unified_graph(
+            db_nodes=db_nodes,
+            db_edges=db_edges,
+            code_nodes=code_nodes,
+            code_edges=code_edges,
+        )
+        metrics = unified["metrics"]
+        print("\nCross-Layer Dependency Metrics:")
+        print(f"  * Total Graph Nodes: {metrics['total_nodes']}")
+        print(f"  * Total Graph Edges: {metrics['total_edges']}")
+        c_db = metrics["code_to_db"]
+        print(f"  * Code-to-DB Calls: {c_db['total_access_calls']}")
+        print(f"    - Static SQL Literals: {c_db['static_sql_count']}")
+        print(f"    - ORM Calls:           {c_db['orm_call_count']}")
+        print(f"    - Dynamic Unresolved:  {c_db['dynamic_unresolved_count']} (ratio: {c_db['dynamic_unresolved_ratio']:.1%})")
+
+        _ensure_parent_dir(parsed.merged_graph_output)
+        with open(parsed.merged_graph_output, "w", encoding="utf-8") as f:
+            json.dump(unified, f, indent=2)
+        print(f"\nUnified cross-layer graph written to {parsed.merged_graph_output}")
+
     elif parsed.command == "impact":
         if not os.path.exists(parsed.graph):
             print(
@@ -470,6 +651,48 @@ def main(args: Optional[list[str]] = None) -> int:
                 msg = bs.get("message", "")
                 print(f"  * [{severity}] {msg}")
             print("=" * 65)
+
+    elif parsed.command == "ci-diff":
+        if not os.path.exists(parsed.graph):
+            print(
+                f"Error: Graph file '{parsed.graph}' not found. "
+                "Run 'ingest-postgres' and 'analyze-python' first.",
+                file=sys.stderr,
+            )
+            return 1
+
+        with open(parsed.graph, "r", encoding="utf-8") as f:
+            graph_data = json.load(f)
+
+        if parsed.changed_files is not None:
+            changed_files = [f.replace("\\", "/").lstrip("./") for f in parsed.changed_files]
+        else:
+            try:
+                changed_files = parse_git_diff(base=parsed.base, head=parsed.head)
+            except Exception as e:
+                print(f"Error determining changed files via git: {e}", file=sys.stderr)
+                return 1
+
+        report = run_ci_impact(
+            changed_files=changed_files,
+            graph_data=graph_data,
+            max_depth=parsed.depth,
+            min_confidence=parsed.min_confidence,
+            high_risk_threshold=parsed.threshold,
+        )
+
+        if parsed.format == "json":
+            output_content = format_json_report(report)
+        else:
+            output_content = format_markdown_report(report, high_risk_threshold=parsed.threshold)
+
+        if parsed.output:
+            _ensure_parent_dir(parsed.output)
+            with open(parsed.output, "w", encoding="utf-8") as f:
+                f.write(output_content)
+            print(f"CI diff report successfully written to {parsed.output}")
+        else:
+            print(output_content)
 
     return 0
 
