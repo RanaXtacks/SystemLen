@@ -80,6 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     treeProvider = new SystemLensTreeProvider(rootPath);
     vscode.window.registerTreeDataProvider("systemlens-explorer", treeProvider);
+    vscode.window.registerTreeDataProvider("systemlens-explorer-sub", treeProvider);
 
     codeLensProvider = new SystemLensCodeLensProvider(rootPath);
     const docSelector: vscode.DocumentSelector = [

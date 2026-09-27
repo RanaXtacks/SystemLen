@@ -63,6 +63,7 @@ function activate(context) {
         scanner = new projectScanner_1.ProjectScanner(rootPath);
         treeProvider = new treeView_1.SystemLensTreeProvider(rootPath);
         vscode.window.registerTreeDataProvider("systemlens-explorer", treeProvider);
+        vscode.window.registerTreeDataProvider("systemlens-explorer-sub", treeProvider);
         codeLensProvider = new codeLens_1.SystemLensCodeLensProvider(rootPath);
         const docSelector = [
             { language: "python", scheme: "file" },
