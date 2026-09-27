@@ -2,8 +2,9 @@
   "name": "systemlens",
   "displayName": "SystemLens",
   "description": "Zero-config universal database dependency tracing and blast radius impact analysis for any backend (Python, TypeScript, Go, Java, Ruby, PHP, SQL).",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "publisher": "SystemLens",
+  "icon": "media/logo.png",
   "license": "MIT",
   "repository": {
     "type": "git",
