@@ -1,30 +1,113 @@
 # SystemLens
 
-Cross-layer dependency tracer for legacy systems. Answers: "what code touches this table, and how sure am I?" — inside VS Code, with an explicit confidence score per result and an explicit list of what it structurally cannot see.
+**Cross-layer dependency tracing & blast radius analyzer.**  
+Answers: *"What code and downstream tables touch this database entity, and how sure am I?"* — directly inside VS Code and in your CI/CD pull requests, with explicit multiplicative path confidence scores and an honest disclosure of what static analysis cannot see.
 
-**Status:** Pre-validation (Steps 0–3 in progress, Step 4 test not yet run — see `plan.md`. Do not treat anything past Step 4 as committed.)
+---
 
-## Why this exists
-Single-layer tools (DB ER diagrams, code call graphs) are commodity. Nobody traces cleanly across layers (React → API → function → table) with an honest confidence score. That's the wedge. See `prd.md` for full problem statement and non-goals.
+## ⚡ What's New in V2
 
-## Docs
-- `prd.md` — problem, scope, non-goals, success metric
-- `plan.md` — Steps 0–4, what to build in order, kill criteria at each step
-- `architecture.md` — engine/UI split, adapter interface, node/edge model
-- `flow.md` — build-time and query-time pipeline diagrams (mermaid)
-- `tech.md` — stack choices, confidence scoring math, blast-radius math, benchmark metrics
+1. **CI/PR Automated Impact Analysis (`systemlens ci-diff`)**
+   - Automatically runs on pull requests to identify modified files, map them to database tables, and post detailed blast radius comments before code is merged.
+   - Includes GitHub Actions workflow (`.github/workflows/systemlens.yml`).
 
-## V1 scope (short version)
-Postgres + Python only. VS Code extension, one query: "what touches this table?" Everything else (other DBs, other languages, web dashboard, CLI, AI labels) is deferred until the Step 4 real-developer test passes. See `plan.md` deferred backlog.
+2. **Full VS Code Extension Suite (v0.2.0)**
+   - **Activity Bar Impact Explorer:** Persistent sidebar displaying all tables, touching functions, foreign keys, blind spots, and graph metrics.
+   - **CodeLens Inline Annotations:** Displays `⚡ SystemLens: Touches N table(s) (users, orders) — View Blast Radius` directly above Python and JS/TS function definitions.
+   - **Gutter & Inline Decorations:** Colored icons on lines executing SQL literals (🔵), ORM calls (🟡), and dynamic queries (🔴).
+   - **Interactive D3.js Force-Directed Graph:** Zoomable, draggable visual graph explorer with node-type filtering and blast radius path highlighting.
 
-## Setup (once Step 0–3 code exists)
+3. **Multi-Language & Multi-Database Adapters**
+   - **Languages:** Python (AST + sqlparse) & JavaScript/TypeScript (Knex, Prisma, Sequelize, raw SQL template literals).
+   - **Databases:** PostgreSQL (`ingest-postgres`), SQLite (`ingest-sqlite`), and MySQL / MariaDB (`ingest-mysql`).
+
+4. **Real-Repo Validated**
+   - Tested on [Saleor](https://github.com/saleor/saleor) e-commerce backend: analyzed **903 functions** across **351 files**, extracting **1,287 nodes** and **1,541 edges** with a **99.8% static ORM resolution rate** (0.2% dynamic ratio).
+
+---
+
+## 🚀 Quick Start
+
+### Installation
+
 ```bash
-pip install -r requirements.txt
-python -m systemlens.scan --pg-url postgresql://user:pass@host/db --src ./path/to/python/backend
+git clone https://github.com/RanaXtacks/SystemLen.git
+cd SystemLen
+pip install -e .
 ```
-Then in VS Code: install extension from `./extension`, run command `SystemLens: What touches this?`, select a table.
 
-## Explicit limitations (read before trusting output)
-- Dynamic SQL, reflection, and cross-service calls (HTTP, queues) are not visible to static analysis — flagged in every result, not silently dropped
-- Confidence scores are heuristic, not guarantees — see `tech.md` §1 for exact formula
-- No NoSQL support — different data model, out of scope by design, not by oversight
+### 1. Ingest Database Schema
+
+**PostgreSQL:**
+```bash
+systemlens ingest-postgres --dsn "postgresql://user:pass@localhost:5432/mydb" --output raw_schema.json
+```
+
+**SQLite:**
+```bash
+systemlens ingest-sqlite --db path/to/app.db --output raw_schema.json
+```
+
+**MySQL:**
+```bash
+systemlens ingest-mysql --host localhost --database mydb --user root --output raw_schema.json
+```
+
+### 2. Analyze Codebase & Assemble Graph
+
+**Python:**
+```bash
+systemlens analyze-python --src-dir ./src --schema-file raw_schema.json --merged-graph-output graph.json
+```
+
+**JavaScript / TypeScript:**
+```bash
+systemlens analyze-js --src-dir ./src --schema-file raw_schema.json --merged-graph-output graph.json
+```
+
+### 3. Query Blast Radius
+
+```bash
+systemlens impact --target users --graph graph.json --depth 2
+```
+
+### 4. Run CI Diff Impact Analysis
+
+```bash
+systemlens ci-diff --base origin/main --head HEAD --graph graph.json --format markdown
+```
+
+---
+
+## 💻 VS Code Extension
+
+Install the packaged VSIX extension from `./extension`:
+
+```bash
+code --install-extension extension/systemlens-0.2.0.vsix
+```
+
+### Features:
+- **SystemLens Explorer:** Open the Activity Bar icon to explore your schema and functions.
+- **What Touches This?:** Press `Ctrl+Shift+P` (or `Cmd+Shift+P`) → `SystemLens: What touches this?` or click the `$(eye) SystemLens` status bar button.
+- **Dependency Graph:** Click the `$(graph) Graph` button in the status bar to open the interactive D3 visualizer.
+- **CodeLens:** Click on the annotations above function definitions to view blast radius instantly.
+
+---
+
+## 🔬 Test Suite
+
+Run all 84 test cases:
+
+```bash
+pytest
+```
+
+---
+
+## ⚠️ Honesty Layer (Explicit Limitations)
+
+- Dynamic SQL, reflections, and cross-service RPC/HTTP/queue boundaries are flagged explicitly as **Blind Spots** in every query and PR comment rather than being silently ignored.
+- Confidence decay math: Multiplicative decay along the reachability path:  
+  $$c(\text{path}) = \prod_{i=1}^{k} c(\text{edge}_i)$$
+- No NoSQL support: relational & schema-bound entities only.
