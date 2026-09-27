@@ -1,0 +1,139 @@
+{
+  "name": "systemlens",
+  "displayName": "SystemLens",
+  "description": "Cross-layer database dependency tracing and blast radius impact analysis.",
+  "version": "0.2.0",
+  "publisher": "SystemLens",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RanaXtacks/SystemLen"
+  },
+  "keywords": [
+    "postgresql",
+    "python",
+    "ast",
+    "impact-analysis",
+    "blast-radius",
+    "dependency-graph",
+    "codelens"
+  ],
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:systemlens-explorer"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "systemlens-view-container",
+          "title": "SystemLens",
+          "icon": "$(eye)"
+        }
+      ]
+    },
+    "views": {
+      "systemlens-view-container": [
+        {
+          "id": "systemlens-explorer",
+          "name": "SystemLens Explorer",
+          "visibility": "visible"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "systemlens.whatTouchesThis",
+        "title": "What touches this?",
+        "category": "SystemLens",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "systemlens.showGraph",
+        "title": "Show Dependency Graph",
+        "category": "SystemLens",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "systemlens.refreshExplorer",
+        "title": "Refresh Explorer",
+        "category": "SystemLens",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "systemlens.analyzeTable",
+        "title": "Analyze Table Blast Radius",
+        "category": "SystemLens"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "systemlens.whatTouchesThis",
+          "group": "SystemLens@1"
+        },
+        {
+          "command": "systemlens.showGraph",
+          "group": "SystemLens@2"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "systemlens.whatTouchesThis",
+          "group": "navigation@1",
+          "when": "editorIsOpen"
+        },
+        {
+          "command": "systemlens.showGraph",
+          "group": "navigation@2",
+          "when": "editorIsOpen"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "systemlens.refreshExplorer",
+          "when": "view == systemlens-explorer",
+          "group": "navigation@1"
+        },
+        {
+          "command": "systemlens.showGraph",
+          "when": "view == systemlens-explorer",
+          "group": "navigation@2"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "SystemLens",
+      "properties": {
+        "systemlens.graphPath": {
+          "type": "string",
+          "default": "graph.json",
+          "description": "Path to the generated graph.json file relative to workspace root."
+        },
+        "systemlens.defaultDepth": {
+          "type": "number",
+          "default": 2,
+          "description": "Default reachability traversal depth for blast radius queries."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.4.0"
+  }
+}

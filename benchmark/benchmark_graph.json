@@ -1,0 +1,2963 @@
+{
+  "nodes": [
+    {
+      "id": "table:public.v_active_subscriptions",
+      "type": "view",
+      "name": "v_active_subscriptions",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "v_active_subscriptions",
+        "is_view": true,
+        "columns": []
+      }
+    },
+    {
+      "id": "table:public.audit_logs_2026_q1",
+      "type": "partition",
+      "name": "audit_logs_2026_q1",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "audit_logs_2026_q1",
+        "is_partition": true,
+        "parent_table": "public.audit_logs",
+        "columns": []
+      }
+    },
+    {
+      "id": "table:public.audit_logs_2026_q2",
+      "type": "partition",
+      "name": "audit_logs_2026_q2",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "audit_logs_2026_q2",
+        "is_partition": true,
+        "parent_table": "public.audit_logs",
+        "columns": []
+      }
+    },
+    {
+      "id": "table:public.organizations",
+      "type": "table",
+      "name": "organizations",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "organizations",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "name",
+            "ordinal_position": 2,
+            "data_type": "varchar(255)",
+            "udt_name": "varchar(255)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "slug",
+            "ordinal_position": 3,
+            "data_type": "varchar(100)",
+            "udt_name": "varchar(100)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "ordinal_position": 4,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.accounts",
+      "type": "table",
+      "name": "accounts",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "accounts",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "name",
+            "ordinal_position": 2,
+            "data_type": "varchar(255)",
+            "udt_name": "varchar(255)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "currency",
+            "ordinal_position": 3,
+            "data_type": "varchar(3)",
+            "udt_name": "varchar(3)",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "balance",
+            "ordinal_position": 4,
+            "data_type": "numeric(12, 2)",
+            "udt_name": "numeric(12, 2)",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "ordinal_position": 5,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.users",
+      "type": "table",
+      "name": "users",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "users",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "organization_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "email",
+            "ordinal_position": 3,
+            "data_type": "varchar(255)",
+            "udt_name": "varchar(255)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "password_hash",
+            "ordinal_position": 4,
+            "data_type": "varchar(255)",
+            "udt_name": "varchar(255)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "full_name",
+            "ordinal_position": 5,
+            "data_type": "varchar(255)",
+            "udt_name": "varchar(255)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "is_active",
+            "ordinal_position": 6,
+            "data_type": "boolean",
+            "udt_name": "boolean",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "ordinal_position": 7,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.user_roles",
+      "type": "table",
+      "name": "user_roles",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "user_roles",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "user_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "role_name",
+            "ordinal_position": 3,
+            "data_type": "varchar(50)",
+            "udt_name": "varchar(50)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "granted_at",
+            "ordinal_position": 4,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.api_tokens",
+      "type": "table",
+      "name": "api_tokens",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "api_tokens",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "token_hash",
+            "ordinal_position": 2,
+            "data_type": "varchar(64)",
+            "udt_name": "varchar(64)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "org_id",
+            "ordinal_position": 3,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "user_id",
+            "ordinal_position": 4,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "expires_at",
+            "ordinal_position": 5,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.plans",
+      "type": "table",
+      "name": "plans",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "plans",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "name",
+            "ordinal_position": 2,
+            "data_type": "varchar(100)",
+            "udt_name": "varchar(100)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "price_cents",
+            "ordinal_position": 3,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "billing_interval",
+            "ordinal_position": 4,
+            "data_type": "varchar(20)",
+            "udt_name": "varchar(20)",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "ordinal_position": 5,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.subscriptions",
+      "type": "table",
+      "name": "subscriptions",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "subscriptions",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "user_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "plan_id",
+            "ordinal_position": 3,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "ordinal_position": 4,
+            "data_type": "varchar(50)",
+            "udt_name": "varchar(50)",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "current_period_end",
+            "ordinal_position": 5,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "ordinal_position": 6,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.payment_methods",
+      "type": "table",
+      "name": "payment_methods",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "payment_methods",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "user_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "provider",
+            "ordinal_position": 3,
+            "data_type": "varchar(50)",
+            "udt_name": "varchar(50)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "last_four",
+            "ordinal_position": 4,
+            "data_type": "varchar(4)",
+            "udt_name": "varchar(4)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "is_default",
+            "ordinal_position": 5,
+            "data_type": "boolean",
+            "udt_name": "boolean",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "ordinal_position": 6,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.invoices",
+      "type": "table",
+      "name": "invoices",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "invoices",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "acct_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "subscription_id",
+            "ordinal_position": 3,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "total_amount",
+            "ordinal_position": 4,
+            "data_type": "numeric(10, 2)",
+            "udt_name": "numeric(10, 2)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "ordinal_position": 5,
+            "data_type": "varchar(50)",
+            "udt_name": "varchar(50)",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "due_date",
+            "ordinal_position": 6,
+            "data_type": "date",
+            "udt_name": "date",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "ordinal_position": 7,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.invoice_items",
+      "type": "table",
+      "name": "invoice_items",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "invoice_items",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "invoice_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "description",
+            "ordinal_position": 3,
+            "data_type": "varchar(255)",
+            "udt_name": "varchar(255)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "amount",
+            "ordinal_position": 4,
+            "data_type": "numeric(10, 2)",
+            "udt_name": "numeric(10, 2)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "quantity",
+            "ordinal_position": 5,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.transactions",
+      "type": "table",
+      "name": "transactions",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "transactions",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "payment_method_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "invoice_id",
+            "ordinal_position": 3,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "amount",
+            "ordinal_position": 4,
+            "data_type": "numeric(10, 2)",
+            "udt_name": "numeric(10, 2)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "ordinal_position": 5,
+            "data_type": "varchar(50)",
+            "udt_name": "varchar(50)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "processed_at",
+            "ordinal_position": 6,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.categories",
+      "type": "table",
+      "name": "categories",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "categories",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "name",
+            "ordinal_position": 2,
+            "data_type": "varchar(100)",
+            "udt_name": "varchar(100)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "slug",
+            "ordinal_position": 3,
+            "data_type": "varchar(100)",
+            "udt_name": "varchar(100)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "parent_category_id",
+            "ordinal_position": 4,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.products",
+      "type": "table",
+      "name": "products",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "products",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "category_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "sku",
+            "ordinal_position": 3,
+            "data_type": "varchar(64)",
+            "udt_name": "varchar(64)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "name",
+            "ordinal_position": 4,
+            "data_type": "varchar(255)",
+            "udt_name": "varchar(255)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "price",
+            "ordinal_position": 5,
+            "data_type": "numeric(10, 2)",
+            "udt_name": "numeric(10, 2)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "is_published",
+            "ordinal_position": 6,
+            "data_type": "boolean",
+            "udt_name": "boolean",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "ordinal_position": 7,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.inventory_items",
+      "type": "table",
+      "name": "inventory_items",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "inventory_items",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "product_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "quantity_on_hand",
+            "ordinal_position": 3,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "warehouse_code",
+            "ordinal_position": 4,
+            "data_type": "varchar(50)",
+            "udt_name": "varchar(50)",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "updated_at",
+            "ordinal_position": 5,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.shipping_addresses",
+      "type": "table",
+      "name": "shipping_addresses",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "shipping_addresses",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "user_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "street_line1",
+            "ordinal_position": 3,
+            "data_type": "varchar(255)",
+            "udt_name": "varchar(255)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "city",
+            "ordinal_position": 4,
+            "data_type": "varchar(100)",
+            "udt_name": "varchar(100)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "postal_code",
+            "ordinal_position": 5,
+            "data_type": "varchar(20)",
+            "udt_name": "varchar(20)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "country_code",
+            "ordinal_position": 6,
+            "data_type": "varchar(2)",
+            "udt_name": "varchar(2)",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.orders",
+      "type": "table",
+      "name": "orders",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "orders",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "user_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "shipping_address_id",
+            "ordinal_position": 3,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "total_amount",
+            "ordinal_position": 4,
+            "data_type": "numeric(10, 2)",
+            "udt_name": "numeric(10, 2)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "status",
+            "ordinal_position": 5,
+            "data_type": "varchar(50)",
+            "udt_name": "varchar(50)",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "placed_at",
+            "ordinal_position": 6,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.order_items",
+      "type": "table",
+      "name": "order_items",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "order_items",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "order_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "product_id",
+            "ordinal_position": 3,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "quantity",
+            "ordinal_position": 4,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "unit_price",
+            "ordinal_position": 5,
+            "data_type": "numeric(10, 2)",
+            "udt_name": "numeric(10, 2)",
+            "is_nullable": false,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.shipments",
+      "type": "table",
+      "name": "shipments",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "shipments",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "serial",
+            "udt_name": "serial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "order_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "shipping_address_id",
+            "ordinal_position": 3,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "tracking_number",
+            "ordinal_position": 4,
+            "data_type": "varchar(100)",
+            "udt_name": "varchar(100)",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "carrier",
+            "ordinal_position": 5,
+            "data_type": "varchar(50)",
+            "udt_name": "varchar(50)",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "shipped_at",
+            "ordinal_position": 6,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": true,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "table:public.audit_logs",
+      "type": "table",
+      "name": "audit_logs",
+      "source_system": "postgres",
+      "metadata": {
+        "schema": "public",
+        "table_name": "audit_logs",
+        "columns": [
+          {
+            "name": "id",
+            "ordinal_position": 1,
+            "data_type": "bigserial",
+            "udt_name": "bigserial",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "usr_id",
+            "ordinal_position": 2,
+            "data_type": "int",
+            "udt_name": "int",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "action",
+            "ordinal_position": 3,
+            "data_type": "varchar(100)",
+            "udt_name": "varchar(100)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "entity_name",
+            "ordinal_position": 4,
+            "data_type": "varchar(100)",
+            "udt_name": "varchar(100)",
+            "is_nullable": false,
+            "default": null
+          },
+          {
+            "name": "entity_id",
+            "ordinal_position": 5,
+            "data_type": "varchar(64)",
+            "udt_name": "varchar(64)",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "payload",
+            "ordinal_position": 6,
+            "data_type": "jsonb",
+            "udt_name": "jsonb",
+            "is_nullable": true,
+            "default": null
+          },
+          {
+            "name": "created_at",
+            "ordinal_position": 7,
+            "data_type": "timestamp",
+            "udt_name": "timestamp",
+            "is_nullable": false,
+            "default": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "file:__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "__init__.py",
+        "size_bytes": 44
+      }
+    },
+    {
+      "id": "file:audit/logger.py",
+      "type": "file",
+      "name": "logger.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "audit/logger.py",
+        "size_bytes": 1248
+      }
+    },
+    {
+      "id": "func:audit/logger.py:log_audit_event",
+      "type": "function",
+      "name": "log_audit_event",
+      "source_system": "python",
+      "metadata": {
+        "file": "audit/logger.py",
+        "lineno": 7,
+        "is_async": false,
+        "docstring": "Log an audit event using static SQL insert."
+      }
+    },
+    {
+      "id": "func:audit/logger.py:search_logs_by_user",
+      "type": "function",
+      "name": "search_logs_by_user",
+      "source_system": "python",
+      "metadata": {
+        "file": "audit/logger.py",
+        "lineno": 16,
+        "is_async": false,
+        "docstring": "Query audit logs for a specific user using static SQL."
+      }
+    },
+    {
+      "id": "func:audit/logger.py:query_audit_logs_dynamic",
+      "type": "function",
+      "name": "query_audit_logs_dynamic",
+      "source_system": "python",
+      "metadata": {
+        "file": "audit/logger.py",
+        "lineno": 23,
+        "is_async": false,
+        "docstring": "Execute a dynamic audit query built via string formatting.\nThis intentionally tests the honesty layer (dynamic_unresolved, c=0.15)."
+      }
+    },
+    {
+      "id": "file:auth/service.py",
+      "type": "file",
+      "name": "service.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "auth/service.py",
+        "size_bytes": 1544
+      }
+    },
+    {
+      "id": "func:auth/service.py:authenticate_user",
+      "type": "function",
+      "name": "authenticate_user",
+      "source_system": "python",
+      "metadata": {
+        "file": "auth/service.py",
+        "lineno": 7,
+        "is_async": false,
+        "docstring": "Authenticate a user using SQLAlchemy ORM query."
+      }
+    },
+    {
+      "id": "func:auth/service.py:get_user_organizations",
+      "type": "function",
+      "name": "get_user_organizations",
+      "source_system": "python",
+      "metadata": {
+        "file": "auth/service.py",
+        "lineno": 12,
+        "is_async": false,
+        "docstring": "Retrieve organization records for a user via joined raw SQL."
+      }
+    },
+    {
+      "id": "func:auth/service.py:create_api_token",
+      "type": "function",
+      "name": "create_api_token",
+      "source_system": "python",
+      "metadata": {
+        "file": "auth/service.py",
+        "lineno": 24,
+        "is_async": false,
+        "docstring": "Insert a new API token linked to an organization and user."
+      }
+    },
+    {
+      "id": "func:auth/service.py:verify_token",
+      "type": "function",
+      "name": "verify_token",
+      "source_system": "python",
+      "metadata": {
+        "file": "auth/service.py",
+        "lineno": 33,
+        "is_async": false,
+        "docstring": "Check validity of an API token."
+      }
+    },
+    {
+      "id": "func:auth/service.py:assign_user_role",
+      "type": "function",
+      "name": "assign_user_role",
+      "source_system": "python",
+      "metadata": {
+        "file": "auth/service.py",
+        "lineno": 40,
+        "is_async": false,
+        "docstring": "Assign a role to a user."
+      }
+    },
+    {
+      "id": "file:billing/processor.py",
+      "type": "file",
+      "name": "processor.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "billing/processor.py",
+        "size_bytes": 1973
+      }
+    },
+    {
+      "id": "func:billing/processor.py:process_subscription_renewals",
+      "type": "function",
+      "name": "process_subscription_renewals",
+      "source_system": "python",
+      "metadata": {
+        "file": "billing/processor.py",
+        "lineno": 7,
+        "is_async": false,
+        "docstring": "Find active subscriptions up for renewal using ORM."
+      }
+    },
+    {
+      "id": "func:billing/processor.py:generate_invoice",
+      "type": "function",
+      "name": "generate_invoice",
+      "source_system": "python",
+      "metadata": {
+        "file": "billing/processor.py",
+        "lineno": 12,
+        "is_async": false,
+        "docstring": "Create a new invoice for an account."
+      }
+    },
+    {
+      "id": "func:billing/processor.py:add_invoice_items",
+      "type": "function",
+      "name": "add_invoice_items",
+      "source_system": "python",
+      "metadata": {
+        "file": "billing/processor.py",
+        "lineno": 24,
+        "is_async": false,
+        "docstring": "Add a line item to an existing invoice."
+      }
+    },
+    {
+      "id": "func:billing/processor.py:charge_payment_method",
+      "type": "function",
+      "name": "charge_payment_method",
+      "source_system": "python",
+      "metadata": {
+        "file": "billing/processor.py",
+        "lineno": 33,
+        "is_async": false,
+        "docstring": "Fetch payment method via ORM and record a transaction via raw SQL."
+      }
+    },
+    {
+      "id": "func:billing/processor.py:get_active_subscriptions_view",
+      "type": "function",
+      "name": "get_active_subscriptions_view",
+      "source_system": "python",
+      "metadata": {
+        "file": "billing/processor.py",
+        "lineno": 44,
+        "is_async": false,
+        "docstring": "Query the pre-defined view for active subscriptions."
+      }
+    },
+    {
+      "id": "file:catalog/views.py",
+      "type": "file",
+      "name": "views.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "catalog/views.py",
+        "size_bytes": 1223
+      }
+    },
+    {
+      "id": "func:catalog/views.py:list_products_by_category",
+      "type": "function",
+      "name": "list_products_by_category",
+      "source_system": "python",
+      "metadata": {
+        "file": "catalog/views.py",
+        "lineno": 7,
+        "is_async": false,
+        "docstring": "Retrieve all published products in a category using ORM."
+      }
+    },
+    {
+      "id": "func:catalog/views.py:get_product_detail",
+      "type": "function",
+      "name": "get_product_detail",
+      "source_system": "python",
+      "metadata": {
+        "file": "catalog/views.py",
+        "lineno": 16,
+        "is_async": false,
+        "docstring": "Fetch product details joined with category metadata."
+      }
+    },
+    {
+      "id": "func:catalog/views.py:check_product_inventory",
+      "type": "function",
+      "name": "check_product_inventory",
+      "source_system": "python",
+      "metadata": {
+        "file": "catalog/views.py",
+        "lineno": 28,
+        "is_async": false,
+        "docstring": "Check available warehouse inventory for a product."
+      }
+    },
+    {
+      "id": "file:models.py",
+      "type": "file",
+      "name": "models.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "models.py",
+        "size_bytes": 1522
+      }
+    },
+    {
+      "id": "file:orders/checkout.py",
+      "type": "file",
+      "name": "checkout.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "orders/checkout.py",
+        "size_bytes": 2041
+      }
+    },
+    {
+      "id": "func:orders/checkout.py:place_order",
+      "type": "function",
+      "name": "place_order",
+      "source_system": "python",
+      "metadata": {
+        "file": "orders/checkout.py",
+        "lineno": 7,
+        "is_async": false,
+        "docstring": "Create an order with line items."
+      }
+    },
+    {
+      "id": "func:orders/checkout.py:dispatch_shipment",
+      "type": "function",
+      "name": "dispatch_shipment",
+      "source_system": "python",
+      "metadata": {
+        "file": "orders/checkout.py",
+        "lineno": 32,
+        "is_async": false,
+        "docstring": "Create shipment and update order status."
+      }
+    },
+    {
+      "id": "func:orders/checkout.py:get_user_order_history",
+      "type": "function",
+      "name": "get_user_order_history",
+      "source_system": "python",
+      "metadata": {
+        "file": "orders/checkout.py",
+        "lineno": 44,
+        "is_async": false,
+        "docstring": "Retrieve full order history for a user."
+      }
+    },
+    {
+      "id": "file:reports/analytics.py",
+      "type": "file",
+      "name": "analytics.py",
+      "source_system": "python",
+      "metadata": {
+        "path": "reports/analytics.py",
+        "size_bytes": 1822
+      }
+    },
+    {
+      "id": "func:reports/analytics.py:get_monthly_revenue_report",
+      "type": "function",
+      "name": "get_monthly_revenue_report",
+      "source_system": "python",
+      "metadata": {
+        "file": "reports/analytics.py",
+        "lineno": 6,
+        "is_async": false,
+        "docstring": "Compute monthly revenue by joining transactions and invoices."
+      }
+    },
+    {
+      "id": "func:reports/analytics.py:get_top_spending_users",
+      "type": "function",
+      "name": "get_top_spending_users",
+      "source_system": "python",
+      "metadata": {
+        "file": "reports/analytics.py",
+        "lineno": 23,
+        "is_async": false,
+        "docstring": "Find top customers by total order spend."
+      }
+    },
+    {
+      "id": "func:reports/analytics.py:get_low_inventory_alerts",
+      "type": "function",
+      "name": "get_low_inventory_alerts",
+      "source_system": "python",
+      "metadata": {
+        "file": "reports/analytics.py",
+        "lineno": 43,
+        "is_async": false,
+        "docstring": "Identify products with inventory below threshold."
+      }
+    },
+    {
+      "id": "table:unresolved",
+      "type": "table",
+      "name": "<unresolved_dynamic_query>",
+      "source_system": "python",
+      "metadata": {
+        "is_unresolved": true,
+        "description": "Blind spot: dynamic query passed to execute() without static resolution"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "table:public.users",
+      "target": "table:public.organizations",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_users_organization_id: public.users(organization_id) -> public.organizations(id)",
+      "metadata": {
+        "constraint_name": "fk_users_organization_id",
+        "source_schema": "public",
+        "source_table": "users",
+        "source_columns": [
+          "organization_id"
+        ],
+        "target_schema": "public",
+        "target_table": "organizations",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.users.organization_id -> public.organizations"
+      }
+    },
+    {
+      "source": "table:public.user_roles",
+      "target": "table:public.users",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_user_roles_user_id: public.user_roles(user_id) -> public.users(id)",
+      "metadata": {
+        "constraint_name": "fk_user_roles_user_id",
+        "source_schema": "public",
+        "source_table": "user_roles",
+        "source_columns": [
+          "user_id"
+        ],
+        "target_schema": "public",
+        "target_table": "users",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.user_roles.user_id -> public.users"
+      }
+    },
+    {
+      "source": "table:public.api_tokens",
+      "target": "table:public.users",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_api_tokens_user_id: public.api_tokens(user_id) -> public.users(id)",
+      "metadata": {
+        "constraint_name": "fk_api_tokens_user_id",
+        "source_schema": "public",
+        "source_table": "api_tokens",
+        "source_columns": [
+          "user_id"
+        ],
+        "target_schema": "public",
+        "target_table": "users",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.api_tokens.user_id -> public.users"
+      }
+    },
+    {
+      "source": "table:public.subscriptions",
+      "target": "table:public.users",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_subscriptions_user_id: public.subscriptions(user_id) -> public.users(id)",
+      "metadata": {
+        "constraint_name": "fk_subscriptions_user_id",
+        "source_schema": "public",
+        "source_table": "subscriptions",
+        "source_columns": [
+          "user_id"
+        ],
+        "target_schema": "public",
+        "target_table": "users",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.subscriptions.user_id -> public.users"
+      }
+    },
+    {
+      "source": "table:public.subscriptions",
+      "target": "table:public.plans",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_subscriptions_plan_id: public.subscriptions(plan_id) -> public.plans(id)",
+      "metadata": {
+        "constraint_name": "fk_subscriptions_plan_id",
+        "source_schema": "public",
+        "source_table": "subscriptions",
+        "source_columns": [
+          "plan_id"
+        ],
+        "target_schema": "public",
+        "target_table": "plans",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.subscriptions.plan_id -> public.plans"
+      }
+    },
+    {
+      "source": "table:public.payment_methods",
+      "target": "table:public.users",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_payment_methods_user_id: public.payment_methods(user_id) -> public.users(id)",
+      "metadata": {
+        "constraint_name": "fk_payment_methods_user_id",
+        "source_schema": "public",
+        "source_table": "payment_methods",
+        "source_columns": [
+          "user_id"
+        ],
+        "target_schema": "public",
+        "target_table": "users",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.payment_methods.user_id -> public.users"
+      }
+    },
+    {
+      "source": "table:public.invoices",
+      "target": "table:public.subscriptions",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_invoices_subscription_id: public.invoices(subscription_id) -> public.subscriptions(id)",
+      "metadata": {
+        "constraint_name": "fk_invoices_subscription_id",
+        "source_schema": "public",
+        "source_table": "invoices",
+        "source_columns": [
+          "subscription_id"
+        ],
+        "target_schema": "public",
+        "target_table": "subscriptions",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.invoices.subscription_id -> public.subscriptions"
+      }
+    },
+    {
+      "source": "table:public.invoice_items",
+      "target": "table:public.invoices",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_invoice_items_invoice_id: public.invoice_items(invoice_id) -> public.invoices(id)",
+      "metadata": {
+        "constraint_name": "fk_invoice_items_invoice_id",
+        "source_schema": "public",
+        "source_table": "invoice_items",
+        "source_columns": [
+          "invoice_id"
+        ],
+        "target_schema": "public",
+        "target_table": "invoices",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.invoice_items.invoice_id -> public.invoices"
+      }
+    },
+    {
+      "source": "table:public.categories",
+      "target": "table:public.categories",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_categories_parent_category_id: public.categories(parent_category_id) -> public.categories(id)",
+      "metadata": {
+        "constraint_name": "fk_categories_parent_category_id",
+        "source_schema": "public",
+        "source_table": "categories",
+        "source_columns": [
+          "parent_category_id"
+        ],
+        "target_schema": "public",
+        "target_table": "categories",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (fuzzy): public.categories.parent_category_id -> public.categories"
+      }
+    },
+    {
+      "source": "table:public.products",
+      "target": "table:public.categories",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_products_category_id: public.products(category_id) -> public.categories(id)",
+      "metadata": {
+        "constraint_name": "fk_products_category_id",
+        "source_schema": "public",
+        "source_table": "products",
+        "source_columns": [
+          "category_id"
+        ],
+        "target_schema": "public",
+        "target_table": "categories",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.products.category_id -> public.categories"
+      }
+    },
+    {
+      "source": "table:public.inventory_items",
+      "target": "table:public.products",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_inventory_items_product_id: public.inventory_items(product_id) -> public.products(id)",
+      "metadata": {
+        "constraint_name": "fk_inventory_items_product_id",
+        "source_schema": "public",
+        "source_table": "inventory_items",
+        "source_columns": [
+          "product_id"
+        ],
+        "target_schema": "public",
+        "target_table": "products",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.inventory_items.product_id -> public.products"
+      }
+    },
+    {
+      "source": "table:public.shipping_addresses",
+      "target": "table:public.users",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_shipping_addresses_user_id: public.shipping_addresses(user_id) -> public.users(id)",
+      "metadata": {
+        "constraint_name": "fk_shipping_addresses_user_id",
+        "source_schema": "public",
+        "source_table": "shipping_addresses",
+        "source_columns": [
+          "user_id"
+        ],
+        "target_schema": "public",
+        "target_table": "users",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.shipping_addresses.user_id -> public.users"
+      }
+    },
+    {
+      "source": "table:public.orders",
+      "target": "table:public.users",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_orders_user_id: public.orders(user_id) -> public.users(id)",
+      "metadata": {
+        "constraint_name": "fk_orders_user_id",
+        "source_schema": "public",
+        "source_table": "orders",
+        "source_columns": [
+          "user_id"
+        ],
+        "target_schema": "public",
+        "target_table": "users",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.orders.user_id -> public.users"
+      }
+    },
+    {
+      "source": "table:public.order_items",
+      "target": "table:public.orders",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_order_items_order_id: public.order_items(order_id) -> public.orders(id)",
+      "metadata": {
+        "constraint_name": "fk_order_items_order_id",
+        "source_schema": "public",
+        "source_table": "order_items",
+        "source_columns": [
+          "order_id"
+        ],
+        "target_schema": "public",
+        "target_table": "orders",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.order_items.order_id -> public.orders"
+      }
+    },
+    {
+      "source": "table:public.order_items",
+      "target": "table:public.products",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_order_items_product_id: public.order_items(product_id) -> public.products(id)",
+      "metadata": {
+        "constraint_name": "fk_order_items_product_id",
+        "source_schema": "public",
+        "source_table": "order_items",
+        "source_columns": [
+          "product_id"
+        ],
+        "target_schema": "public",
+        "target_table": "products",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.order_items.product_id -> public.products"
+      }
+    },
+    {
+      "source": "table:public.shipments",
+      "target": "table:public.orders",
+      "type": "declared_fk",
+      "confidence": 1.0,
+      "evidence": "FK fk_shipments_order_id: public.shipments(order_id) -> public.orders(id)",
+      "metadata": {
+        "constraint_name": "fk_shipments_order_id",
+        "source_schema": "public",
+        "source_table": "shipments",
+        "source_columns": [
+          "order_id"
+        ],
+        "target_schema": "public",
+        "target_table": "orders",
+        "target_columns": [
+          "id"
+        ],
+        "naming_agreement": true,
+        "naming_evidence": "Naming inference (exact): public.shipments.order_id -> public.orders"
+      }
+    },
+    {
+      "source": "table:public.users",
+      "target": "table:public.organizations",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.users.organization_id -> public.organizations",
+      "metadata": {
+        "source_column": "organization_id",
+        "stem": "organization",
+        "candidate_table": "organizations",
+        "target_table": "public.organizations",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.user_roles",
+      "target": "table:public.users",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.user_roles.user_id -> public.users",
+      "metadata": {
+        "source_column": "user_id",
+        "stem": "user",
+        "candidate_table": "users",
+        "target_table": "public.users",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.api_tokens",
+      "target": "table:public.organizations",
+      "type": "inferred_naming",
+      "confidence": 0.495,
+      "evidence": "Naming inference (fuzzy): public.api_tokens.org_id -> public.organizations",
+      "metadata": {
+        "source_column": "org_id",
+        "stem": "org",
+        "candidate_table": "organizations",
+        "target_table": "public.organizations",
+        "match_type": "fuzzy",
+        "modifier": 0.9,
+        "same_schema": true
+      }
+    },
+    {
+      "source": "table:public.api_tokens",
+      "target": "table:public.users",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.api_tokens.user_id -> public.users",
+      "metadata": {
+        "source_column": "user_id",
+        "stem": "user",
+        "candidate_table": "users",
+        "target_table": "public.users",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.subscriptions",
+      "target": "table:public.users",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.subscriptions.user_id -> public.users",
+      "metadata": {
+        "source_column": "user_id",
+        "stem": "user",
+        "candidate_table": "users",
+        "target_table": "public.users",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.subscriptions",
+      "target": "table:public.plans",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.subscriptions.plan_id -> public.plans",
+      "metadata": {
+        "source_column": "plan_id",
+        "stem": "plan",
+        "candidate_table": "plans",
+        "target_table": "public.plans",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.payment_methods",
+      "target": "table:public.users",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.payment_methods.user_id -> public.users",
+      "metadata": {
+        "source_column": "user_id",
+        "stem": "user",
+        "candidate_table": "users",
+        "target_table": "public.users",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.invoices",
+      "target": "table:public.accounts",
+      "type": "inferred_naming",
+      "confidence": 0.495,
+      "evidence": "Naming inference (fuzzy): public.invoices.acct_id -> public.accounts",
+      "metadata": {
+        "source_column": "acct_id",
+        "stem": "acct",
+        "candidate_table": "accounts",
+        "target_table": "public.accounts",
+        "match_type": "fuzzy",
+        "modifier": 0.9,
+        "same_schema": true
+      }
+    },
+    {
+      "source": "table:public.invoices",
+      "target": "table:public.subscriptions",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.invoices.subscription_id -> public.subscriptions",
+      "metadata": {
+        "source_column": "subscription_id",
+        "stem": "subscription",
+        "candidate_table": "subscriptions",
+        "target_table": "public.subscriptions",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.invoice_items",
+      "target": "table:public.invoices",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.invoice_items.invoice_id -> public.invoices",
+      "metadata": {
+        "source_column": "invoice_id",
+        "stem": "invoice",
+        "candidate_table": "invoices",
+        "target_table": "public.invoices",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.transactions",
+      "target": "table:public.payment_methods",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.transactions.payment_method_id -> public.payment_methods",
+      "metadata": {
+        "source_column": "payment_method_id",
+        "stem": "payment_method",
+        "candidate_table": "payment_methods",
+        "target_table": "public.payment_methods",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true
+      }
+    },
+    {
+      "source": "table:public.transactions",
+      "target": "table:public.invoices",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.transactions.invoice_id -> public.invoices",
+      "metadata": {
+        "source_column": "invoice_id",
+        "stem": "invoice",
+        "candidate_table": "invoices",
+        "target_table": "public.invoices",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true
+      }
+    },
+    {
+      "source": "table:public.categories",
+      "target": "table:public.categories",
+      "type": "inferred_naming",
+      "confidence": 0.495,
+      "evidence": "Naming inference (fuzzy): public.categories.parent_category_id -> public.categories",
+      "metadata": {
+        "source_column": "parent_category_id",
+        "stem": "parent_category",
+        "candidate_table": "categories",
+        "target_table": "public.categories",
+        "match_type": "fuzzy",
+        "modifier": 0.9,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.products",
+      "target": "table:public.categories",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.products.category_id -> public.categories",
+      "metadata": {
+        "source_column": "category_id",
+        "stem": "category",
+        "candidate_table": "categories",
+        "target_table": "public.categories",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.inventory_items",
+      "target": "table:public.products",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.inventory_items.product_id -> public.products",
+      "metadata": {
+        "source_column": "product_id",
+        "stem": "product",
+        "candidate_table": "products",
+        "target_table": "public.products",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.shipping_addresses",
+      "target": "table:public.users",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.shipping_addresses.user_id -> public.users",
+      "metadata": {
+        "source_column": "user_id",
+        "stem": "user",
+        "candidate_table": "users",
+        "target_table": "public.users",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.orders",
+      "target": "table:public.users",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.orders.user_id -> public.users",
+      "metadata": {
+        "source_column": "user_id",
+        "stem": "user",
+        "candidate_table": "users",
+        "target_table": "public.users",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.orders",
+      "target": "table:public.shipping_addresses",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.orders.shipping_address_id -> public.shipping_addresses",
+      "metadata": {
+        "source_column": "shipping_address_id",
+        "stem": "shipping_address",
+        "candidate_table": "shipping_addresses",
+        "target_table": "public.shipping_addresses",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true
+      }
+    },
+    {
+      "source": "table:public.order_items",
+      "target": "table:public.orders",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.order_items.order_id -> public.orders",
+      "metadata": {
+        "source_column": "order_id",
+        "stem": "order",
+        "candidate_table": "orders",
+        "target_table": "public.orders",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.order_items",
+      "target": "table:public.products",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.order_items.product_id -> public.products",
+      "metadata": {
+        "source_column": "product_id",
+        "stem": "product",
+        "candidate_table": "products",
+        "target_table": "public.products",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.shipments",
+      "target": "table:public.orders",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.shipments.order_id -> public.orders",
+      "metadata": {
+        "source_column": "order_id",
+        "stem": "order",
+        "candidate_table": "orders",
+        "target_table": "public.orders",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true,
+        "declared_agreement": true,
+        "agreement_bonus": 1.0
+      }
+    },
+    {
+      "source": "table:public.shipments",
+      "target": "table:public.shipping_addresses",
+      "type": "inferred_naming",
+      "confidence": 0.55,
+      "evidence": "Naming inference (exact): public.shipments.shipping_address_id -> public.shipping_addresses",
+      "metadata": {
+        "source_column": "shipping_address_id",
+        "stem": "shipping_address",
+        "candidate_table": "shipping_addresses",
+        "target_table": "public.shipping_addresses",
+        "match_type": "exact",
+        "modifier": 1.0,
+        "same_schema": true
+      }
+    },
+    {
+      "source": "table:public.audit_logs",
+      "target": "table:public.users",
+      "type": "inferred_naming",
+      "confidence": 0.495,
+      "evidence": "Naming inference (fuzzy): public.audit_logs.usr_id -> public.users",
+      "metadata": {
+        "source_column": "usr_id",
+        "stem": "usr",
+        "candidate_table": "users",
+        "target_table": "public.users",
+        "match_type": "fuzzy",
+        "modifier": 0.9,
+        "same_schema": true
+      }
+    },
+    {
+      "source": "func:audit/logger.py:log_audit_event",
+      "target": "file:audit/logger.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in audit/logger.py:7",
+      "metadata": {
+        "lineno": 7,
+        "file": "audit/logger.py"
+      }
+    },
+    {
+      "source": "func:audit/logger.py:log_audit_event",
+      "target": "table:public.audit_logs",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in audit/logger.py:13 -> audit_logs: INSERT INTO audit_logs (usr_id, action, entity_name, entity_id, payload)\n       ",
+      "metadata": {
+        "lineno": 13,
+        "file": "audit/logger.py",
+        "raw_sql": "INSERT INTO audit_logs (usr_id, action, entity_name, entity_id, payload)\n        VALUES (%s, %s, %s, %s, %s)",
+        "table": "audit_logs",
+        "resolved_target": "table:public.audit_logs"
+      }
+    },
+    {
+      "source": "func:audit/logger.py:search_logs_by_user",
+      "target": "file:audit/logger.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in audit/logger.py:16",
+      "metadata": {
+        "lineno": 16,
+        "file": "audit/logger.py"
+      }
+    },
+    {
+      "source": "func:audit/logger.py:search_logs_by_user",
+      "target": "table:public.audit_logs",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in audit/logger.py:19 -> audit_logs: SELECT * FROM audit_logs WHERE usr_id = %s ORDER BY created_at DESC",
+      "metadata": {
+        "lineno": 19,
+        "file": "audit/logger.py",
+        "raw_sql": "SELECT * FROM audit_logs WHERE usr_id = %s ORDER BY created_at DESC",
+        "table": "audit_logs",
+        "resolved_target": "table:public.audit_logs"
+      }
+    },
+    {
+      "source": "func:audit/logger.py:query_audit_logs_dynamic",
+      "target": "file:audit/logger.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in audit/logger.py:23",
+      "metadata": {
+        "lineno": 23,
+        "file": "audit/logger.py"
+      }
+    },
+    {
+      "source": "func:audit/logger.py:query_audit_logs_dynamic",
+      "target": "table:unresolved",
+      "type": "dynamic_unresolved",
+      "confidence": 0.15,
+      "evidence": "Dynamic unresolved query call (Name) in audit/logger.py:29",
+      "metadata": {
+        "lineno": 29,
+        "file": "audit/logger.py",
+        "arg_type": "Name",
+        "unresolved": true
+      }
+    },
+    {
+      "source": "func:auth/service.py:authenticate_user",
+      "target": "file:auth/service.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in auth/service.py:7",
+      "metadata": {
+        "lineno": 7,
+        "file": "auth/service.py"
+      }
+    },
+    {
+      "source": "func:auth/service.py:authenticate_user",
+      "target": "table:public.users",
+      "type": "orm_call",
+      "confidence": 0.8,
+      "evidence": "SQLAlchemy query(User) call in auth/service.py:9 -> users",
+      "metadata": {
+        "lineno": 9,
+        "file": "auth/service.py",
+        "model": "User",
+        "table": "users",
+        "orm": "sqlalchemy",
+        "resolved_target": "table:public.users"
+      }
+    },
+    {
+      "source": "func:auth/service.py:get_user_organizations",
+      "target": "file:auth/service.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in auth/service.py:12",
+      "metadata": {
+        "lineno": 12,
+        "file": "auth/service.py"
+      }
+    },
+    {
+      "source": "func:auth/service.py:get_user_organizations",
+      "target": "table:public.organizations",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in auth/service.py:20 -> organizations: SELECT o.id, o.name, o.slug\n        FROM organizations o\n        JOIN users u ON",
+      "metadata": {
+        "lineno": 20,
+        "file": "auth/service.py",
+        "raw_sql": "SELECT o.id, o.name, o.slug\n        FROM organizations o\n        JOIN users u ON u.organization_id = o.id\n        WHERE u.id = %s",
+        "table": "organizations",
+        "resolved_target": "table:public.organizations"
+      }
+    },
+    {
+      "source": "func:auth/service.py:get_user_organizations",
+      "target": "table:public.users",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in auth/service.py:20 -> users: SELECT o.id, o.name, o.slug\n        FROM organizations o\n        JOIN users u ON",
+      "metadata": {
+        "lineno": 20,
+        "file": "auth/service.py",
+        "raw_sql": "SELECT o.id, o.name, o.slug\n        FROM organizations o\n        JOIN users u ON u.organization_id = o.id\n        WHERE u.id = %s",
+        "table": "users",
+        "resolved_target": "table:public.users"
+      }
+    },
+    {
+      "source": "func:auth/service.py:create_api_token",
+      "target": "file:auth/service.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in auth/service.py:24",
+      "metadata": {
+        "lineno": 24,
+        "file": "auth/service.py"
+      }
+    },
+    {
+      "source": "func:auth/service.py:create_api_token",
+      "target": "table:public.api_tokens",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in auth/service.py:30 -> api_tokens: INSERT INTO api_tokens (token_hash, org_id, user_id)\n        VALUES (%s, %s, %s)",
+      "metadata": {
+        "lineno": 30,
+        "file": "auth/service.py",
+        "raw_sql": "INSERT INTO api_tokens (token_hash, org_id, user_id)\n        VALUES (%s, %s, %s)",
+        "table": "api_tokens",
+        "resolved_target": "table:public.api_tokens"
+      }
+    },
+    {
+      "source": "func:auth/service.py:verify_token",
+      "target": "file:auth/service.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in auth/service.py:33",
+      "metadata": {
+        "lineno": 33,
+        "file": "auth/service.py"
+      }
+    },
+    {
+      "source": "func:auth/service.py:verify_token",
+      "target": "table:public.api_tokens",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in auth/service.py:36 -> api_tokens: SELECT * FROM api_tokens WHERE token_hash = %s",
+      "metadata": {
+        "lineno": 36,
+        "file": "auth/service.py",
+        "raw_sql": "SELECT * FROM api_tokens WHERE token_hash = %s",
+        "table": "api_tokens",
+        "resolved_target": "table:public.api_tokens"
+      }
+    },
+    {
+      "source": "func:auth/service.py:assign_user_role",
+      "target": "file:auth/service.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in auth/service.py:40",
+      "metadata": {
+        "lineno": 40,
+        "file": "auth/service.py"
+      }
+    },
+    {
+      "source": "func:auth/service.py:assign_user_role",
+      "target": "table:public.user_roles",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in auth/service.py:43 -> user_roles: INSERT INTO user_roles (user_id, role_name) VALUES (%s, %s)",
+      "metadata": {
+        "lineno": 43,
+        "file": "auth/service.py",
+        "raw_sql": "INSERT INTO user_roles (user_id, role_name) VALUES (%s, %s)",
+        "table": "user_roles",
+        "resolved_target": "table:public.user_roles"
+      }
+    },
+    {
+      "source": "func:billing/processor.py:process_subscription_renewals",
+      "target": "file:billing/processor.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in billing/processor.py:7",
+      "metadata": {
+        "lineno": 7,
+        "file": "billing/processor.py"
+      }
+    },
+    {
+      "source": "func:billing/processor.py:process_subscription_renewals",
+      "target": "table:public.subscriptions",
+      "type": "orm_call",
+      "confidence": 0.8,
+      "evidence": "SQLAlchemy query(Subscription) call in billing/processor.py:9 -> subscriptions",
+      "metadata": {
+        "lineno": 9,
+        "file": "billing/processor.py",
+        "model": "Subscription",
+        "table": "subscriptions",
+        "orm": "sqlalchemy",
+        "resolved_target": "table:public.subscriptions"
+      }
+    },
+    {
+      "source": "func:billing/processor.py:generate_invoice",
+      "target": "file:billing/processor.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in billing/processor.py:12",
+      "metadata": {
+        "lineno": 12,
+        "file": "billing/processor.py"
+      }
+    },
+    {
+      "source": "func:billing/processor.py:generate_invoice",
+      "target": "table:public.invoices",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in billing/processor.py:19 -> invoices: INSERT INTO invoices (acct_id, subscription_id, total_amount, due_date)\n        ",
+      "metadata": {
+        "lineno": 19,
+        "file": "billing/processor.py",
+        "raw_sql": "INSERT INTO invoices (acct_id, subscription_id, total_amount, due_date)\n        VALUES (%s, %s, %s, %s)\n        RETURNING id",
+        "table": "invoices",
+        "resolved_target": "table:public.invoices"
+      }
+    },
+    {
+      "source": "func:billing/processor.py:add_invoice_items",
+      "target": "file:billing/processor.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in billing/processor.py:24",
+      "metadata": {
+        "lineno": 24,
+        "file": "billing/processor.py"
+      }
+    },
+    {
+      "source": "func:billing/processor.py:add_invoice_items",
+      "target": "table:public.invoice_items",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in billing/processor.py:30 -> invoice_items: INSERT INTO invoice_items (invoice_id, description, amount, quantity)\n        VA",
+      "metadata": {
+        "lineno": 30,
+        "file": "billing/processor.py",
+        "raw_sql": "INSERT INTO invoice_items (invoice_id, description, amount, quantity)\n        VALUES (%s, %s, %s, %s)",
+        "table": "invoice_items",
+        "resolved_target": "table:public.invoice_items"
+      }
+    },
+    {
+      "source": "func:billing/processor.py:charge_payment_method",
+      "target": "file:billing/processor.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in billing/processor.py:33",
+      "metadata": {
+        "lineno": 33,
+        "file": "billing/processor.py"
+      }
+    },
+    {
+      "source": "func:billing/processor.py:charge_payment_method",
+      "target": "table:public.transactions",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in billing/processor.py:41 -> transactions: INSERT INTO transactions (payment_method_id, invoice_id, amount, status)\n       ",
+      "metadata": {
+        "lineno": 41,
+        "file": "billing/processor.py",
+        "raw_sql": "INSERT INTO transactions (payment_method_id, invoice_id, amount, status)\n            VALUES (%s, %s, %s, 'settled')",
+        "table": "transactions",
+        "resolved_target": "table:public.transactions"
+      }
+    },
+    {
+      "source": "func:billing/processor.py:charge_payment_method",
+      "target": "table:public.payment_methods",
+      "type": "orm_call",
+      "confidence": 0.8,
+      "evidence": "SQLAlchemy query(PaymentMethod) call in billing/processor.py:35 -> payment_methods",
+      "metadata": {
+        "lineno": 35,
+        "file": "billing/processor.py",
+        "model": "PaymentMethod",
+        "table": "payment_methods",
+        "orm": "sqlalchemy",
+        "resolved_target": "table:public.payment_methods"
+      }
+    },
+    {
+      "source": "func:billing/processor.py:get_active_subscriptions_view",
+      "target": "file:billing/processor.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in billing/processor.py:44",
+      "metadata": {
+        "lineno": 44,
+        "file": "billing/processor.py"
+      }
+    },
+    {
+      "source": "func:billing/processor.py:get_active_subscriptions_view",
+      "target": "table:public.v_active_subscriptions",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in billing/processor.py:47 -> v_active_subscriptions: SELECT * FROM v_active_subscriptions",
+      "metadata": {
+        "lineno": 47,
+        "file": "billing/processor.py",
+        "raw_sql": "SELECT * FROM v_active_subscriptions",
+        "table": "v_active_subscriptions",
+        "resolved_target": "table:public.v_active_subscriptions"
+      }
+    },
+    {
+      "source": "func:catalog/views.py:list_products_by_category",
+      "target": "file:catalog/views.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in catalog/views.py:7",
+      "metadata": {
+        "lineno": 7,
+        "file": "catalog/views.py"
+      }
+    },
+    {
+      "source": "func:catalog/views.py:list_products_by_category",
+      "target": "table:public.products",
+      "type": "orm_call",
+      "confidence": 0.8,
+      "evidence": "SQLAlchemy query(Product) call in catalog/views.py:10 -> products",
+      "metadata": {
+        "lineno": 10,
+        "file": "catalog/views.py",
+        "model": "Product",
+        "table": "products",
+        "orm": "sqlalchemy",
+        "resolved_target": "table:public.products"
+      }
+    },
+    {
+      "source": "func:catalog/views.py:get_product_detail",
+      "target": "file:catalog/views.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in catalog/views.py:16",
+      "metadata": {
+        "lineno": 16,
+        "file": "catalog/views.py"
+      }
+    },
+    {
+      "source": "func:catalog/views.py:get_product_detail",
+      "target": "table:public.products",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in catalog/views.py:24 -> products: SELECT p.id, p.sku, p.name, p.price, c.name AS category_name\n        FROM produc",
+      "metadata": {
+        "lineno": 24,
+        "file": "catalog/views.py",
+        "raw_sql": "SELECT p.id, p.sku, p.name, p.price, c.name AS category_name\n        FROM products p\n        JOIN categories c ON p.category_id = c.id\n        WHERE p.id = %s",
+        "table": "products",
+        "resolved_target": "table:public.products"
+      }
+    },
+    {
+      "source": "func:catalog/views.py:get_product_detail",
+      "target": "table:public.categories",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in catalog/views.py:24 -> categories: SELECT p.id, p.sku, p.name, p.price, c.name AS category_name\n        FROM produc",
+      "metadata": {
+        "lineno": 24,
+        "file": "catalog/views.py",
+        "raw_sql": "SELECT p.id, p.sku, p.name, p.price, c.name AS category_name\n        FROM products p\n        JOIN categories c ON p.category_id = c.id\n        WHERE p.id = %s",
+        "table": "categories",
+        "resolved_target": "table:public.categories"
+      }
+    },
+    {
+      "source": "func:catalog/views.py:check_product_inventory",
+      "target": "file:catalog/views.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in catalog/views.py:28",
+      "metadata": {
+        "lineno": 28,
+        "file": "catalog/views.py"
+      }
+    },
+    {
+      "source": "func:catalog/views.py:check_product_inventory",
+      "target": "table:public.inventory_items",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in catalog/views.py:35 -> inventory_items: SELECT COALESCE(SUM(quantity_on_hand), 0)\n        FROM inventory_items\n        W",
+      "metadata": {
+        "lineno": 35,
+        "file": "catalog/views.py",
+        "raw_sql": "SELECT COALESCE(SUM(quantity_on_hand), 0)\n        FROM inventory_items\n        WHERE product_id = %s",
+        "table": "inventory_items",
+        "resolved_target": "table:public.inventory_items"
+      }
+    },
+    {
+      "source": "func:orders/checkout.py:place_order",
+      "target": "file:orders/checkout.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in orders/checkout.py:7",
+      "metadata": {
+        "lineno": 7,
+        "file": "orders/checkout.py"
+      }
+    },
+    {
+      "source": "func:orders/checkout.py:place_order",
+      "target": "table:public.orders",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in orders/checkout.py:19 -> orders: INSERT INTO orders (user_id, shipping_address_id, total_amount, status)\n        ",
+      "metadata": {
+        "lineno": 19,
+        "file": "orders/checkout.py",
+        "raw_sql": "INSERT INTO orders (user_id, shipping_address_id, total_amount, status)\n        VALUES (%s, %s, %s, 'pending')\n        RETURNING id",
+        "table": "orders",
+        "resolved_target": "table:public.orders"
+      }
+    },
+    {
+      "source": "func:orders/checkout.py:place_order",
+      "target": "table:public.order_items",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in orders/checkout.py:27 -> order_items: INSERT INTO order_items (order_id, product_id, quantity, unit_price)\n           ",
+      "metadata": {
+        "lineno": 27,
+        "file": "orders/checkout.py",
+        "raw_sql": "INSERT INTO order_items (order_id, product_id, quantity, unit_price)\n            VALUES (%s, %s, %s, %s)",
+        "table": "order_items",
+        "resolved_target": "table:public.order_items"
+      }
+    },
+    {
+      "source": "func:orders/checkout.py:place_order",
+      "target": "table:public.users",
+      "type": "orm_call",
+      "confidence": 0.8,
+      "evidence": "SQLAlchemy query(User) call in orders/checkout.py:10 -> users",
+      "metadata": {
+        "lineno": 10,
+        "file": "orders/checkout.py",
+        "model": "User",
+        "table": "users",
+        "orm": "sqlalchemy",
+        "resolved_target": "table:public.users"
+      }
+    },
+    {
+      "source": "func:orders/checkout.py:dispatch_shipment",
+      "target": "file:orders/checkout.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in orders/checkout.py:32",
+      "metadata": {
+        "lineno": 32,
+        "file": "orders/checkout.py"
+      }
+    },
+    {
+      "source": "func:orders/checkout.py:dispatch_shipment",
+      "target": "table:public.shipments",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in orders/checkout.py:38 -> shipments: INSERT INTO shipments (order_id, shipping_address_id, tracking_number, carrier, ",
+      "metadata": {
+        "lineno": 38,
+        "file": "orders/checkout.py",
+        "raw_sql": "INSERT INTO shipments (order_id, shipping_address_id, tracking_number, carrier, shipped_at)\n        VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP)",
+        "table": "shipments",
+        "resolved_target": "table:public.shipments"
+      }
+    },
+    {
+      "source": "func:orders/checkout.py:dispatch_shipment",
+      "target": "table:public.orders",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in orders/checkout.py:41 -> orders: UPDATE orders SET status = 'shipped' WHERE id = %s",
+      "metadata": {
+        "lineno": 41,
+        "file": "orders/checkout.py",
+        "raw_sql": "UPDATE orders SET status = 'shipped' WHERE id = %s",
+        "table": "orders",
+        "resolved_target": "table:public.orders"
+      }
+    },
+    {
+      "source": "func:orders/checkout.py:get_user_order_history",
+      "target": "file:orders/checkout.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in orders/checkout.py:44",
+      "metadata": {
+        "lineno": 44,
+        "file": "orders/checkout.py"
+      }
+    },
+    {
+      "source": "func:orders/checkout.py:get_user_order_history",
+      "target": "table:public.orders",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in orders/checkout.py:53 -> orders: SELECT o.id, o.total_amount, o.status, s.tracking_number, s.carrier\n        FROM",
+      "metadata": {
+        "lineno": 53,
+        "file": "orders/checkout.py",
+        "raw_sql": "SELECT o.id, o.total_amount, o.status, s.tracking_number, s.carrier\n        FROM orders o\n        LEFT JOIN shipments s ON s.order_id = o.id\n        WHERE o.user_id = %s\n        ORDER BY o.placed_at DESC",
+        "table": "orders",
+        "resolved_target": "table:public.orders"
+      }
+    },
+    {
+      "source": "func:orders/checkout.py:get_user_order_history",
+      "target": "table:public.shipments",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in orders/checkout.py:53 -> shipments: SELECT o.id, o.total_amount, o.status, s.tracking_number, s.carrier\n        FROM",
+      "metadata": {
+        "lineno": 53,
+        "file": "orders/checkout.py",
+        "raw_sql": "SELECT o.id, o.total_amount, o.status, s.tracking_number, s.carrier\n        FROM orders o\n        LEFT JOIN shipments s ON s.order_id = o.id\n        WHERE o.user_id = %s\n        ORDER BY o.placed_at DESC",
+        "table": "shipments",
+        "resolved_target": "table:public.shipments"
+      }
+    },
+    {
+      "source": "func:reports/analytics.py:get_monthly_revenue_report",
+      "target": "file:reports/analytics.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in reports/analytics.py:6",
+      "metadata": {
+        "lineno": 6,
+        "file": "reports/analytics.py"
+      }
+    },
+    {
+      "source": "func:reports/analytics.py:get_monthly_revenue_report",
+      "target": "table:public.transactions",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in reports/analytics.py:19 -> transactions: SELECT\n            DATE_TRUNC('month', t.processed_at) AS report_month,\n        ",
+      "metadata": {
+        "lineno": 19,
+        "file": "reports/analytics.py",
+        "raw_sql": "SELECT\n            DATE_TRUNC('month', t.processed_at) AS report_month,\n            COUNT(t.id) AS transaction_count,\n            SUM(t.amount) AS total_revenue\n        FROM transactions t\n        JOIN invoices i ON t.invoice_id = i.id\n        WHERE t.status = 'settled'\n        GROUP BY 1\n        ORDER BY 1 DESC",
+        "table": "transactions",
+        "resolved_target": "table:public.transactions"
+      }
+    },
+    {
+      "source": "func:reports/analytics.py:get_monthly_revenue_report",
+      "target": "table:public.invoices",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in reports/analytics.py:19 -> invoices: SELECT\n            DATE_TRUNC('month', t.processed_at) AS report_month,\n        ",
+      "metadata": {
+        "lineno": 19,
+        "file": "reports/analytics.py",
+        "raw_sql": "SELECT\n            DATE_TRUNC('month', t.processed_at) AS report_month,\n            COUNT(t.id) AS transaction_count,\n            SUM(t.amount) AS total_revenue\n        FROM transactions t\n        JOIN invoices i ON t.invoice_id = i.id\n        WHERE t.status = 'settled'\n        GROUP BY 1\n        ORDER BY 1 DESC",
+        "table": "invoices",
+        "resolved_target": "table:public.invoices"
+      }
+    },
+    {
+      "source": "func:reports/analytics.py:get_top_spending_users",
+      "target": "file:reports/analytics.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in reports/analytics.py:23",
+      "metadata": {
+        "lineno": 23,
+        "file": "reports/analytics.py"
+      }
+    },
+    {
+      "source": "func:reports/analytics.py:get_top_spending_users",
+      "target": "table:public.users",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in reports/analytics.py:39 -> users: SELECT\n            u.id,\n            u.email,\n            u.full_name,\n         ",
+      "metadata": {
+        "lineno": 39,
+        "file": "reports/analytics.py",
+        "raw_sql": "SELECT\n            u.id,\n            u.email,\n            u.full_name,\n            COUNT(o.id) AS total_orders,\n            SUM(o.total_amount) AS total_spend\n        FROM users u\n        JOIN orders o ON u.id = o.user_id\n        WHERE o.status != 'cancelled'\n        GROUP BY u.id, u.email, u.full_name\n        ORDER BY total_spend DESC\n        LIMIT %s",
+        "table": "users",
+        "resolved_target": "table:public.users"
+      }
+    },
+    {
+      "source": "func:reports/analytics.py:get_top_spending_users",
+      "target": "table:public.orders",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in reports/analytics.py:39 -> orders: SELECT\n            u.id,\n            u.email,\n            u.full_name,\n         ",
+      "metadata": {
+        "lineno": 39,
+        "file": "reports/analytics.py",
+        "raw_sql": "SELECT\n            u.id,\n            u.email,\n            u.full_name,\n            COUNT(o.id) AS total_orders,\n            SUM(o.total_amount) AS total_spend\n        FROM users u\n        JOIN orders o ON u.id = o.user_id\n        WHERE o.status != 'cancelled'\n        GROUP BY u.id, u.email, u.full_name\n        ORDER BY total_spend DESC\n        LIMIT %s",
+        "table": "orders",
+        "resolved_target": "table:public.orders"
+      }
+    },
+    {
+      "source": "func:reports/analytics.py:get_low_inventory_alerts",
+      "target": "file:reports/analytics.py",
+      "type": "structural_belongs_to",
+      "confidence": 1.0,
+      "evidence": "Defined in reports/analytics.py:43",
+      "metadata": {
+        "lineno": 43,
+        "file": "reports/analytics.py"
+      }
+    },
+    {
+      "source": "func:reports/analytics.py:get_low_inventory_alerts",
+      "target": "table:public.products",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in reports/analytics.py:58 -> products: SELECT\n            p.id,\n            p.sku,\n            p.name,\n            c.na",
+      "metadata": {
+        "lineno": 58,
+        "file": "reports/analytics.py",
+        "raw_sql": "SELECT\n            p.id,\n            p.sku,\n            p.name,\n            c.name AS category_name,\n            i.quantity_on_hand\n        FROM products p\n        JOIN categories c ON p.category_id = c.id\n        JOIN inventory_items i ON p.id = i.product_id\n        WHERE i.quantity_on_hand <= %s\n        ORDER BY i.quantity_on_hand ASC",
+        "table": "products",
+        "resolved_target": "table:public.products"
+      }
+    },
+    {
+      "source": "func:reports/analytics.py:get_low_inventory_alerts",
+      "target": "table:public.categories",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in reports/analytics.py:58 -> categories: SELECT\n            p.id,\n            p.sku,\n            p.name,\n            c.na",
+      "metadata": {
+        "lineno": 58,
+        "file": "reports/analytics.py",
+        "raw_sql": "SELECT\n            p.id,\n            p.sku,\n            p.name,\n            c.name AS category_name,\n            i.quantity_on_hand\n        FROM products p\n        JOIN categories c ON p.category_id = c.id\n        JOIN inventory_items i ON p.id = i.product_id\n        WHERE i.quantity_on_hand <= %s\n        ORDER BY i.quantity_on_hand ASC",
+        "table": "categories",
+        "resolved_target": "table:public.categories"
+      }
+    },
+    {
+      "source": "func:reports/analytics.py:get_low_inventory_alerts",
+      "target": "table:public.inventory_items",
+      "type": "static_sql_string",
+      "confidence": 0.85,
+      "evidence": "SQL literal execution in reports/analytics.py:58 -> inventory_items: SELECT\n            p.id,\n            p.sku,\n            p.name,\n            c.na",
+      "metadata": {
+        "lineno": 58,
+        "file": "reports/analytics.py",
+        "raw_sql": "SELECT\n            p.id,\n            p.sku,\n            p.name,\n            c.name AS category_name,\n            i.quantity_on_hand\n        FROM products p\n        JOIN categories c ON p.category_id = c.id\n        JOIN inventory_items i ON p.id = i.product_id\n        WHERE i.quantity_on_hand <= %s\n        ORDER BY i.quantity_on_hand ASC",
+        "table": "inventory_items",
+        "resolved_target": "table:public.inventory_items"
+      }
+    }
+  ],
+  "metrics": {
+    "total_nodes": 53,
+    "total_edges": 94,
+    "node_breakdown": {
+      "view": 1,
+      "partition": 2,
+      "table": 20,
+      "file": 8,
+      "function": 22
+    },
+    "edge_breakdown": {
+      "declared_fk": 16,
+      "inferred_naming": 23,
+      "structural_belongs_to": 22,
+      "static_sql_string": 27,
+      "dynamic_unresolved": 1,
+      "orm_call": 5
+    },
+    "code_to_db": {
+      "total_access_calls": 33,
+      "static_sql_count": 27,
+      "orm_call_count": 5,
+      "dynamic_unresolved_count": 1,
+      "dynamic_unresolved_ratio": 0.0303,
+      "kill_check_warning": false,
+      "tables_touched_count": 17,
+      "functions_touching_db_count": 21
+    }
+  }
+}

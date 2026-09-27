@@ -1,0 +1,199 @@
+{
+  "benchmark_meta": {
+    "version": "1.0.0",
+    "description": "SystemLens V1 Maintainer Evaluation Ground Truth Matrix",
+    "target_application": "Enterprise SaaS / E-Commerce Monolith",
+    "schema_file": "benchmark/schema.sql",
+    "code_root": "benchmark/app"
+  },
+  "test_cases": [
+    {
+      "target_id": "table:public.users",
+      "target_name": "users",
+      "domain": "Authentication & Identity",
+      "ground_truth": {
+        "expected_dependent_tables": [
+          "table:public.orders",
+          "table:public.user_roles",
+          "table:public.subscriptions",
+          "table:public.payment_methods",
+          "table:public.shipping_addresses",
+          "table:public.api_tokens",
+          "table:public.audit_logs"
+        ],
+        "expected_direct_functions": [
+          "func:auth/service.py:authenticate_user",
+          "func:auth/service.py:get_user_organizations",
+          "func:orders/checkout.py:place_order",
+          "func:reports/analytics.py:get_top_spending_users"
+        ],
+        "expected_direct_files": [
+          "file:auth/service.py",
+          "file:orders/checkout.py",
+          "file:reports/analytics.py"
+        ],
+        "negative_controls": [
+          "func:catalog/views.py:check_product_inventory",
+          "func:catalog/views.py:list_products_by_category",
+          "func:catalog/views.py:get_product_detail"
+        ]
+      }
+    },
+    {
+      "target_id": "table:public.orders",
+      "target_name": "orders",
+      "domain": "Orders & Checkout",
+      "ground_truth": {
+        "expected_dependent_tables": [
+          "table:public.order_items",
+          "table:public.shipments"
+        ],
+        "expected_direct_functions": [
+          "func:orders/checkout.py:place_order",
+          "func:orders/checkout.py:dispatch_shipment",
+          "func:orders/checkout.py:get_user_order_history",
+          "func:reports/analytics.py:get_top_spending_users"
+        ],
+        "expected_direct_files": [
+          "file:orders/checkout.py",
+          "file:reports/analytics.py"
+        ],
+        "negative_controls": [
+          "func:auth/service.py:verify_token",
+          "func:billing/processor.py:generate_invoice",
+          "func:catalog/views.py:list_products_by_category"
+        ]
+      }
+    },
+    {
+      "target_id": "table:public.invoices",
+      "target_name": "invoices",
+      "domain": "Billing & Invoicing",
+      "ground_truth": {
+        "expected_dependent_tables": [
+          "table:public.invoice_items",
+          "table:public.transactions"
+        ],
+        "expected_direct_functions": [
+          "func:billing/processor.py:generate_invoice",
+          "func:reports/analytics.py:get_monthly_revenue_report"
+        ],
+        "expected_direct_files": [
+          "file:billing/processor.py",
+          "file:reports/analytics.py"
+        ],
+        "negative_controls": [
+          "func:catalog/views.py:list_products_by_category",
+          "func:orders/checkout.py:place_order",
+          "func:auth/service.py:authenticate_user"
+        ]
+      }
+    },
+    {
+      "target_id": "table:public.products",
+      "target_name": "products",
+      "domain": "Catalog & Inventory",
+      "ground_truth": {
+        "expected_dependent_tables": [
+          "table:public.order_items",
+          "table:public.inventory_items"
+        ],
+        "expected_direct_functions": [
+          "func:catalog/views.py:list_products_by_category",
+          "func:catalog/views.py:get_product_detail",
+          "func:reports/analytics.py:get_low_inventory_alerts"
+        ],
+        "expected_direct_files": [
+          "file:catalog/views.py",
+          "file:reports/analytics.py"
+        ],
+        "negative_controls": [
+          "func:auth/service.py:assign_user_role",
+          "func:billing/processor.py:charge_payment_method",
+          "func:orders/checkout.py:dispatch_shipment"
+        ]
+      }
+    },
+    {
+      "target_id": "table:public.audit_logs",
+      "target_name": "audit_logs",
+      "domain": "Audit & Compliance",
+      "ground_truth": {
+        "expected_dependent_tables": [],
+        "expected_direct_functions": [
+          "func:audit/logger.py:log_audit_event",
+          "func:audit/logger.py:search_logs_by_user"
+        ],
+        "expected_direct_files": [
+          "file:audit/logger.py"
+        ],
+        "expected_blind_spots": [
+          "func:audit/logger.py:query_audit_logs_dynamic"
+        ],
+        "negative_controls": [
+          "func:billing/processor.py:process_subscription_renewals",
+          "func:catalog/views.py:check_product_inventory"
+        ]
+      }
+    },
+    {
+      "target_id": "table:public.payment_methods",
+      "target_name": "payment_methods",
+      "domain": "Payments & Transactions",
+      "ground_truth": {
+        "expected_dependent_tables": [
+          "table:public.transactions"
+        ],
+        "expected_direct_functions": [
+          "func:billing/processor.py:charge_payment_method"
+        ],
+        "expected_direct_files": [
+          "file:billing/processor.py"
+        ],
+        "negative_controls": [
+          "func:catalog/views.py:get_product_detail",
+          "func:orders/checkout.py:dispatch_shipment"
+        ]
+      }
+    },
+    {
+      "target_id": "table:public.shipments",
+      "target_name": "shipments",
+      "domain": "Fulfillment & Shipping",
+      "ground_truth": {
+        "expected_dependent_tables": [],
+        "expected_direct_functions": [
+          "func:orders/checkout.py:dispatch_shipment",
+          "func:orders/checkout.py:get_user_order_history"
+        ],
+        "expected_direct_files": [
+          "file:orders/checkout.py"
+        ],
+        "negative_controls": [
+          "func:auth/service.py:authenticate_user",
+          "func:billing/processor.py:add_invoice_items"
+        ]
+      }
+    },
+    {
+      "target_id": "table:public.subscriptions",
+      "target_name": "subscriptions",
+      "domain": "Subscriptions & Recurring Billing",
+      "ground_truth": {
+        "expected_dependent_tables": [
+          "table:public.invoices"
+        ],
+        "expected_direct_functions": [
+          "func:billing/processor.py:process_subscription_renewals"
+        ],
+        "expected_direct_files": [
+          "file:billing/processor.py"
+        ],
+        "negative_controls": [
+          "func:orders/checkout.py:place_order",
+          "func:catalog/views.py:list_products_by_category"
+        ]
+      }
+    }
+  ]
+}

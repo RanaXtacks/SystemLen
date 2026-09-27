@@ -1,0 +1,59 @@
+name: SystemLens Impact Analysis
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '**.py'
+      - '**.sql'
+      - 'graph.json'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  impact-analysis:
+    name: Blast Radius Impact Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install SystemLens
+        run: |
+          python -m pip install --upgrade pip
+          pip install .
+
+      - name: Ensure Graph Available
+        run: |
+          if [ ! -f graph.json ]; then
+            echo "graph.json not found in repository root; generating AST graph from codebase..."
+            systemlens analyze-python --src-dir . --merged-graph-output graph.json
+          fi
+
+      - name: Run SystemLens CI Diff
+        id: run_ci_diff
+        run: |
+          systemlens ci-diff \
+            --base "${{ github.event.pull_request.base.sha }}" \
+            --head "${{ github.event.pull_request.head.sha }}" \
+            --graph graph.json \
+            --format markdown \
+            --output impact-report.md
+        continue-on-error: true
+
+      - name: Post PR Blast Radius Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: steps.run_ci_diff.outcome == 'success' && hashFiles('impact-report.md') != ''
+        with:
+          path: impact-report.md
+          header: systemlens-blast-radius-analysis
