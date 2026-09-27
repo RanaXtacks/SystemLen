@@ -50,13 +50,24 @@ export class SystemLensCodeLensProvider implements vscode.CodeLensProvider {
     }
   }
 
-  public refresh(): void {
-    this.reloadGraph();
+  public setGraphData(graph: any): void {
+    this.graphData = graph;
+    this.buildIndex();
+    this._onDidChangeCodeLenses.fire();
+  }
+
+  public refresh(graph?: any): void {
+    if (graph !== undefined) {
+      this.graphData = graph;
+      this.buildIndex();
+    } else {
+      this.reloadGraph();
+    }
     this._onDidChangeCodeLenses.fire();
   }
 
   /**
-   * Builds an index: normalized_file_path -> (func_name -> [touched_table_names])
+   * Builds an index: normalized_file_path -> (func_name -> { tables: string[], line?: number })
    */
   private buildIndex(): void {
     this.cachedFileMap.clear();
@@ -137,35 +148,53 @@ export class SystemLensCodeLensProvider implements vscode.CodeLensProvider {
     const text = document.getText();
     const lines = text.split("\n");
 
-    const funcDefRegex = /^(?:\s*)(?:async\s+)?def\s+([a-zA-Z0-9_]+)\s*\(/;
+    // Multi-language function definition patterns:
+    // Python, JS/TS, Go, Java, Ruby, PHP
+    const multiLangRegexes = [
+      /^(?:\s*)(?:async\s+)?def\s+([a-zA-Z0-9_]+)\s*\(/, // Python
+      /^(?:\s*)(?:export\s+)?(?:default\s+)?(?:async\s+)?function\s+([a-zA-Z0-9_]+)\s*\(/, // JS/TS function
+      /^(?:\s*)(?:export\s+)?(?:const|let|var)\s+([a-zA-Z0-9_]+)\s*=\s*(?:async\s*)?\(/, // JS/TS arrow/expr
+      /^(?:\s*)func\s+(?:\([^)]+\)\s+)?([a-zA-Z0-9_]+)\s*\(/, // Go func or method
+      /^(?:\s*)(?:public|protected|private|static|final|\s)+[\w<>\[\], ?]+\s+([a-zA-Z0-9_]+)\s*\(/, // Java/Kotlin
+      /^(?:\s*)def\s+([a-zA-Z0-9_]+)/, // Ruby
+      /^(?:\s*)(?:public|protected|private|static|\s)*function\s+([a-zA-Z0-9_]+)\s*\(/, // PHP
+    ];
+
+    const matchedLines = new Set<number>();
 
     for (let i = 0; i < lines.length; i++) {
-      const match = funcDefRegex.exec(lines[i]);
-      if (match) {
-        const funcName = match[1];
-        if (fileFuncMap.has(funcName)) {
-          const touchedTables = fileFuncMap.get(funcName)!;
-          const range = new vscode.Range(i, 0, i, lines[i].length);
+      const line = lines[i];
 
-          const tablesSummary = touchedTables.slice(0, 3).join(", ");
-          const more =
-            touchedTables.length > 3
-              ? ` +${touchedTables.length - 3} more`
-              : "";
+      for (const regex of multiLangRegexes) {
+        const match = regex.exec(line);
+        if (match) {
+          const funcName = match[1];
+          if (fileFuncMap.has(funcName) && !matchedLines.has(i)) {
+            matchedLines.add(i);
+            const touchedTables = fileFuncMap.get(funcName)!;
+            const range = new vscode.Range(i, 0, i, line.length);
 
-          const title = `⚡ SystemLens: Touches ${touchedTables.length} table${
-            touchedTables.length === 1 ? "" : "s"
-          } (${tablesSummary}${more}) — View Blast Radius`;
+            const tablesSummary = touchedTables.slice(0, 3).join(", ");
+            const more =
+              touchedTables.length > 3
+                ? ` +${touchedTables.length - 3} more`
+                : "";
 
-          const primaryTable = touchedTables[0];
-          const command: vscode.Command = {
-            title,
-            command: "systemlens.analyzeTable",
-            arguments: [primaryTable],
-            tooltip: `Click to view blast radius for '${primaryTable}'`,
-          };
+            const title = `⚡ SystemLens: Touches ${touchedTables.length} table${
+              touchedTables.length === 1 ? "" : "s"
+            } (${tablesSummary}${more}) — View Blast Radius`;
 
-          codeLenses.push(new vscode.CodeLens(range, command));
+            const primaryTable = touchedTables[0];
+            const command: vscode.Command = {
+              title,
+              command: "systemlens.analyzeTable",
+              arguments: [primaryTable],
+              tooltip: `Click to view blast radius for '${primaryTable}'`,
+            };
+
+            codeLenses.push(new vscode.CodeLens(range, command));
+            break;
+          }
         }
       }
     }

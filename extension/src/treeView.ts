@@ -70,8 +70,17 @@ export class SystemLensTreeProvider implements vscode.TreeDataProvider<TreeNode>
     }
   }
 
-  public refresh(): void {
-    this.reloadGraph();
+  public setGraphData(graph: GraphData | null): void {
+    this.graphData = graph;
+    this._onDidChangeTreeData.fire();
+  }
+
+  public refresh(graph?: GraphData | null): void {
+    if (graph !== undefined) {
+      this.graphData = graph;
+    } else {
+      this.reloadGraph();
+    }
     this._onDidChangeTreeData.fire();
   }
 
@@ -80,13 +89,19 @@ export class SystemLensTreeProvider implements vscode.TreeDataProvider<TreeNode>
   }
 
   getChildren(element?: TreeNode): Thenable<TreeNode[]> {
-    if (!this.graphData) {
-      const noGraphNode = new TreeNode(
-        "No graph.json found (Run 'analyze-python' to generate)",
-        vscode.TreeItemCollapsibleState.None
+    if (!this.graphData || !this.graphData.nodes || this.graphData.nodes.length === 0) {
+      const rescanNode = new TreeNode(
+        "No database dependencies indexed yet (Click to Rescan)",
+        vscode.TreeItemCollapsibleState.None,
+        "action",
+        undefined,
+        {
+          command: "systemlens.rescanProject",
+          title: "Rescan Workspace",
+        }
       );
-      noGraphNode.iconPath = new vscode.ThemeIcon("info");
-      return Promise.resolve([noGraphNode]);
+      rescanNode.iconPath = new vscode.ThemeIcon("sync");
+      return Promise.resolve([rescanNode]);
     }
 
     if (!element) {

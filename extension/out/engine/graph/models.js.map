@@ -1,0 +1,1 @@
+{"version":3,"file":"models.js","sourceRoot":"","sources":["../../../src/engine/graph/models.ts"],"names":[],"mappings":";;;AAUa,QAAA,YAAY,GAA6B;IACpD,WAAW,EAAE,GAAG;IAChB,qBAAqB,EAAE,GAAG;IAC1B,iBAAiB,EAAE,IAAI;IACvB,QAAQ,EAAE,IAAI;IACd,eAAe,EAAE,IAAI;IACrB,kBAAkB,EAAE,IAAI;CACzB,CAAC"}

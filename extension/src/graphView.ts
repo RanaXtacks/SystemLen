@@ -6,41 +6,46 @@ import { getGraphWebviewContent } from "./graphWebview";
 export class GraphViewManager {
   private static currentPanel: vscode.WebviewPanel | undefined;
 
-  public static show(context: vscode.ExtensionContext, workspaceRoot: string): void {
-    const config = vscode.workspace.getConfiguration("systemlens");
-    const configuredPath = config.get<string>("graphPath", "graph.json");
+  public static show(context: vscode.ExtensionContext, workspaceRoot: string, inMemoryGraph?: any): void {
+    let graphData: any = inMemoryGraph;
 
-    let graphPath = path.isAbsolute(configuredPath)
-      ? configuredPath
-      : path.join(workspaceRoot, configuredPath);
+    if (!graphData) {
+      const config = vscode.workspace.getConfiguration("systemlens");
+      const configuredPath = config.get<string>("graphPath", "graph.json");
 
-    if (!fs.existsSync(graphPath)) {
-      const fallbacks = [
-        path.join(workspaceRoot, "graph.json"),
-        path.join(workspaceRoot, "benchmark", "benchmark_graph.json"),
-        path.join(workspaceRoot, ".systemlens", "graph.json"),
-      ];
-      for (const fb of fallbacks) {
-        if (fs.existsSync(fb)) {
-          graphPath = fb;
-          break;
+      let graphPath = path.isAbsolute(configuredPath)
+        ? configuredPath
+        : path.join(workspaceRoot, configuredPath);
+
+      if (!fs.existsSync(graphPath)) {
+        const fallbacks = [
+          path.join(workspaceRoot, ".systemlens", "graph.json"),
+          path.join(workspaceRoot, "graph.json"),
+          path.join(workspaceRoot, "benchmark", "benchmark_graph.json"),
+        ];
+        for (const fb of fallbacks) {
+          if (fs.existsSync(fb)) {
+            graphPath = fb;
+            break;
+          }
+        }
+      }
+
+      if (fs.existsSync(graphPath)) {
+        try {
+          const raw = fs.readFileSync(graphPath, "utf-8");
+          graphData = JSON.parse(raw);
+        } catch (e) {
+          vscode.window.showErrorMessage(`SystemLens: Failed to read graph file: ${e}`);
+          return;
         }
       }
     }
 
-    if (!fs.existsSync(graphPath)) {
+    if (!graphData) {
       vscode.window.showErrorMessage(
-        "SystemLens: No graph.json found. Run 'systemlens analyze-python' first."
+        "SystemLens: No dependency graph available. Rescan the project or wait for indexing to finish."
       );
-      return;
-    }
-
-    let graphData: any;
-    try {
-      const raw = fs.readFileSync(graphPath, "utf-8");
-      graphData = JSON.parse(raw);
-    } catch (e) {
-      vscode.window.showErrorMessage(`SystemLens: Failed to read graph file: ${e}`);
       return;
     }
 

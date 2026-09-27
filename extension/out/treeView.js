@@ -65,18 +65,30 @@ class SystemLensTreeProvider {
             this.graphPath = null;
         }
     }
-    refresh() {
-        this.reloadGraph();
+    setGraphData(graph) {
+        this.graphData = graph;
+        this._onDidChangeTreeData.fire();
+    }
+    refresh(graph) {
+        if (graph !== undefined) {
+            this.graphData = graph;
+        }
+        else {
+            this.reloadGraph();
+        }
         this._onDidChangeTreeData.fire();
     }
     getTreeItem(element) {
         return element;
     }
     getChildren(element) {
-        if (!this.graphData) {
-            const noGraphNode = new TreeNode("No graph.json found (Run 'analyze-python' to generate)", vscode.TreeItemCollapsibleState.None);
-            noGraphNode.iconPath = new vscode.ThemeIcon("info");
-            return Promise.resolve([noGraphNode]);
+        if (!this.graphData || !this.graphData.nodes || this.graphData.nodes.length === 0) {
+            const rescanNode = new TreeNode("No database dependencies indexed yet (Click to Rescan)", vscode.TreeItemCollapsibleState.None, "action", undefined, {
+                command: "systemlens.rescanProject",
+                title: "Rescan Workspace",
+            });
+            rescanNode.iconPath = new vscode.ThemeIcon("sync");
+            return Promise.resolve([rescanNode]);
         }
         if (!element) {
             // Root items

@@ -29,13 +29,29 @@ class SystemLensDecorationProvider {
             overviewRulerLane: vscode.OverviewRulerLane.Right,
         });
     }
+    static SUPPORTED_LANGS = new Set([
+        "python",
+        "javascript",
+        "typescript",
+        "javascriptreact",
+        "typescriptreact",
+        "go",
+        "java",
+        "ruby",
+        "php",
+        "rust",
+        "csharp",
+        "c",
+        "cpp",
+        "sql",
+    ]);
     updateDecorations(editor) {
         if (!editor) {
             return;
         }
         const document = editor.document;
         const lang = document.languageId;
-        if (lang !== "python" && lang !== "javascript" && lang !== "typescript") {
+        if (!SystemLensDecorationProvider.SUPPORTED_LANGS.has(lang)) {
             return;
         }
         const text = document.getText();
@@ -45,10 +61,16 @@ class SystemLensDecorationProvider {
         const dynamicSqlDecorations = [];
         // Static SQL regex (literal SELECT/INSERT/UPDATE/DELETE/FROM in string)
         const sqlRegex = /["'`](?:SELECT|INSERT\s+INTO|UPDATE|DELETE\s+FROM|CREATE\s+TABLE|ALTER\s+TABLE)\b/i;
-        // ORM call patterns (.objects.filter, .objects.create, .findMany, etc.)
-        const ormRegex = /\b(?:objects\.(?:filter|get|create|update|all|exclude|values)|query\.(?:filter|all|first)|session\.query|\.(?:findAll|findUnique|findMany|create|update|destroy)\s*\()/;
-        // Dynamic execution without static literal (execute(var), raw(var))
-        const dynamicRegex = /\b(?:cursor\.execute|execute|raw)\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*[,)]/;
+        // Multi-backend ORM call patterns:
+        // - Python: objects.filter/create, session.query
+        // - JS/TS: findMany, findUnique, create, update, destroy
+        // - Go: db.Find, db.Where, db.Create, db.Table
+        // - Java: @Query, findBy, findAll, save
+        // - Ruby: .where, .find_by, .create
+        // - PHP: DB::table, ->where, ->find
+        const ormRegex = /\b(?:objects\.(?:filter|get|create|update|all|exclude|values)|query\.(?:filter|all|first)|session\.query|\.(?:findAll|findUnique|findMany|create|update|destroy|where|find_by|FindBy)\s*\(|db\.(?:Find|Where|Create|Table|First)\s*\(|DB::table\s*\(|@Query\s*\()/;
+        // Dynamic execution without static literal (execute(var), raw(var), db.Raw(var), etc.)
+        const dynamicRegex = /\b(?:cursor\.execute|execute|raw|client\.query|db\.Raw|db\.Exec|em\.createNativeQuery|DB::raw|DB::statement)\s*\(\s*[$a-zA-Z_][a-zA-Z0-9_]*\s*[,)]/;
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
             const range = new vscode.Range(i, 0, i, line.length);

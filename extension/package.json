@@ -1,8 +1,8 @@
 {
   "name": "systemlens",
   "displayName": "SystemLens",
-  "description": "Cross-layer database dependency tracing and blast radius impact analysis.",
-  "version": "0.2.0",
+  "description": "Zero-config universal database dependency tracing and blast radius impact analysis for any backend (Python, TypeScript, Go, Java, Ruby, PHP, SQL).",
+  "version": "0.3.0",
   "publisher": "SystemLens",
   "license": "MIT",
   "repository": {
@@ -10,13 +10,18 @@
     "url": "https://github.com/RanaXtacks/SystemLen"
   },
   "keywords": [
-    "postgresql",
-    "python",
-    "ast",
+    "database",
+    "sql",
     "impact-analysis",
     "blast-radius",
     "dependency-graph",
-    "codelens"
+    "codelens",
+    "python",
+    "typescript",
+    "golang",
+    "java",
+    "ruby",
+    "php"
   ],
   "engines": {
     "vscode": "^1.80.0"
@@ -63,6 +68,12 @@
         "icon": "$(graph)"
       },
       {
+        "command": "systemlens.rescanProject",
+        "title": "Rescan Workspace",
+        "category": "SystemLens",
+        "icon": "$(sync)"
+      },
+      {
         "command": "systemlens.refreshExplorer",
         "title": "Refresh Explorer",
         "category": "SystemLens",
@@ -99,6 +110,11 @@
       ],
       "view/title": [
         {
+          "command": "systemlens.rescanProject",
+          "when": "view == systemlens-explorer",
+          "group": "navigation@0"
+        },
+        {
           "command": "systemlens.refreshExplorer",
           "when": "view == systemlens-explorer",
           "group": "navigation@1"
@@ -113,6 +129,16 @@
     "configuration": {
       "title": "SystemLens",
       "properties": {
+        "systemlens.autoScanOnOpen": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically discover schemas and code dependencies upon workspace open."
+        },
+        "systemlens.autoScanOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Incrementally re-index dependencies when files are saved."
+        },
         "systemlens.graphPath": {
           "type": "string",
           "default": "graph.json",
