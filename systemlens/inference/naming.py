@@ -254,6 +254,11 @@ def infer_edges_from_naming(
     for full_name, info in tables.items():
         bare_name = info["name"].lower()
         table_name_lookup.setdefault(bare_name, []).append(full_name)
+        # Also index suffix for prefixed tables (e.g. Django app_model: 'account_user' -> 'user')
+        if "_" in bare_name:
+            suffix_name = bare_name.split("_", 1)[1]
+            if suffix_name and suffix_name not in table_name_lookup:
+                table_name_lookup.setdefault(suffix_name, []).append(full_name)
 
     base_weight = BASE_WEIGHTS[EdgeType.INFERRED_NAMING]
     edges: list[Edge] = []

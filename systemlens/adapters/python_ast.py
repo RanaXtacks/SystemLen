@@ -65,6 +65,38 @@ NON_TABLE_WORDS = {
     "OFFSET",
     "(",
     ")",
+    "THE",
+    "A",
+    "AN",
+    "THIS",
+    "THAT",
+    "THESE",
+    "THOSE",
+    "BATCH",
+    "ALL",
+    "ANY",
+    "EACH",
+    "EVERY",
+    "ONE",
+    "ROW",
+    "ROWS",
+    "DATA",
+    "IS",
+    "ARE",
+    "WAS",
+    "WERE",
+    "NOT",
+    "AND",
+    "OR",
+    "IN",
+    "ON",
+    "BY",
+    "FOR",
+    "WITH",
+    "AS",
+    "AT",
+    "TO",
+    "FROM",
 }
 
 
@@ -158,7 +190,10 @@ def _extract_django_model_name(node: ast.AST) -> str | None:
     curr = node
     while isinstance(curr, ast.Attribute):
         if curr.attr == "objects" and isinstance(curr.value, ast.Name):
-            return curr.value.id
+            name = curr.value.id
+            if name and name[0].isupper():
+                return name
+            return None
         curr = curr.value
     return None
 
