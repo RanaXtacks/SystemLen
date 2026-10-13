@@ -1,0 +1,6875 @@
+{
+  "models": {
+    "Address": {
+      "app": "account",
+      "table": "account_address",
+      "fields": [
+        "first_name",
+        "last_name",
+        "company_name",
+        "street_address_1",
+        "street_address_2",
+        "city",
+        "city_area",
+        "postal_code",
+        "country",
+        "country_area",
+        "phone",
+        "validation_skipped",
+        "objects",
+        "__hash__"
+      ],
+      "fks": []
+    },
+    "CustomerType": {
+      "app": "account",
+      "table": "account_customertype",
+      "fields": [
+        "name",
+        "slug",
+        "is_default"
+      ],
+      "fks": []
+    },
+    "User": {
+      "app": "account",
+      "table": "account_user",
+      "fields": [
+        "email",
+        "first_name",
+        "last_name",
+        "addresses",
+        "is_staff",
+        "is_active",
+        "is_confirmed",
+        "last_confirm_email_request",
+        "note",
+        "date_joined",
+        "updated_at",
+        "last_password_reset_request",
+        "default_shipping_address",
+        "default_billing_address",
+        "avatar",
+        "jwt_token_key",
+        "language_code",
+        "search_vector",
+        "search_document",
+        "uuid",
+        "customer_type",
+        "number_of_orders",
+        "USERNAME_FIELD",
+        "NEWLY_CREATED_USER",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "default_shipping_address",
+          "column": "default_shipping_address_id",
+          "target_model": "Address"
+        },
+        {
+          "field": "default_billing_address",
+          "column": "default_billing_address_id",
+          "target_model": "Address"
+        },
+        {
+          "field": "customer_type",
+          "column": "customer_type_id",
+          "target_model": "CustomerType"
+        }
+      ]
+    },
+    "CustomerNote": {
+      "app": "account",
+      "table": "account_customernote",
+      "fields": [
+        "user",
+        "date",
+        "content",
+        "is_public",
+        "customer"
+      ],
+      "fks": [
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "AUTH_USER_MODEL"
+        },
+        {
+          "field": "customer",
+          "column": "customer_id",
+          "target_model": "AUTH_USER_MODEL"
+        }
+      ]
+    },
+    "CustomerEvent": {
+      "app": "account",
+      "table": "account_customerevent",
+      "fields": [
+        "date",
+        "type",
+        "order",
+        "parameters",
+        "user",
+        "app"
+      ],
+      "fks": [
+        {
+          "field": "order",
+          "column": "order_id",
+          "target_model": "Order"
+        },
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "User"
+        },
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        }
+      ]
+    },
+    "StaffNotificationRecipient": {
+      "app": "account",
+      "table": "account_staffnotificationrecipient",
+      "fields": [
+        "user",
+        "staff_email",
+        "active"
+      ],
+      "fks": [
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "User"
+        }
+      ]
+    },
+    "Group": {
+      "app": "account",
+      "table": "account_group",
+      "fields": [
+        "name",
+        "permissions",
+        "restricted_access_to_channels",
+        "channels",
+        "objects"
+      ],
+      "fks": []
+    },
+    "App": {
+      "app": "app",
+      "table": "app_app",
+      "fields": [
+        "uuid",
+        "name",
+        "created_at",
+        "is_active",
+        "removed_at",
+        "type",
+        "identifier",
+        "permissions",
+        "about_app",
+        "data_privacy",
+        "data_privacy_url",
+        "homepage_url",
+        "support_url",
+        "configuration_url",
+        "app_url",
+        "manifest_url",
+        "version",
+        "audience",
+        "is_installed",
+        "author",
+        "brand_logo_default",
+        "objects"
+      ],
+      "fks": []
+    },
+    "AppToken": {
+      "app": "app",
+      "table": "app_apptoken",
+      "fields": [
+        "app",
+        "name",
+        "auth_token",
+        "token_last_4",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        }
+      ]
+    },
+    "AppExtension": {
+      "app": "app",
+      "table": "app_appextension",
+      "fields": [
+        "app",
+        "label",
+        "url",
+        "mount",
+        "target",
+        "permissions",
+        "http_target_method",
+        "settings",
+        "identifier"
+      ],
+      "fks": [
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        }
+      ]
+    },
+    "AppProblem": {
+      "app": "app",
+      "table": "app_appproblem",
+      "fields": [
+        "MAX_PROBLEMS_PER_APP",
+        "app",
+        "created_at",
+        "updated_at",
+        "message",
+        "key",
+        "count",
+        "is_critical",
+        "dismissed",
+        "dismissed_by_user_email",
+        "dismissed_by_user"
+      ],
+      "fks": [
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        },
+        {
+          "field": "dismissed_by_user",
+          "column": "dismissed_by_user_id",
+          "target_model": "User"
+        }
+      ]
+    },
+    "Channel": {
+      "app": "channel",
+      "table": "channel_channel",
+      "fields": [
+        "name",
+        "is_active",
+        "slug",
+        "currency_code",
+        "default_country",
+        "allocation_strategy",
+        "order_mark_as_paid_strategy",
+        "default_transaction_flow_strategy",
+        "automatically_confirm_all_new_orders",
+        "allow_unpaid_orders",
+        "automatically_fulfill_non_shippable_gift_card",
+        "expire_orders_after",
+        "delete_expired_orders_after",
+        "include_draft_order_in_voucher_usage",
+        "use_legacy_error_flow_for_checkout",
+        "automatically_complete_fully_paid_checkouts",
+        "automatic_completion_delay",
+        "automatic_completion_cut_off_date",
+        "draft_order_line_price_freeze_period",
+        "use_legacy_line_discount_propagation_for_order",
+        "release_funds_for_expired_checkouts",
+        "checkout_ttl_before_releasing_funds",
+        "checkout_release_funds_cut_off_date",
+        "allow_legacy_gift_card_use"
+      ],
+      "fks": []
+    },
+    "CheckoutDelivery": {
+      "app": "checkout",
+      "table": "checkout_checkoutdelivery",
+      "fields": [
+        "id",
+        "checkout",
+        "external_shipping_method_id",
+        "built_in_shipping_method_id",
+        "name",
+        "description",
+        "price",
+        "price_amount",
+        "currency",
+        "maximum_delivery_days",
+        "minimum_delivery_days",
+        "metadata",
+        "private_metadata",
+        "active",
+        "message",
+        "is_external",
+        "is_valid",
+        "created_at",
+        "updated_at",
+        "tax_class_id",
+        "tax_class_name",
+        "tax_class_private_metadata",
+        "tax_class_metadata"
+      ],
+      "fks": [
+        {
+          "field": "checkout",
+          "column": "checkout_id",
+          "target_model": "Checkout"
+        }
+      ]
+    },
+    "Checkout": {
+      "app": "checkout",
+      "table": "checkout_checkout",
+      "fields": [
+        "created_at",
+        "last_change",
+        "completing_started_at",
+        "last_transaction_modified_at",
+        "automatically_refundable",
+        "last_automatic_completion_attempt",
+        "user",
+        "email",
+        "token",
+        "channel",
+        "save_billing_address",
+        "billing_address",
+        "save_shipping_address",
+        "shipping_address",
+        "shipping_method",
+        "shipping_method_name",
+        "external_shipping_method_id",
+        "collection_point",
+        "note",
+        "currency",
+        "country",
+        "total_net_amount",
+        "total_gross_amount",
+        "total",
+        "base_total_amount",
+        "base_total",
+        "subtotal_net_amount",
+        "subtotal_gross_amount",
+        "subtotal",
+        "base_subtotal_amount",
+        "base_subtotal",
+        "shipping_price_net_amount",
+        "shipping_price_gross_amount",
+        "shipping_price",
+        "shipping_tax_rate",
+        "undiscounted_base_shipping_price_amount",
+        "undiscounted_base_shipping_price",
+        "authorize_status",
+        "charge_status",
+        "delivery_methods_stale_at",
+        "price_expiration",
+        "discount_expiration",
+        "assigned_delivery",
+        "discount_amount",
+        "discount",
+        "discount_name",
+        "translated_discount_name",
+        "gift_cards",
+        "voucher_code",
+        "is_voucher_usage_increased",
+        "redirect_url",
+        "tracking_code",
+        "language_code",
+        "tax_exemption",
+        "tax_error",
+        "search_vector",
+        "search_index_dirty"
+      ],
+      "fks": [
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "AUTH_USER_MODEL"
+        },
+        {
+          "field": "channel",
+          "column": "channel_id",
+          "target_model": "Channel"
+        },
+        {
+          "field": "billing_address",
+          "column": "billing_address_id",
+          "target_model": "Address"
+        },
+        {
+          "field": "shipping_address",
+          "column": "shipping_address_id",
+          "target_model": "Address"
+        },
+        {
+          "field": "shipping_method",
+          "column": "shipping_method_id",
+          "target_model": "ShippingMethod"
+        },
+        {
+          "field": "collection_point",
+          "column": "collection_point_id",
+          "target_model": "Warehouse"
+        },
+        {
+          "field": "assigned_delivery",
+          "column": "assigned_delivery_id",
+          "target_model": "CheckoutDelivery"
+        }
+      ]
+    },
+    "CheckoutLine": {
+      "app": "checkout",
+      "table": "checkout_checkoutline",
+      "fields": [
+        "id",
+        "old_id",
+        "created_at",
+        "checkout",
+        "variant",
+        "quantity",
+        "is_gift",
+        "price_override",
+        "price_override_reason",
+        "currency",
+        "undiscounted_unit_price_amount",
+        "undiscounted_unit_price",
+        "prior_unit_price_amount",
+        "prior_unit_price",
+        "total_price_net_amount",
+        "total_price_gross_amount",
+        "total_price",
+        "tax_rate",
+        "__hash__"
+      ],
+      "fks": [
+        {
+          "field": "checkout",
+          "column": "checkout_id",
+          "target_model": "Checkout"
+        },
+        {
+          "field": "variant",
+          "column": "variant_id",
+          "target_model": "ProductVariant"
+        }
+      ]
+    },
+    "CheckoutMetadata": {
+      "app": "checkout",
+      "table": "checkout_checkoutmetadata",
+      "fields": [
+        "checkout"
+      ],
+      "fks": [
+        {
+          "field": "checkout",
+          "column": "checkout_id",
+          "target_model": "Checkout"
+        }
+      ]
+    },
+    "SortableModel": {
+      "app": "core",
+      "table": "core_sortablemodel",
+      "fields": [
+        "sort_order"
+      ],
+      "fks": []
+    },
+    "PublishableModel": {
+      "app": "core",
+      "table": "core_publishablemodel",
+      "fields": [
+        "published_at",
+        "is_published"
+      ],
+      "fks": []
+    },
+    "ModelWithMetadata": {
+      "app": "core",
+      "table": "core_modelwithmetadata",
+      "fields": [
+        "private_metadata",
+        "metadata"
+      ],
+      "fks": []
+    },
+    "ModelWithExternalReference": {
+      "app": "core",
+      "table": "core_modelwithexternalreference",
+      "fields": [
+        "external_reference"
+      ],
+      "fks": []
+    },
+    "Job": {
+      "app": "core",
+      "table": "core_job",
+      "fields": [
+        "status",
+        "message",
+        "created_at",
+        "updated_at"
+      ],
+      "fks": []
+    },
+    "EventPayload": {
+      "app": "core",
+      "table": "core_eventpayload",
+      "fields": [
+        "PAYLOADS_DIR",
+        "payload",
+        "payload_file",
+        "created_at",
+        "objects"
+      ],
+      "fks": []
+    },
+    "EventDelivery": {
+      "app": "core",
+      "table": "core_eventdelivery",
+      "fields": [
+        "created_at",
+        "status",
+        "event_type",
+        "payload",
+        "webhook"
+      ],
+      "fks": [
+        {
+          "field": "payload",
+          "column": "payload_id",
+          "target_model": "EventPayload"
+        },
+        {
+          "field": "webhook",
+          "column": "webhook_id",
+          "target_model": "Webhook"
+        }
+      ]
+    },
+    "EventDeliveryAttempt": {
+      "app": "core",
+      "table": "core_eventdeliveryattempt",
+      "fields": [
+        "delivery",
+        "created_at",
+        "task_id",
+        "duration",
+        "response",
+        "response_headers",
+        "response_status_code",
+        "request_headers",
+        "status"
+      ],
+      "fks": [
+        {
+          "field": "delivery",
+          "column": "delivery_id",
+          "target_model": "EventDelivery"
+        }
+      ]
+    },
+    "ExportEvent": {
+      "app": "csv",
+      "table": "csv_exportevent",
+      "fields": [
+        "date",
+        "type",
+        "parameters",
+        "export_file",
+        "user",
+        "app"
+      ],
+      "fks": [
+        {
+          "field": "export_file",
+          "column": "export_file_id",
+          "target_model": "ExportFile"
+        },
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "User"
+        },
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        }
+      ]
+    },
+    "Voucher": {
+      "app": "discount",
+      "table": "discount_voucher",
+      "fields": [
+        "type",
+        "name",
+        "usage_limit",
+        "start_date",
+        "end_date",
+        "apply_once_per_order",
+        "apply_once_per_customer",
+        "single_use",
+        "only_for_staff",
+        "discount_value_type",
+        "countries",
+        "min_checkout_items_quantity",
+        "products",
+        "variants",
+        "collections",
+        "categories",
+        "objects"
+      ],
+      "fks": []
+    },
+    "VoucherCode": {
+      "app": "discount",
+      "table": "discount_vouchercode",
+      "fields": [
+        "id",
+        "code",
+        "used",
+        "is_active",
+        "voucher",
+        "created_at"
+      ],
+      "fks": [
+        {
+          "field": "voucher",
+          "column": "voucher_id",
+          "target_model": "Voucher"
+        }
+      ]
+    },
+    "VoucherChannelListing": {
+      "app": "discount",
+      "table": "discount_voucherchannellisting",
+      "fields": [
+        "voucher",
+        "channel",
+        "discount_value",
+        "discount",
+        "currency",
+        "min_spent_amount",
+        "min_spent"
+      ],
+      "fks": [
+        {
+          "field": "voucher",
+          "column": "voucher_id",
+          "target_model": "Voucher"
+        },
+        {
+          "field": "channel",
+          "column": "channel_id",
+          "target_model": "Channel"
+        }
+      ]
+    },
+    "VoucherCustomer": {
+      "app": "discount",
+      "table": "discount_vouchercustomer",
+      "fields": [
+        "voucher_code",
+        "customer_email"
+      ],
+      "fks": [
+        {
+          "field": "voucher_code",
+          "column": "voucher_code_id",
+          "target_model": "VoucherCode"
+        }
+      ]
+    },
+    "Promotion": {
+      "app": "discount",
+      "table": "discount_promotion",
+      "fields": [
+        "id",
+        "name",
+        "type",
+        "description",
+        "old_sale_id",
+        "start_date",
+        "end_date",
+        "created_at",
+        "updated_at",
+        "last_notification_scheduled_at",
+        "objects"
+      ],
+      "fks": []
+    },
+    "PromotionRule": {
+      "app": "discount",
+      "table": "discount_promotionrule",
+      "fields": [
+        "id",
+        "name",
+        "description",
+        "promotion",
+        "channels",
+        "catalogue_predicate",
+        "order_predicate",
+        "variants",
+        "reward_value_type",
+        "reward_value",
+        "reward_type",
+        "gifts",
+        "old_channel_listing_id",
+        "variants_dirty"
+      ],
+      "fks": [
+        {
+          "field": "promotion",
+          "column": "promotion_id",
+          "target_model": "Promotion"
+        }
+      ]
+    },
+    "PromotionRule_Variants": {
+      "app": "discount",
+      "table": "discount_promotionrule_variants",
+      "fields": [
+        "id",
+        "promotionrule",
+        "productvariant"
+      ],
+      "fks": [
+        {
+          "field": "promotionrule",
+          "column": "promotionrule_id",
+          "target_model": "PromotionRule"
+        },
+        {
+          "field": "productvariant",
+          "column": "productvariant_id",
+          "target_model": "ProductVariant"
+        }
+      ]
+    },
+    "BaseDiscount": {
+      "app": "discount",
+      "table": "discount_basediscount",
+      "fields": [
+        "id",
+        "created_at",
+        "type",
+        "value_type",
+        "value",
+        "amount_value",
+        "amount",
+        "currency",
+        "name",
+        "translated_name",
+        "reason",
+        "promotion_rule",
+        "voucher",
+        "voucher_code"
+      ],
+      "fks": [
+        {
+          "field": "promotion_rule",
+          "column": "promotion_rule_id",
+          "target_model": "PromotionRule"
+        },
+        {
+          "field": "voucher",
+          "column": "voucher_id",
+          "target_model": "Voucher"
+        }
+      ]
+    },
+    "PromotionEvent": {
+      "app": "discount",
+      "table": "discount_promotionevent",
+      "fields": [
+        "id",
+        "date",
+        "type",
+        "parameters",
+        "user",
+        "app",
+        "promotion"
+      ],
+      "fks": [
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "AUTH_USER_MODEL"
+        },
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        },
+        {
+          "field": "promotion",
+          "column": "promotion_id",
+          "target_model": "Promotion"
+        }
+      ]
+    },
+    "GiftCardTag": {
+      "app": "giftcard",
+      "table": "giftcard_giftcardtag",
+      "fields": [
+        "name"
+      ],
+      "fks": []
+    },
+    "GiftCard": {
+      "app": "giftcard",
+      "table": "giftcard_giftcard",
+      "fields": [
+        "code",
+        "is_active",
+        "created_by",
+        "used_by",
+        "created_by_email",
+        "used_by_email",
+        "assigned_to",
+        "assigned_to_email",
+        "app",
+        "expiry_date",
+        "tags",
+        "created_at",
+        "last_used_on",
+        "product",
+        "fulfillment_line",
+        "currency",
+        "initial_balance_amount",
+        "initial_balance",
+        "current_balance_amount",
+        "current_balance",
+        "search_vector",
+        "search_index_dirty",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "created_by",
+          "column": "created_by_id",
+          "target_model": "AUTH_USER_MODEL"
+        },
+        {
+          "field": "used_by",
+          "column": "used_by_id",
+          "target_model": "AUTH_USER_MODEL"
+        },
+        {
+          "field": "assigned_to",
+          "column": "assigned_to_id",
+          "target_model": "AUTH_USER_MODEL"
+        },
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        },
+        {
+          "field": "product",
+          "column": "product_id",
+          "target_model": "Product"
+        },
+        {
+          "field": "fulfillment_line",
+          "column": "fulfillment_line_id",
+          "target_model": "FulfillmentLine"
+        }
+      ]
+    },
+    "GiftCardEvent": {
+      "app": "giftcard",
+      "table": "giftcard_giftcardevent",
+      "fields": [
+        "date",
+        "type",
+        "parameters",
+        "user",
+        "app",
+        "order",
+        "gift_card"
+      ],
+      "fks": [
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "AUTH_USER_MODEL"
+        },
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        },
+        {
+          "field": "order",
+          "column": "order_id",
+          "target_model": "Order"
+        },
+        {
+          "field": "gift_card",
+          "column": "gift_card_id",
+          "target_model": "GiftCard"
+        }
+      ]
+    },
+    "Invoice": {
+      "app": "invoice",
+      "table": "invoice_invoice",
+      "fields": [
+        "order",
+        "number",
+        "created",
+        "external_url",
+        "invoice_file",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "order",
+          "column": "order_id",
+          "target_model": "Order"
+        }
+      ]
+    },
+    "InvoiceEvent": {
+      "app": "invoice",
+      "table": "invoice_invoiceevent",
+      "fields": [
+        "date",
+        "type",
+        "invoice",
+        "order",
+        "user",
+        "app",
+        "parameters"
+      ],
+      "fks": [
+        {
+          "field": "invoice",
+          "column": "invoice_id",
+          "target_model": "Invoice"
+        },
+        {
+          "field": "order",
+          "column": "order_id",
+          "target_model": "Order"
+        },
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "AUTH_USER_MODEL"
+        },
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        }
+      ]
+    },
+    "Menu": {
+      "app": "menu",
+      "table": "menu_menu",
+      "fields": [
+        "name",
+        "slug"
+      ],
+      "fks": []
+    },
+    "MenuItem": {
+      "app": "menu",
+      "table": "menu_menuitem",
+      "fields": [
+        "menu",
+        "name",
+        "parent",
+        "url",
+        "category",
+        "collection",
+        "page",
+        "objects",
+        "tree"
+      ],
+      "fks": [
+        {
+          "field": "menu",
+          "column": "menu_id",
+          "target_model": "Menu"
+        },
+        {
+          "field": "parent",
+          "column": "parent_id",
+          "target_model": "self"
+        },
+        {
+          "field": "category",
+          "column": "category_id",
+          "target_model": "Category"
+        },
+        {
+          "field": "collection",
+          "column": "collection_id",
+          "target_model": "Collection"
+        },
+        {
+          "field": "page",
+          "column": "page_id",
+          "target_model": "Page"
+        }
+      ]
+    },
+    "Order": {
+      "app": "order",
+      "table": "order_order",
+      "fields": [
+        "id",
+        "number",
+        "use_old_id",
+        "created_at",
+        "updated_at",
+        "expired_at",
+        "status",
+        "authorize_status",
+        "charge_status",
+        "user",
+        "language_code",
+        "tracking_client_id",
+        "billing_address",
+        "shipping_address",
+        "draft_save_billing_address",
+        "draft_save_shipping_address",
+        "user_email",
+        "original",
+        "origin",
+        "currency",
+        "shipping_method",
+        "collection_point",
+        "shipping_method_name",
+        "collection_point_name",
+        "channel",
+        "shipping_price_net_amount",
+        "shipping_price_net",
+        "shipping_price_gross_amount",
+        "shipping_price_gross",
+        "shipping_price",
+        "base_shipping_price_amount",
+        "base_shipping_price",
+        "undiscounted_base_shipping_price_amount",
+        "undiscounted_base_shipping_price",
+        "shipping_tax_rate",
+        "shipping_tax_class",
+        "shipping_tax_class_name",
+        "shipping_tax_class_private_metadata",
+        "shipping_tax_class_metadata",
+        "shipping_method_private_metadata",
+        "shipping_method_metadata",
+        "checkout_token",
+        "lines_count",
+        "total_net_amount",
+        "undiscounted_total_net_amount",
+        "total_net",
+        "undiscounted_total_net",
+        "total_gross_amount",
+        "undiscounted_total_gross_amount",
+        "total_gross",
+        "undiscounted_total_gross",
+        "total",
+        "undiscounted_total",
+        "total_charged_amount",
+        "total_authorized_amount",
+        "total_authorized",
+        "total_charged",
+        "subtotal_net_amount",
+        "subtotal_gross_amount",
+        "subtotal",
+        "voucher",
+        "voucher_code",
+        "gift_cards",
+        "display_gross_prices",
+        "customer_note",
+        "weight",
+        "redirect_url",
+        "search_document",
+        "search_vector",
+        "should_refresh_prices",
+        "tax_exemption",
+        "tax_error",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "User"
+        },
+        {
+          "field": "billing_address",
+          "column": "billing_address_id",
+          "target_model": "Address"
+        },
+        {
+          "field": "shipping_address",
+          "column": "shipping_address_id",
+          "target_model": "Address"
+        },
+        {
+          "field": "original",
+          "column": "original_id",
+          "target_model": "self"
+        },
+        {
+          "field": "shipping_method",
+          "column": "shipping_method_id",
+          "target_model": "ShippingMethod"
+        },
+        {
+          "field": "collection_point",
+          "column": "collection_point_id",
+          "target_model": "Warehouse"
+        },
+        {
+          "field": "channel",
+          "column": "channel_id",
+          "target_model": "Channel"
+        },
+        {
+          "field": "shipping_tax_class",
+          "column": "shipping_tax_class_id",
+          "target_model": "TaxClass"
+        },
+        {
+          "field": "voucher",
+          "column": "voucher_id",
+          "target_model": "Voucher"
+        }
+      ]
+    },
+    "OrderLine": {
+      "app": "order",
+      "table": "order_orderline",
+      "fields": [
+        "id",
+        "old_id",
+        "created_at",
+        "order",
+        "variant",
+        "product_name",
+        "variant_name",
+        "translated_product_name",
+        "translated_variant_name",
+        "product_sku",
+        "product_variant_id",
+        "product_type_id",
+        "is_shipping_required",
+        "is_gift_card",
+        "quantity",
+        "quantity_fulfilled",
+        "is_gift",
+        "currency",
+        "unit_discount_amount",
+        "unit_discount",
+        "unit_discount_type",
+        "unit_discount_reason",
+        "unit_price_net_amount",
+        "unit_discount_value",
+        "unit_price_net",
+        "unit_price_gross_amount",
+        "unit_price_gross",
+        "unit_price",
+        "total_price_net_amount",
+        "total_price_net",
+        "total_price_gross_amount",
+        "total_price_gross",
+        "total_price",
+        "undiscounted_unit_price_gross_amount",
+        "undiscounted_unit_price_net_amount",
+        "undiscounted_unit_price",
+        "undiscounted_total_price_gross_amount",
+        "undiscounted_total_price_net_amount",
+        "undiscounted_total_price",
+        "base_unit_price_amount",
+        "base_unit_price",
+        "undiscounted_base_unit_price_amount",
+        "undiscounted_base_unit_price",
+        "tax_rate",
+        "tax_class",
+        "tax_class_name",
+        "tax_class_private_metadata",
+        "tax_class_metadata",
+        "is_price_overridden",
+        "price_override_reason",
+        "voucher_code",
+        "sale_id",
+        "draft_base_price_expire_at"
+      ],
+      "fks": [
+        {
+          "field": "order",
+          "column": "order_id",
+          "target_model": "Order"
+        },
+        {
+          "field": "variant",
+          "column": "variant_id",
+          "target_model": "ProductVariant"
+        },
+        {
+          "field": "tax_class",
+          "column": "tax_class_id",
+          "target_model": "TaxClass"
+        }
+      ]
+    },
+    "Fulfillment": {
+      "app": "order",
+      "table": "order_fulfillment",
+      "fields": [
+        "fulfillment_order",
+        "order",
+        "status",
+        "tracking_number",
+        "created_at",
+        "reason",
+        "reason_reference",
+        "shipping_refund_amount",
+        "total_refund_amount"
+      ],
+      "fks": [
+        {
+          "field": "order",
+          "column": "order_id",
+          "target_model": "Order"
+        },
+        {
+          "field": "reason_reference",
+          "column": "reason_reference_id",
+          "target_model": "Page"
+        }
+      ]
+    },
+    "FulfillmentLine": {
+      "app": "order",
+      "table": "order_fulfillmentline",
+      "fields": [
+        "order_line",
+        "fulfillment",
+        "quantity",
+        "stock",
+        "reason",
+        "reason_reference"
+      ],
+      "fks": [
+        {
+          "field": "order_line",
+          "column": "order_line_id",
+          "target_model": "OrderLine"
+        },
+        {
+          "field": "fulfillment",
+          "column": "fulfillment_id",
+          "target_model": "Fulfillment"
+        },
+        {
+          "field": "stock",
+          "column": "stock_id",
+          "target_model": "Stock"
+        },
+        {
+          "field": "reason_reference",
+          "column": "reason_reference_id",
+          "target_model": "Page"
+        }
+      ]
+    },
+    "OrderEvent": {
+      "app": "order",
+      "table": "order_orderevent",
+      "fields": [
+        "date",
+        "type",
+        "order",
+        "parameters",
+        "user",
+        "app",
+        "related"
+      ],
+      "fks": [
+        {
+          "field": "order",
+          "column": "order_id",
+          "target_model": "Order"
+        },
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "AUTH_USER_MODEL"
+        },
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        },
+        {
+          "field": "related",
+          "column": "related_id",
+          "target_model": "self"
+        }
+      ]
+    },
+    "OrderGrantedRefund": {
+      "app": "order",
+      "table": "order_ordergrantedrefund",
+      "fields": [
+        "created_at",
+        "updated_at",
+        "amount_value",
+        "amount",
+        "currency",
+        "reason",
+        "reason_reference",
+        "user",
+        "app",
+        "order",
+        "shipping_costs_included",
+        "transaction_item",
+        "status"
+      ],
+      "fks": [
+        {
+          "field": "reason_reference",
+          "column": "reason_reference_id",
+          "target_model": "Page"
+        },
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "AUTH_USER_MODEL"
+        },
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        },
+        {
+          "field": "order",
+          "column": "order_id",
+          "target_model": "Order"
+        },
+        {
+          "field": "transaction_item",
+          "column": "transaction_item_id",
+          "target_model": "TransactionItem"
+        }
+      ]
+    },
+    "OrderGrantedRefundLine": {
+      "app": "order",
+      "table": "order_ordergrantedrefundline",
+      "fields": [
+        "order_line",
+        "quantity",
+        "granted_refund",
+        "reason",
+        "reason_reference"
+      ],
+      "fks": [
+        {
+          "field": "order_line",
+          "column": "order_line_id",
+          "target_model": "OrderLine"
+        },
+        {
+          "field": "granted_refund",
+          "column": "granted_refund_id",
+          "target_model": "OrderGrantedRefund"
+        },
+        {
+          "field": "reason_reference",
+          "column": "reason_reference_id",
+          "target_model": "Page"
+        }
+      ]
+    },
+    "Page": {
+      "app": "page",
+      "table": "page_page",
+      "fields": [
+        "slug",
+        "title",
+        "page_type",
+        "content",
+        "created_at",
+        "search_vector",
+        "search_index_dirty",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "page_type",
+          "column": "page_type_id",
+          "target_model": "PageType"
+        }
+      ]
+    },
+    "PageTranslation": {
+      "app": "page",
+      "table": "page_pagetranslation",
+      "fields": [
+        "page",
+        "title",
+        "content"
+      ],
+      "fks": [
+        {
+          "field": "page",
+          "column": "page_id",
+          "target_model": "Page"
+        }
+      ]
+    },
+    "PageType": {
+      "app": "page",
+      "table": "page_pagetype",
+      "fields": [
+        "name",
+        "slug"
+      ],
+      "fks": []
+    },
+    "TransactionItem": {
+      "app": "payment",
+      "table": "payment_transactionitem",
+      "fields": [
+        "token",
+        "use_old_id",
+        "created_at",
+        "modified_at",
+        "idempotency_key",
+        "name",
+        "message",
+        "psp_reference",
+        "available_actions",
+        "currency",
+        "amount_charged",
+        "charged_value",
+        "amount_authorized",
+        "authorized_value",
+        "amount_refunded",
+        "refunded_value",
+        "amount_canceled",
+        "canceled_value",
+        "amount_refund_pending",
+        "refund_pending_value",
+        "amount_charge_pending",
+        "charge_pending_value",
+        "amount_authorize_pending",
+        "authorize_pending_value",
+        "cancel_pending_value",
+        "amount_cancel_pending",
+        "external_url",
+        "checkout",
+        "order",
+        "user",
+        "app",
+        "app_identifier",
+        "last_refund_success",
+        "cc_first_digits",
+        "cc_last_digits",
+        "cc_brand",
+        "cc_exp_month",
+        "cc_exp_year",
+        "payment_method_type",
+        "payment_method_name",
+        "gift_card_last_chars",
+        "gift_card_brand",
+        "gift_card"
+      ],
+      "fks": [
+        {
+          "field": "checkout",
+          "column": "checkout_id",
+          "target_model": "Checkout"
+        },
+        {
+          "field": "order",
+          "column": "order_id",
+          "target_model": "Order"
+        },
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "AUTH_USER_MODEL"
+        },
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        },
+        {
+          "field": "gift_card",
+          "column": "gift_card_id",
+          "target_model": "GiftCard"
+        }
+      ]
+    },
+    "TransactionEvent": {
+      "app": "payment",
+      "table": "payment_transactionevent",
+      "fields": [
+        "created_at",
+        "idempotency_key",
+        "psp_reference",
+        "message",
+        "transaction",
+        "external_url",
+        "currency",
+        "type",
+        "amount",
+        "amount_value",
+        "user",
+        "app",
+        "app_identifier",
+        "include_in_calculations",
+        "related_granted_refund",
+        "reason_reference"
+      ],
+      "fks": [
+        {
+          "field": "transaction",
+          "column": "transaction_id",
+          "target_model": "TransactionItem"
+        },
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "AUTH_USER_MODEL"
+        },
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        },
+        {
+          "field": "related_granted_refund",
+          "column": "related_granted_refund_id",
+          "target_model": "OrderGrantedRefund"
+        },
+        {
+          "field": "reason_reference",
+          "column": "reason_reference_id",
+          "target_model": "Page"
+        }
+      ]
+    },
+    "Payment": {
+      "app": "payment",
+      "table": "payment_payment",
+      "fields": [
+        "gateway",
+        "is_active",
+        "to_confirm",
+        "created_at",
+        "modified_at",
+        "charge_status",
+        "token",
+        "total",
+        "captured_amount",
+        "currency",
+        "checkout",
+        "order",
+        "store_payment_method",
+        "billing_email",
+        "billing_first_name",
+        "billing_last_name",
+        "billing_company_name",
+        "billing_address_1",
+        "billing_address_2",
+        "billing_city",
+        "billing_city_area",
+        "billing_postal_code",
+        "billing_country_code",
+        "billing_country_area",
+        "cc_first_digits",
+        "cc_last_digits",
+        "cc_brand",
+        "cc_exp_month",
+        "cc_exp_year",
+        "payment_method_type",
+        "customer_ip_address",
+        "extra_data",
+        "return_url",
+        "psp_reference"
+      ],
+      "fks": [
+        {
+          "field": "checkout",
+          "column": "checkout_id",
+          "target_model": "Checkout"
+        },
+        {
+          "field": "order",
+          "column": "order_id",
+          "target_model": "Order"
+        }
+      ]
+    },
+    "Transaction": {
+      "app": "payment",
+      "table": "payment_transaction",
+      "fields": [
+        "created_at",
+        "payment",
+        "token",
+        "kind",
+        "is_success",
+        "action_required",
+        "action_required_data",
+        "currency",
+        "amount",
+        "error",
+        "customer_id",
+        "gateway_response",
+        "already_processed"
+      ],
+      "fks": [
+        {
+          "field": "payment",
+          "column": "payment_id",
+          "target_model": "Payment"
+        }
+      ]
+    },
+    "Permission": {
+      "app": "permission",
+      "table": "permission_permission",
+      "fields": [
+        "name",
+        "content_type",
+        "codename",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "content_type",
+          "column": "content_type_id",
+          "target_model": "ContentType"
+        }
+      ]
+    },
+    "PermissionsMixin": {
+      "app": "permission",
+      "table": "permission_permissionsmixin",
+      "fields": [
+        "is_superuser",
+        "groups",
+        "user_permissions"
+      ],
+      "fks": []
+    },
+    "PluginConfiguration": {
+      "app": "plugins",
+      "table": "plugins_pluginconfiguration",
+      "fields": [
+        "identifier",
+        "name",
+        "channel",
+        "description",
+        "active",
+        "configuration"
+      ],
+      "fks": [
+        {
+          "field": "channel",
+          "column": "channel_id",
+          "target_model": "Channel"
+        }
+      ]
+    },
+    "EmailTemplate": {
+      "app": "plugins",
+      "table": "plugins_emailtemplate",
+      "fields": [
+        "plugin_configuration",
+        "name",
+        "value"
+      ],
+      "fks": [
+        {
+          "field": "plugin_configuration",
+          "column": "plugin_configuration_id",
+          "target_model": "PluginConfiguration"
+        }
+      ]
+    },
+    "Category": {
+      "app": "product",
+      "table": "product_category",
+      "fields": [
+        "name",
+        "slug",
+        "description",
+        "description_plaintext",
+        "updated_at",
+        "parent",
+        "background_image",
+        "background_image_alt",
+        "objects",
+        "tree"
+      ],
+      "fks": [
+        {
+          "field": "parent",
+          "column": "parent_id",
+          "target_model": "self"
+        }
+      ]
+    },
+    "CategoryTranslation": {
+      "app": "product",
+      "table": "product_categorytranslation",
+      "fields": [
+        "category",
+        "name",
+        "description"
+      ],
+      "fks": [
+        {
+          "field": "category",
+          "column": "category_id",
+          "target_model": "Category"
+        }
+      ]
+    },
+    "ProductType": {
+      "app": "product",
+      "table": "product_producttype",
+      "fields": [
+        "name",
+        "slug",
+        "kind",
+        "is_shipping_required",
+        "weight",
+        "tax_class",
+        "has_variants"
+      ],
+      "fks": [
+        {
+          "field": "tax_class",
+          "column": "tax_class_id",
+          "target_model": "TaxClass"
+        }
+      ]
+    },
+    "Product": {
+      "app": "product",
+      "table": "product_product",
+      "fields": [
+        "product_type",
+        "name",
+        "slug",
+        "description",
+        "description_plaintext",
+        "search_document",
+        "search_vector",
+        "search_index_dirty",
+        "category",
+        "created_at",
+        "updated_at",
+        "weight",
+        "default_variant",
+        "rating",
+        "tax_class",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "product_type",
+          "column": "product_type_id",
+          "target_model": "ProductType"
+        },
+        {
+          "field": "category",
+          "column": "category_id",
+          "target_model": "Category"
+        },
+        {
+          "field": "default_variant",
+          "column": "default_variant_id",
+          "target_model": "ProductVariant"
+        },
+        {
+          "field": "tax_class",
+          "column": "tax_class_id",
+          "target_model": "TaxClass"
+        }
+      ]
+    },
+    "ProductTranslation": {
+      "app": "product",
+      "table": "product_producttranslation",
+      "fields": [
+        "product",
+        "name",
+        "description"
+      ],
+      "fks": [
+        {
+          "field": "product",
+          "column": "product_id",
+          "target_model": "Product"
+        }
+      ]
+    },
+    "ProductChannelListing": {
+      "app": "product",
+      "table": "product_productchannellisting",
+      "fields": [
+        "product",
+        "channel",
+        "visible_in_listings",
+        "available_for_purchase_at",
+        "currency",
+        "discounted_price_amount",
+        "discounted_price",
+        "discounted_price_dirty"
+      ],
+      "fks": [
+        {
+          "field": "product",
+          "column": "product_id",
+          "target_model": "Product"
+        },
+        {
+          "field": "channel",
+          "column": "channel_id",
+          "target_model": "Channel"
+        }
+      ]
+    },
+    "ProductVariant": {
+      "app": "product",
+      "table": "product_productvariant",
+      "fields": [
+        "sku",
+        "name",
+        "product",
+        "media",
+        "track_inventory",
+        "is_preorder",
+        "preorder_end_date",
+        "preorder_global_threshold",
+        "quantity_limit_per_customer",
+        "created_at",
+        "updated_at",
+        "weight",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "product",
+          "column": "product_id",
+          "target_model": "Product"
+        }
+      ]
+    },
+    "ProductVariantChannelListing": {
+      "app": "product",
+      "table": "product_productvariantchannellisting",
+      "fields": [
+        "variant",
+        "channel",
+        "currency",
+        "price_amount",
+        "price",
+        "cost_price_amount",
+        "cost_price",
+        "prior_price_amount",
+        "prior_price",
+        "discounted_price_amount",
+        "discounted_price",
+        "promotion_rules",
+        "preorder_quantity_threshold",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "variant",
+          "column": "variant_id",
+          "target_model": "ProductVariant"
+        },
+        {
+          "field": "channel",
+          "column": "channel_id",
+          "target_model": "Channel"
+        }
+      ]
+    },
+    "VariantChannelListingPromotionRule": {
+      "app": "product",
+      "table": "product_variantchannellistingpromotionrule",
+      "fields": [
+        "variant_channel_listing",
+        "promotion_rule",
+        "discount_amount",
+        "discount",
+        "currency"
+      ],
+      "fks": [
+        {
+          "field": "variant_channel_listing",
+          "column": "variant_channel_listing_id",
+          "target_model": "ProductVariantChannelListing"
+        },
+        {
+          "field": "promotion_rule",
+          "column": "promotion_rule_id",
+          "target_model": "PromotionRule"
+        }
+      ]
+    },
+    "ProductMedia": {
+      "app": "product",
+      "table": "product_productmedia",
+      "fields": [
+        "product",
+        "image",
+        "alt",
+        "type",
+        "external_url",
+        "oembed_data",
+        "to_remove"
+      ],
+      "fks": [
+        {
+          "field": "product",
+          "column": "product_id",
+          "target_model": "Product"
+        }
+      ]
+    },
+    "VariantMedia": {
+      "app": "product",
+      "table": "product_variantmedia",
+      "fields": [
+        "variant",
+        "media"
+      ],
+      "fks": [
+        {
+          "field": "variant",
+          "column": "variant_id",
+          "target_model": "ProductVariant"
+        },
+        {
+          "field": "media",
+          "column": "media_id",
+          "target_model": "ProductMedia"
+        }
+      ]
+    },
+    "CollectionProduct": {
+      "app": "product",
+      "table": "product_collectionproduct",
+      "fields": [
+        "collection",
+        "product"
+      ],
+      "fks": [
+        {
+          "field": "collection",
+          "column": "collection_id",
+          "target_model": "Collection"
+        },
+        {
+          "field": "product",
+          "column": "product_id",
+          "target_model": "Product"
+        }
+      ]
+    },
+    "Collection": {
+      "app": "product",
+      "table": "product_collection",
+      "fields": [
+        "name",
+        "slug",
+        "products",
+        "background_image",
+        "background_image_alt",
+        "description",
+        "objects"
+      ],
+      "fks": []
+    },
+    "CollectionChannelListing": {
+      "app": "product",
+      "table": "product_collectionchannellisting",
+      "fields": [
+        "collection",
+        "channel"
+      ],
+      "fks": [
+        {
+          "field": "collection",
+          "column": "collection_id",
+          "target_model": "Collection"
+        },
+        {
+          "field": "channel",
+          "column": "channel_id",
+          "target_model": "Channel"
+        }
+      ]
+    },
+    "CollectionTranslation": {
+      "app": "product",
+      "table": "product_collectiontranslation",
+      "fields": [
+        "collection",
+        "name",
+        "description"
+      ],
+      "fks": [
+        {
+          "field": "collection",
+          "column": "collection_id",
+          "target_model": "Collection"
+        }
+      ]
+    },
+    "CustomSchedule": {
+      "app": "schedulers",
+      "table": "schedulers_customschedule",
+      "fields": [
+        "no_changes",
+        "schedule_import_path"
+      ],
+      "fks": []
+    },
+    "SeoModel": {
+      "app": "seo",
+      "table": "seo_seomodel",
+      "fields": [
+        "seo_title",
+        "seo_description"
+      ],
+      "fks": []
+    },
+    "SeoModelTranslationWithSlug": {
+      "app": "seo",
+      "table": "seo_seomodeltranslationwithslug",
+      "fields": [
+        "slug"
+      ],
+      "fks": []
+    },
+    "ShippingZone": {
+      "app": "shipping",
+      "table": "shipping_shippingzone",
+      "fields": [
+        "name",
+        "countries",
+        "default",
+        "description",
+        "channels"
+      ],
+      "fks": []
+    },
+    "ShippingMethod": {
+      "app": "shipping",
+      "table": "shipping_shippingmethod",
+      "fields": [
+        "name",
+        "type",
+        "shipping_zone",
+        "minimum_order_weight",
+        "maximum_order_weight",
+        "excluded_products",
+        "maximum_delivery_days",
+        "minimum_delivery_days",
+        "description",
+        "tax_class",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "shipping_zone",
+          "column": "shipping_zone_id",
+          "target_model": "ShippingZone"
+        },
+        {
+          "field": "tax_class",
+          "column": "tax_class_id",
+          "target_model": "TaxClass"
+        }
+      ]
+    },
+    "ShippingMethodPostalCodeRule": {
+      "app": "shipping",
+      "table": "shipping_shippingmethodpostalcoderule",
+      "fields": [
+        "shipping_method",
+        "start",
+        "end",
+        "inclusion_type"
+      ],
+      "fks": [
+        {
+          "field": "shipping_method",
+          "column": "shipping_method_id",
+          "target_model": "ShippingMethod"
+        }
+      ]
+    },
+    "ShippingMethodChannelListing": {
+      "app": "shipping",
+      "table": "shipping_shippingmethodchannellisting",
+      "fields": [
+        "shipping_method",
+        "channel",
+        "minimum_order_price_amount",
+        "minimum_order_price",
+        "currency",
+        "maximum_order_price_amount",
+        "maximum_order_price",
+        "price",
+        "price_amount"
+      ],
+      "fks": [
+        {
+          "field": "shipping_method",
+          "column": "shipping_method_id",
+          "target_model": "ShippingMethod"
+        },
+        {
+          "field": "channel",
+          "column": "channel_id",
+          "target_model": "Channel"
+        }
+      ]
+    },
+    "SiteSettings": {
+      "app": "site",
+      "table": "site_sitesettings",
+      "fields": [
+        "site",
+        "header_text",
+        "description",
+        "top_menu",
+        "bottom_menu",
+        "track_inventory_by_default",
+        "default_weight_unit",
+        "company_address",
+        "default_mail_sender_name",
+        "default_mail_sender_address",
+        "enable_account_confirmation_by_email",
+        "allow_login_without_confirmation",
+        "password_login_mode",
+        "customer_set_password_url",
+        "fulfillment_auto_approve",
+        "fulfillment_allow_unpaid",
+        "allow_storefront_traffic",
+        "preserve_all_address_fields",
+        "reserve_stock_duration_anonymous_user",
+        "reserve_stock_duration_authenticated_user",
+        "limit_quantity_per_checkout",
+        "gift_card_expiry_type",
+        "gift_card_expiry_period_type",
+        "gift_card_expiry_period",
+        "refund_reason_reference_type",
+        "return_reason_reference_type",
+        "instance_id",
+        "usage_telemetry_reported_at",
+        "charge_taxes_on_shipping",
+        "include_taxes_in_prices",
+        "display_gross_prices",
+        "use_legacy_update_webhook_emission",
+        "use_legacy_shipping_zone_stock_availability",
+        "account_confirm_merge_mode"
+      ],
+      "fks": [
+        {
+          "field": "site",
+          "column": "site_id",
+          "target_model": "Site"
+        },
+        {
+          "field": "top_menu",
+          "column": "top_menu_id",
+          "target_model": "Menu"
+        },
+        {
+          "field": "bottom_menu",
+          "column": "bottom_menu_id",
+          "target_model": "Menu"
+        },
+        {
+          "field": "company_address",
+          "column": "company_address_id",
+          "target_model": "Address"
+        },
+        {
+          "field": "refund_reason_reference_type",
+          "column": "refund_reason_reference_type_id",
+          "target_model": null
+        },
+        {
+          "field": "return_reason_reference_type",
+          "column": "return_reason_reference_type_id",
+          "target_model": null
+        }
+      ]
+    },
+    "TaxClass": {
+      "app": "tax",
+      "table": "tax_taxclass",
+      "fields": [
+        "name"
+      ],
+      "fks": []
+    },
+    "TaxClassCountryRate": {
+      "app": "tax",
+      "table": "tax_taxclasscountryrate",
+      "fields": [
+        "tax_class",
+        "country",
+        "rate"
+      ],
+      "fks": [
+        {
+          "field": "tax_class",
+          "column": "tax_class_id",
+          "target_model": "TaxClass"
+        }
+      ]
+    },
+    "TaxConfiguration": {
+      "app": "tax",
+      "table": "tax_taxconfiguration",
+      "fields": [
+        "channel",
+        "charge_taxes",
+        "tax_calculation_strategy",
+        "display_gross_prices",
+        "prices_entered_with_tax",
+        "tax_app_id",
+        "use_weighted_tax_for_shipping"
+      ],
+      "fks": [
+        {
+          "field": "channel",
+          "column": "channel_id",
+          "target_model": "Channel"
+        }
+      ]
+    },
+    "TaxConfigurationPerCountry": {
+      "app": "tax",
+      "table": "tax_taxconfigurationpercountry",
+      "fields": [
+        "tax_configuration",
+        "country",
+        "charge_taxes",
+        "tax_calculation_strategy",
+        "display_gross_prices",
+        "tax_app_id",
+        "use_weighted_tax_for_shipping"
+      ],
+      "fks": [
+        {
+          "field": "tax_configuration",
+          "column": "tax_configuration_id",
+          "target_model": "TaxConfiguration"
+        }
+      ]
+    },
+    "Book": {
+      "app": "tests",
+      "table": "tests_book",
+      "fields": [
+        "name"
+      ],
+      "fks": []
+    },
+    "Thumbnail": {
+      "app": "thumbnail",
+      "table": "thumbnail_thumbnail",
+      "fields": [
+        "image",
+        "size",
+        "format",
+        "category",
+        "collection",
+        "product_media",
+        "user",
+        "app",
+        "app_installation"
+      ],
+      "fks": [
+        {
+          "field": "category",
+          "column": "category_id",
+          "target_model": "Category"
+        },
+        {
+          "field": "collection",
+          "column": "collection_id",
+          "target_model": "Collection"
+        },
+        {
+          "field": "product_media",
+          "column": "product_media_id",
+          "target_model": "ProductMedia"
+        },
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "User"
+        },
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        },
+        {
+          "field": "app_installation",
+          "column": "app_installation_id",
+          "target_model": "AppInstallation"
+        }
+      ]
+    },
+    "ChannelWarehouse": {
+      "app": "warehouse",
+      "table": "warehouse_channelwarehouse",
+      "fields": [
+        "channel",
+        "warehouse"
+      ],
+      "fks": [
+        {
+          "field": "channel",
+          "column": "channel_id",
+          "target_model": "Channel"
+        },
+        {
+          "field": "warehouse",
+          "column": "warehouse_id",
+          "target_model": "Warehouse"
+        }
+      ]
+    },
+    "Warehouse": {
+      "app": "warehouse",
+      "table": "warehouse_warehouse",
+      "fields": [
+        "id",
+        "name",
+        "slug",
+        "channels",
+        "shipping_zones",
+        "address",
+        "email",
+        "click_and_collect_option",
+        "is_private",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "address",
+          "column": "address_id",
+          "target_model": "Address"
+        }
+      ]
+    },
+    "Stock": {
+      "app": "warehouse",
+      "table": "warehouse_stock",
+      "fields": [
+        "warehouse",
+        "product_variant",
+        "quantity",
+        "quantity_allocated",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "warehouse",
+          "column": "warehouse_id",
+          "target_model": "Warehouse"
+        },
+        {
+          "field": "product_variant",
+          "column": "product_variant_id",
+          "target_model": "ProductVariant"
+        }
+      ]
+    },
+    "Allocation": {
+      "app": "warehouse",
+      "table": "warehouse_allocation",
+      "fields": [
+        "order_line",
+        "stock",
+        "quantity_allocated",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "order_line",
+          "column": "order_line_id",
+          "target_model": "OrderLine"
+        },
+        {
+          "field": "stock",
+          "column": "stock_id",
+          "target_model": "Stock"
+        }
+      ]
+    },
+    "PreorderAllocation": {
+      "app": "warehouse",
+      "table": "warehouse_preorderallocation",
+      "fields": [
+        "order_line",
+        "quantity",
+        "product_variant_channel_listing"
+      ],
+      "fks": [
+        {
+          "field": "order_line",
+          "column": "order_line_id",
+          "target_model": "OrderLine"
+        },
+        {
+          "field": "product_variant_channel_listing",
+          "column": "product_variant_channel_listing_id",
+          "target_model": "ProductVariantChannelListing"
+        }
+      ]
+    },
+    "PreorderReservation": {
+      "app": "warehouse",
+      "table": "warehouse_preorderreservation",
+      "fields": [
+        "checkout_line",
+        "product_variant_channel_listing",
+        "quantity_reserved",
+        "reserved_until",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "checkout_line",
+          "column": "checkout_line_id",
+          "target_model": "CheckoutLine"
+        },
+        {
+          "field": "product_variant_channel_listing",
+          "column": "product_variant_channel_listing_id",
+          "target_model": "ProductVariantChannelListing"
+        }
+      ]
+    },
+    "Reservation": {
+      "app": "warehouse",
+      "table": "warehouse_reservation",
+      "fields": [
+        "checkout_line",
+        "stock",
+        "quantity_reserved",
+        "reserved_until",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "checkout_line",
+          "column": "checkout_line_id",
+          "target_model": "CheckoutLine"
+        },
+        {
+          "field": "stock",
+          "column": "stock_id",
+          "target_model": "Stock"
+        }
+      ]
+    },
+    "Webhook": {
+      "app": "webhook",
+      "table": "webhook_webhook",
+      "fields": [
+        "name",
+        "app",
+        "target_url",
+        "is_active",
+        "secret_key",
+        "subscription_query",
+        "custom_headers",
+        "filterable_channel_slugs",
+        "identifier"
+      ],
+      "fks": [
+        {
+          "field": "app",
+          "column": "app_id",
+          "target_model": "App"
+        }
+      ]
+    },
+    "WebhookEvent": {
+      "app": "webhook",
+      "table": "webhook_webhookevent",
+      "fields": [
+        "webhook",
+        "event_type"
+      ],
+      "fks": [
+        {
+          "field": "webhook",
+          "column": "webhook_id",
+          "target_model": "Webhook"
+        }
+      ]
+    },
+    "StrictBaseModel": {
+      "app": "core",
+      "table": "core_strictbasemodel",
+      "fields": [
+        "model_config"
+      ],
+      "fks": []
+    },
+    "SizeDataModel": {
+      "app": "core",
+      "table": "core_sizedatamodel",
+      "fields": [],
+      "fks": []
+    },
+    "EditorJSBlock": {
+      "app": "core",
+      "table": "core_editorjsblock",
+      "fields": [],
+      "fks": []
+    },
+    "EditorJSParagraphDataModel": {
+      "app": "core",
+      "table": "core_editorjsparagraphdatamodel",
+      "fields": [],
+      "fks": []
+    },
+    "EditorJSHeaderDataModel": {
+      "app": "core",
+      "table": "core_editorjsheaderdatamodel",
+      "fields": [],
+      "fks": []
+    },
+    "EditorJSQuoteDataModel": {
+      "app": "core",
+      "table": "core_editorjsquotedatamodel",
+      "fields": [],
+      "fks": []
+    },
+    "EditorJSEmbedDataModel": {
+      "app": "core",
+      "table": "core_editorjsembeddatamodel",
+      "fields": [],
+      "fks": []
+    },
+    "ImageFileModel": {
+      "app": "core",
+      "table": "core_imagefilemodel",
+      "fields": [],
+      "fks": []
+    },
+    "EditorJSImageDataModel": {
+      "app": "core",
+      "table": "core_editorjsimagedatamodel",
+      "fields": [],
+      "fks": []
+    },
+    "EditorJSTableDataModel": {
+      "app": "core",
+      "table": "core_editorjstabledatamodel",
+      "fields": [],
+      "fks": []
+    },
+    "EditorJSNestedListItemModel": {
+      "app": "core",
+      "table": "core_editorjsnestedlistitemmodel",
+      "fields": [],
+      "fks": []
+    },
+    "EditorJSListDataModel": {
+      "app": "core",
+      "table": "core_editorjslistdatamodel",
+      "fields": [],
+      "fks": []
+    },
+    "EditorJSDocumentModel": {
+      "app": "core",
+      "table": "core_editorjsdocumentmodel",
+      "fields": [],
+      "fks": []
+    }
+  },
+  "catalog": {
+    "tables": {
+      "account_address": {
+        "name": "account_address",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "first_name"
+          },
+          {
+            "name": "last_name"
+          },
+          {
+            "name": "company_name"
+          },
+          {
+            "name": "street_address_1"
+          },
+          {
+            "name": "street_address_2"
+          },
+          {
+            "name": "city"
+          },
+          {
+            "name": "city_area"
+          },
+          {
+            "name": "postal_code"
+          },
+          {
+            "name": "country"
+          },
+          {
+            "name": "country_area"
+          },
+          {
+            "name": "phone"
+          },
+          {
+            "name": "validation_skipped"
+          },
+          {
+            "name": "objects"
+          },
+          {
+            "name": "__hash__"
+          }
+        ]
+      },
+      "account_customertype": {
+        "name": "account_customertype",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "slug"
+          },
+          {
+            "name": "is_default"
+          }
+        ]
+      },
+      "account_user": {
+        "name": "account_user",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "default_shipping_address_id"
+          },
+          {
+            "name": "default_billing_address_id"
+          },
+          {
+            "name": "customer_type_id"
+          },
+          {
+            "name": "email"
+          },
+          {
+            "name": "first_name"
+          },
+          {
+            "name": "last_name"
+          },
+          {
+            "name": "addresses"
+          },
+          {
+            "name": "is_staff"
+          },
+          {
+            "name": "is_active"
+          },
+          {
+            "name": "is_confirmed"
+          },
+          {
+            "name": "last_confirm_email_request"
+          },
+          {
+            "name": "note"
+          },
+          {
+            "name": "date_joined"
+          },
+          {
+            "name": "updated_at"
+          },
+          {
+            "name": "last_password_reset_request"
+          },
+          {
+            "name": "default_shipping_address"
+          },
+          {
+            "name": "default_billing_address"
+          },
+          {
+            "name": "avatar"
+          },
+          {
+            "name": "jwt_token_key"
+          },
+          {
+            "name": "language_code"
+          },
+          {
+            "name": "search_vector"
+          },
+          {
+            "name": "search_document"
+          },
+          {
+            "name": "uuid"
+          },
+          {
+            "name": "customer_type"
+          },
+          {
+            "name": "number_of_orders"
+          },
+          {
+            "name": "USERNAME_FIELD"
+          },
+          {
+            "name": "NEWLY_CREATED_USER"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "account_customernote": {
+        "name": "account_customernote",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "customer_id"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "date"
+          },
+          {
+            "name": "content"
+          },
+          {
+            "name": "is_public"
+          },
+          {
+            "name": "customer"
+          }
+        ]
+      },
+      "account_customerevent": {
+        "name": "account_customerevent",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "order_id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "date"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "order"
+          },
+          {
+            "name": "parameters"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "app"
+          }
+        ]
+      },
+      "account_staffnotificationrecipient": {
+        "name": "account_staffnotificationrecipient",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "staff_email"
+          },
+          {
+            "name": "active"
+          }
+        ]
+      },
+      "account_group": {
+        "name": "account_group",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "permissions"
+          },
+          {
+            "name": "restricted_access_to_channels"
+          },
+          {
+            "name": "channels"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "app_app": {
+        "name": "app_app",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "uuid"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "is_active"
+          },
+          {
+            "name": "removed_at"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "identifier"
+          },
+          {
+            "name": "permissions"
+          },
+          {
+            "name": "about_app"
+          },
+          {
+            "name": "data_privacy"
+          },
+          {
+            "name": "data_privacy_url"
+          },
+          {
+            "name": "homepage_url"
+          },
+          {
+            "name": "support_url"
+          },
+          {
+            "name": "configuration_url"
+          },
+          {
+            "name": "app_url"
+          },
+          {
+            "name": "manifest_url"
+          },
+          {
+            "name": "version"
+          },
+          {
+            "name": "audience"
+          },
+          {
+            "name": "is_installed"
+          },
+          {
+            "name": "author"
+          },
+          {
+            "name": "brand_logo_default"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "app_apptoken": {
+        "name": "app_apptoken",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "app"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "auth_token"
+          },
+          {
+            "name": "token_last_4"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "app_appextension": {
+        "name": "app_appextension",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "app"
+          },
+          {
+            "name": "label"
+          },
+          {
+            "name": "url"
+          },
+          {
+            "name": "mount"
+          },
+          {
+            "name": "target"
+          },
+          {
+            "name": "permissions"
+          },
+          {
+            "name": "http_target_method"
+          },
+          {
+            "name": "settings"
+          },
+          {
+            "name": "identifier"
+          }
+        ]
+      },
+      "app_appproblem": {
+        "name": "app_appproblem",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "dismissed_by_user_id"
+          },
+          {
+            "name": "MAX_PROBLEMS_PER_APP"
+          },
+          {
+            "name": "app"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "updated_at"
+          },
+          {
+            "name": "message"
+          },
+          {
+            "name": "key"
+          },
+          {
+            "name": "count"
+          },
+          {
+            "name": "is_critical"
+          },
+          {
+            "name": "dismissed"
+          },
+          {
+            "name": "dismissed_by_user_email"
+          },
+          {
+            "name": "dismissed_by_user"
+          }
+        ]
+      },
+      "channel_channel": {
+        "name": "channel_channel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "is_active"
+          },
+          {
+            "name": "slug"
+          },
+          {
+            "name": "currency_code"
+          },
+          {
+            "name": "default_country"
+          },
+          {
+            "name": "allocation_strategy"
+          },
+          {
+            "name": "order_mark_as_paid_strategy"
+          },
+          {
+            "name": "default_transaction_flow_strategy"
+          },
+          {
+            "name": "automatically_confirm_all_new_orders"
+          },
+          {
+            "name": "allow_unpaid_orders"
+          },
+          {
+            "name": "automatically_fulfill_non_shippable_gift_card"
+          },
+          {
+            "name": "expire_orders_after"
+          },
+          {
+            "name": "delete_expired_orders_after"
+          },
+          {
+            "name": "include_draft_order_in_voucher_usage"
+          },
+          {
+            "name": "use_legacy_error_flow_for_checkout"
+          },
+          {
+            "name": "automatically_complete_fully_paid_checkouts"
+          },
+          {
+            "name": "automatic_completion_delay"
+          },
+          {
+            "name": "automatic_completion_cut_off_date"
+          },
+          {
+            "name": "draft_order_line_price_freeze_period"
+          },
+          {
+            "name": "use_legacy_line_discount_propagation_for_order"
+          },
+          {
+            "name": "release_funds_for_expired_checkouts"
+          },
+          {
+            "name": "checkout_ttl_before_releasing_funds"
+          },
+          {
+            "name": "checkout_release_funds_cut_off_date"
+          },
+          {
+            "name": "allow_legacy_gift_card_use"
+          }
+        ]
+      },
+      "checkout_checkoutdelivery": {
+        "name": "checkout_checkoutdelivery",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "checkout_id"
+          },
+          {
+            "name": "checkout"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "description"
+          },
+          {
+            "name": "price"
+          },
+          {
+            "name": "price_amount"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "maximum_delivery_days"
+          },
+          {
+            "name": "minimum_delivery_days"
+          },
+          {
+            "name": "metadata"
+          },
+          {
+            "name": "private_metadata"
+          },
+          {
+            "name": "active"
+          },
+          {
+            "name": "message"
+          },
+          {
+            "name": "is_external"
+          },
+          {
+            "name": "is_valid"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "updated_at"
+          },
+          {
+            "name": "tax_class_name"
+          },
+          {
+            "name": "tax_class_private_metadata"
+          },
+          {
+            "name": "tax_class_metadata"
+          }
+        ]
+      },
+      "checkout_checkout": {
+        "name": "checkout_checkout",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "channel_id"
+          },
+          {
+            "name": "billing_address_id"
+          },
+          {
+            "name": "shipping_address_id"
+          },
+          {
+            "name": "shipping_method_id"
+          },
+          {
+            "name": "collection_point_id"
+          },
+          {
+            "name": "assigned_delivery_id"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "last_change"
+          },
+          {
+            "name": "completing_started_at"
+          },
+          {
+            "name": "last_transaction_modified_at"
+          },
+          {
+            "name": "automatically_refundable"
+          },
+          {
+            "name": "last_automatic_completion_attempt"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "email"
+          },
+          {
+            "name": "token"
+          },
+          {
+            "name": "channel"
+          },
+          {
+            "name": "save_billing_address"
+          },
+          {
+            "name": "billing_address"
+          },
+          {
+            "name": "save_shipping_address"
+          },
+          {
+            "name": "shipping_address"
+          },
+          {
+            "name": "shipping_method"
+          },
+          {
+            "name": "shipping_method_name"
+          },
+          {
+            "name": "collection_point"
+          },
+          {
+            "name": "note"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "country"
+          },
+          {
+            "name": "total_net_amount"
+          },
+          {
+            "name": "total_gross_amount"
+          },
+          {
+            "name": "total"
+          },
+          {
+            "name": "base_total_amount"
+          },
+          {
+            "name": "base_total"
+          },
+          {
+            "name": "subtotal_net_amount"
+          },
+          {
+            "name": "subtotal_gross_amount"
+          },
+          {
+            "name": "subtotal"
+          },
+          {
+            "name": "base_subtotal_amount"
+          },
+          {
+            "name": "base_subtotal"
+          },
+          {
+            "name": "shipping_price_net_amount"
+          },
+          {
+            "name": "shipping_price_gross_amount"
+          },
+          {
+            "name": "shipping_price"
+          },
+          {
+            "name": "shipping_tax_rate"
+          },
+          {
+            "name": "undiscounted_base_shipping_price_amount"
+          },
+          {
+            "name": "undiscounted_base_shipping_price"
+          },
+          {
+            "name": "authorize_status"
+          },
+          {
+            "name": "charge_status"
+          },
+          {
+            "name": "delivery_methods_stale_at"
+          },
+          {
+            "name": "price_expiration"
+          },
+          {
+            "name": "discount_expiration"
+          },
+          {
+            "name": "assigned_delivery"
+          },
+          {
+            "name": "discount_amount"
+          },
+          {
+            "name": "discount"
+          },
+          {
+            "name": "discount_name"
+          },
+          {
+            "name": "translated_discount_name"
+          },
+          {
+            "name": "gift_cards"
+          },
+          {
+            "name": "voucher_code"
+          },
+          {
+            "name": "is_voucher_usage_increased"
+          },
+          {
+            "name": "redirect_url"
+          },
+          {
+            "name": "tracking_code"
+          },
+          {
+            "name": "language_code"
+          },
+          {
+            "name": "tax_exemption"
+          },
+          {
+            "name": "tax_error"
+          },
+          {
+            "name": "search_vector"
+          },
+          {
+            "name": "search_index_dirty"
+          }
+        ]
+      },
+      "checkout_checkoutline": {
+        "name": "checkout_checkoutline",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "checkout_id"
+          },
+          {
+            "name": "variant_id"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "checkout"
+          },
+          {
+            "name": "variant"
+          },
+          {
+            "name": "quantity"
+          },
+          {
+            "name": "is_gift"
+          },
+          {
+            "name": "price_override"
+          },
+          {
+            "name": "price_override_reason"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "undiscounted_unit_price_amount"
+          },
+          {
+            "name": "undiscounted_unit_price"
+          },
+          {
+            "name": "prior_unit_price_amount"
+          },
+          {
+            "name": "prior_unit_price"
+          },
+          {
+            "name": "total_price_net_amount"
+          },
+          {
+            "name": "total_price_gross_amount"
+          },
+          {
+            "name": "total_price"
+          },
+          {
+            "name": "tax_rate"
+          },
+          {
+            "name": "__hash__"
+          }
+        ]
+      },
+      "checkout_checkoutmetadata": {
+        "name": "checkout_checkoutmetadata",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "checkout_id"
+          },
+          {
+            "name": "checkout"
+          }
+        ]
+      },
+      "core_sortablemodel": {
+        "name": "core_sortablemodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "sort_order"
+          }
+        ]
+      },
+      "core_publishablemodel": {
+        "name": "core_publishablemodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "published_at"
+          },
+          {
+            "name": "is_published"
+          }
+        ]
+      },
+      "core_modelwithmetadata": {
+        "name": "core_modelwithmetadata",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "private_metadata"
+          },
+          {
+            "name": "metadata"
+          }
+        ]
+      },
+      "core_modelwithexternalreference": {
+        "name": "core_modelwithexternalreference",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "external_reference"
+          }
+        ]
+      },
+      "core_job": {
+        "name": "core_job",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "status"
+          },
+          {
+            "name": "message"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "updated_at"
+          }
+        ]
+      },
+      "core_eventpayload": {
+        "name": "core_eventpayload",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "PAYLOADS_DIR"
+          },
+          {
+            "name": "payload"
+          },
+          {
+            "name": "payload_file"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "core_eventdelivery": {
+        "name": "core_eventdelivery",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "payload_id"
+          },
+          {
+            "name": "webhook_id"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "status"
+          },
+          {
+            "name": "event_type"
+          },
+          {
+            "name": "payload"
+          },
+          {
+            "name": "webhook"
+          }
+        ]
+      },
+      "core_eventdeliveryattempt": {
+        "name": "core_eventdeliveryattempt",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "delivery_id"
+          },
+          {
+            "name": "delivery"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "duration"
+          },
+          {
+            "name": "response"
+          },
+          {
+            "name": "response_headers"
+          },
+          {
+            "name": "response_status_code"
+          },
+          {
+            "name": "request_headers"
+          },
+          {
+            "name": "status"
+          }
+        ]
+      },
+      "csv_exportevent": {
+        "name": "csv_exportevent",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "export_file_id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "date"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "parameters"
+          },
+          {
+            "name": "export_file"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "app"
+          }
+        ]
+      },
+      "discount_voucher": {
+        "name": "discount_voucher",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "usage_limit"
+          },
+          {
+            "name": "start_date"
+          },
+          {
+            "name": "end_date"
+          },
+          {
+            "name": "apply_once_per_order"
+          },
+          {
+            "name": "apply_once_per_customer"
+          },
+          {
+            "name": "single_use"
+          },
+          {
+            "name": "only_for_staff"
+          },
+          {
+            "name": "discount_value_type"
+          },
+          {
+            "name": "countries"
+          },
+          {
+            "name": "min_checkout_items_quantity"
+          },
+          {
+            "name": "products"
+          },
+          {
+            "name": "variants"
+          },
+          {
+            "name": "collections"
+          },
+          {
+            "name": "categories"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "discount_vouchercode": {
+        "name": "discount_vouchercode",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "voucher_id"
+          },
+          {
+            "name": "code"
+          },
+          {
+            "name": "used"
+          },
+          {
+            "name": "is_active"
+          },
+          {
+            "name": "voucher"
+          },
+          {
+            "name": "created_at"
+          }
+        ]
+      },
+      "discount_voucherchannellisting": {
+        "name": "discount_voucherchannellisting",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "voucher_id"
+          },
+          {
+            "name": "channel_id"
+          },
+          {
+            "name": "voucher"
+          },
+          {
+            "name": "channel"
+          },
+          {
+            "name": "discount_value"
+          },
+          {
+            "name": "discount"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "min_spent_amount"
+          },
+          {
+            "name": "min_spent"
+          }
+        ]
+      },
+      "discount_vouchercustomer": {
+        "name": "discount_vouchercustomer",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "voucher_code_id"
+          },
+          {
+            "name": "voucher_code"
+          },
+          {
+            "name": "customer_email"
+          }
+        ]
+      },
+      "discount_promotion": {
+        "name": "discount_promotion",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "description"
+          },
+          {
+            "name": "start_date"
+          },
+          {
+            "name": "end_date"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "updated_at"
+          },
+          {
+            "name": "last_notification_scheduled_at"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "discount_promotionrule": {
+        "name": "discount_promotionrule",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "promotion_id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "description"
+          },
+          {
+            "name": "promotion"
+          },
+          {
+            "name": "channels"
+          },
+          {
+            "name": "catalogue_predicate"
+          },
+          {
+            "name": "order_predicate"
+          },
+          {
+            "name": "variants"
+          },
+          {
+            "name": "reward_value_type"
+          },
+          {
+            "name": "reward_value"
+          },
+          {
+            "name": "reward_type"
+          },
+          {
+            "name": "gifts"
+          },
+          {
+            "name": "variants_dirty"
+          }
+        ]
+      },
+      "discount_promotionrule_variants": {
+        "name": "discount_promotionrule_variants",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "promotionrule_id"
+          },
+          {
+            "name": "productvariant_id"
+          },
+          {
+            "name": "promotionrule"
+          },
+          {
+            "name": "productvariant"
+          }
+        ]
+      },
+      "discount_basediscount": {
+        "name": "discount_basediscount",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "promotion_rule_id"
+          },
+          {
+            "name": "voucher_id"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "value_type"
+          },
+          {
+            "name": "value"
+          },
+          {
+            "name": "amount_value"
+          },
+          {
+            "name": "amount"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "translated_name"
+          },
+          {
+            "name": "reason"
+          },
+          {
+            "name": "promotion_rule"
+          },
+          {
+            "name": "voucher"
+          },
+          {
+            "name": "voucher_code"
+          }
+        ]
+      },
+      "discount_promotionevent": {
+        "name": "discount_promotionevent",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "promotion_id"
+          },
+          {
+            "name": "date"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "parameters"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "app"
+          },
+          {
+            "name": "promotion"
+          }
+        ]
+      },
+      "giftcard_giftcardtag": {
+        "name": "giftcard_giftcardtag",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "name"
+          }
+        ]
+      },
+      "giftcard_giftcard": {
+        "name": "giftcard_giftcard",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "created_by_id"
+          },
+          {
+            "name": "used_by_id"
+          },
+          {
+            "name": "assigned_to_id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "product_id"
+          },
+          {
+            "name": "fulfillment_line_id"
+          },
+          {
+            "name": "code"
+          },
+          {
+            "name": "is_active"
+          },
+          {
+            "name": "created_by"
+          },
+          {
+            "name": "used_by"
+          },
+          {
+            "name": "created_by_email"
+          },
+          {
+            "name": "used_by_email"
+          },
+          {
+            "name": "assigned_to"
+          },
+          {
+            "name": "assigned_to_email"
+          },
+          {
+            "name": "app"
+          },
+          {
+            "name": "expiry_date"
+          },
+          {
+            "name": "tags"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "last_used_on"
+          },
+          {
+            "name": "product"
+          },
+          {
+            "name": "fulfillment_line"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "initial_balance_amount"
+          },
+          {
+            "name": "initial_balance"
+          },
+          {
+            "name": "current_balance_amount"
+          },
+          {
+            "name": "current_balance"
+          },
+          {
+            "name": "search_vector"
+          },
+          {
+            "name": "search_index_dirty"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "giftcard_giftcardevent": {
+        "name": "giftcard_giftcardevent",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "order_id"
+          },
+          {
+            "name": "gift_card_id"
+          },
+          {
+            "name": "date"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "parameters"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "app"
+          },
+          {
+            "name": "order"
+          },
+          {
+            "name": "gift_card"
+          }
+        ]
+      },
+      "invoice_invoice": {
+        "name": "invoice_invoice",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "order_id"
+          },
+          {
+            "name": "order"
+          },
+          {
+            "name": "number"
+          },
+          {
+            "name": "created"
+          },
+          {
+            "name": "external_url"
+          },
+          {
+            "name": "invoice_file"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "invoice_invoiceevent": {
+        "name": "invoice_invoiceevent",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "invoice_id"
+          },
+          {
+            "name": "order_id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "date"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "invoice"
+          },
+          {
+            "name": "order"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "app"
+          },
+          {
+            "name": "parameters"
+          }
+        ]
+      },
+      "menu_menu": {
+        "name": "menu_menu",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "slug"
+          }
+        ]
+      },
+      "menu_menuitem": {
+        "name": "menu_menuitem",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "menu_id"
+          },
+          {
+            "name": "parent_id"
+          },
+          {
+            "name": "category_id"
+          },
+          {
+            "name": "collection_id"
+          },
+          {
+            "name": "page_id"
+          },
+          {
+            "name": "menu"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "parent"
+          },
+          {
+            "name": "url"
+          },
+          {
+            "name": "category"
+          },
+          {
+            "name": "collection"
+          },
+          {
+            "name": "page"
+          },
+          {
+            "name": "objects"
+          },
+          {
+            "name": "tree"
+          }
+        ]
+      },
+      "order_order": {
+        "name": "order_order",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "billing_address_id"
+          },
+          {
+            "name": "shipping_address_id"
+          },
+          {
+            "name": "original_id"
+          },
+          {
+            "name": "shipping_method_id"
+          },
+          {
+            "name": "collection_point_id"
+          },
+          {
+            "name": "channel_id"
+          },
+          {
+            "name": "shipping_tax_class_id"
+          },
+          {
+            "name": "voucher_id"
+          },
+          {
+            "name": "number"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "updated_at"
+          },
+          {
+            "name": "expired_at"
+          },
+          {
+            "name": "status"
+          },
+          {
+            "name": "authorize_status"
+          },
+          {
+            "name": "charge_status"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "language_code"
+          },
+          {
+            "name": "billing_address"
+          },
+          {
+            "name": "shipping_address"
+          },
+          {
+            "name": "draft_save_billing_address"
+          },
+          {
+            "name": "draft_save_shipping_address"
+          },
+          {
+            "name": "user_email"
+          },
+          {
+            "name": "original"
+          },
+          {
+            "name": "origin"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "shipping_method"
+          },
+          {
+            "name": "collection_point"
+          },
+          {
+            "name": "shipping_method_name"
+          },
+          {
+            "name": "collection_point_name"
+          },
+          {
+            "name": "channel"
+          },
+          {
+            "name": "shipping_price_net_amount"
+          },
+          {
+            "name": "shipping_price_net"
+          },
+          {
+            "name": "shipping_price_gross_amount"
+          },
+          {
+            "name": "shipping_price_gross"
+          },
+          {
+            "name": "shipping_price"
+          },
+          {
+            "name": "base_shipping_price_amount"
+          },
+          {
+            "name": "base_shipping_price"
+          },
+          {
+            "name": "undiscounted_base_shipping_price_amount"
+          },
+          {
+            "name": "undiscounted_base_shipping_price"
+          },
+          {
+            "name": "shipping_tax_rate"
+          },
+          {
+            "name": "shipping_tax_class"
+          },
+          {
+            "name": "shipping_tax_class_name"
+          },
+          {
+            "name": "shipping_tax_class_private_metadata"
+          },
+          {
+            "name": "shipping_tax_class_metadata"
+          },
+          {
+            "name": "shipping_method_private_metadata"
+          },
+          {
+            "name": "shipping_method_metadata"
+          },
+          {
+            "name": "checkout_token"
+          },
+          {
+            "name": "lines_count"
+          },
+          {
+            "name": "total_net_amount"
+          },
+          {
+            "name": "undiscounted_total_net_amount"
+          },
+          {
+            "name": "total_net"
+          },
+          {
+            "name": "undiscounted_total_net"
+          },
+          {
+            "name": "total_gross_amount"
+          },
+          {
+            "name": "undiscounted_total_gross_amount"
+          },
+          {
+            "name": "total_gross"
+          },
+          {
+            "name": "undiscounted_total_gross"
+          },
+          {
+            "name": "total"
+          },
+          {
+            "name": "undiscounted_total"
+          },
+          {
+            "name": "total_charged_amount"
+          },
+          {
+            "name": "total_authorized_amount"
+          },
+          {
+            "name": "total_authorized"
+          },
+          {
+            "name": "total_charged"
+          },
+          {
+            "name": "subtotal_net_amount"
+          },
+          {
+            "name": "subtotal_gross_amount"
+          },
+          {
+            "name": "subtotal"
+          },
+          {
+            "name": "voucher"
+          },
+          {
+            "name": "voucher_code"
+          },
+          {
+            "name": "gift_cards"
+          },
+          {
+            "name": "display_gross_prices"
+          },
+          {
+            "name": "customer_note"
+          },
+          {
+            "name": "weight"
+          },
+          {
+            "name": "redirect_url"
+          },
+          {
+            "name": "search_document"
+          },
+          {
+            "name": "search_vector"
+          },
+          {
+            "name": "should_refresh_prices"
+          },
+          {
+            "name": "tax_exemption"
+          },
+          {
+            "name": "tax_error"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "order_orderline": {
+        "name": "order_orderline",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "order_id"
+          },
+          {
+            "name": "variant_id"
+          },
+          {
+            "name": "tax_class_id"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "order"
+          },
+          {
+            "name": "variant"
+          },
+          {
+            "name": "product_name"
+          },
+          {
+            "name": "variant_name"
+          },
+          {
+            "name": "translated_product_name"
+          },
+          {
+            "name": "translated_variant_name"
+          },
+          {
+            "name": "product_sku"
+          },
+          {
+            "name": "is_shipping_required"
+          },
+          {
+            "name": "is_gift_card"
+          },
+          {
+            "name": "quantity"
+          },
+          {
+            "name": "quantity_fulfilled"
+          },
+          {
+            "name": "is_gift"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "unit_discount_amount"
+          },
+          {
+            "name": "unit_discount"
+          },
+          {
+            "name": "unit_discount_type"
+          },
+          {
+            "name": "unit_discount_reason"
+          },
+          {
+            "name": "unit_price_net_amount"
+          },
+          {
+            "name": "unit_discount_value"
+          },
+          {
+            "name": "unit_price_net"
+          },
+          {
+            "name": "unit_price_gross_amount"
+          },
+          {
+            "name": "unit_price_gross"
+          },
+          {
+            "name": "unit_price"
+          },
+          {
+            "name": "total_price_net_amount"
+          },
+          {
+            "name": "total_price_net"
+          },
+          {
+            "name": "total_price_gross_amount"
+          },
+          {
+            "name": "total_price_gross"
+          },
+          {
+            "name": "total_price"
+          },
+          {
+            "name": "undiscounted_unit_price_gross_amount"
+          },
+          {
+            "name": "undiscounted_unit_price_net_amount"
+          },
+          {
+            "name": "undiscounted_unit_price"
+          },
+          {
+            "name": "undiscounted_total_price_gross_amount"
+          },
+          {
+            "name": "undiscounted_total_price_net_amount"
+          },
+          {
+            "name": "undiscounted_total_price"
+          },
+          {
+            "name": "base_unit_price_amount"
+          },
+          {
+            "name": "base_unit_price"
+          },
+          {
+            "name": "undiscounted_base_unit_price_amount"
+          },
+          {
+            "name": "undiscounted_base_unit_price"
+          },
+          {
+            "name": "tax_rate"
+          },
+          {
+            "name": "tax_class"
+          },
+          {
+            "name": "tax_class_name"
+          },
+          {
+            "name": "tax_class_private_metadata"
+          },
+          {
+            "name": "tax_class_metadata"
+          },
+          {
+            "name": "is_price_overridden"
+          },
+          {
+            "name": "price_override_reason"
+          },
+          {
+            "name": "voucher_code"
+          },
+          {
+            "name": "draft_base_price_expire_at"
+          }
+        ]
+      },
+      "order_fulfillment": {
+        "name": "order_fulfillment",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "order_id"
+          },
+          {
+            "name": "reason_reference_id"
+          },
+          {
+            "name": "fulfillment_order"
+          },
+          {
+            "name": "order"
+          },
+          {
+            "name": "status"
+          },
+          {
+            "name": "tracking_number"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "reason"
+          },
+          {
+            "name": "reason_reference"
+          },
+          {
+            "name": "shipping_refund_amount"
+          },
+          {
+            "name": "total_refund_amount"
+          }
+        ]
+      },
+      "order_fulfillmentline": {
+        "name": "order_fulfillmentline",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "order_line_id"
+          },
+          {
+            "name": "fulfillment_id"
+          },
+          {
+            "name": "stock_id"
+          },
+          {
+            "name": "reason_reference_id"
+          },
+          {
+            "name": "order_line"
+          },
+          {
+            "name": "fulfillment"
+          },
+          {
+            "name": "quantity"
+          },
+          {
+            "name": "stock"
+          },
+          {
+            "name": "reason"
+          },
+          {
+            "name": "reason_reference"
+          }
+        ]
+      },
+      "order_orderevent": {
+        "name": "order_orderevent",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "order_id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "related_id"
+          },
+          {
+            "name": "date"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "order"
+          },
+          {
+            "name": "parameters"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "app"
+          },
+          {
+            "name": "related"
+          }
+        ]
+      },
+      "order_ordergrantedrefund": {
+        "name": "order_ordergrantedrefund",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "reason_reference_id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "order_id"
+          },
+          {
+            "name": "transaction_item_id"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "updated_at"
+          },
+          {
+            "name": "amount_value"
+          },
+          {
+            "name": "amount"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "reason"
+          },
+          {
+            "name": "reason_reference"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "app"
+          },
+          {
+            "name": "order"
+          },
+          {
+            "name": "shipping_costs_included"
+          },
+          {
+            "name": "transaction_item"
+          },
+          {
+            "name": "status"
+          }
+        ]
+      },
+      "order_ordergrantedrefundline": {
+        "name": "order_ordergrantedrefundline",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "order_line_id"
+          },
+          {
+            "name": "granted_refund_id"
+          },
+          {
+            "name": "reason_reference_id"
+          },
+          {
+            "name": "order_line"
+          },
+          {
+            "name": "quantity"
+          },
+          {
+            "name": "granted_refund"
+          },
+          {
+            "name": "reason"
+          },
+          {
+            "name": "reason_reference"
+          }
+        ]
+      },
+      "page_page": {
+        "name": "page_page",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "page_type_id"
+          },
+          {
+            "name": "slug"
+          },
+          {
+            "name": "title"
+          },
+          {
+            "name": "page_type"
+          },
+          {
+            "name": "content"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "search_vector"
+          },
+          {
+            "name": "search_index_dirty"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "page_pagetranslation": {
+        "name": "page_pagetranslation",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "page_id"
+          },
+          {
+            "name": "page"
+          },
+          {
+            "name": "title"
+          },
+          {
+            "name": "content"
+          }
+        ]
+      },
+      "page_pagetype": {
+        "name": "page_pagetype",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "slug"
+          }
+        ]
+      },
+      "payment_transactionitem": {
+        "name": "payment_transactionitem",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "checkout_id"
+          },
+          {
+            "name": "order_id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "gift_card_id"
+          },
+          {
+            "name": "token"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "modified_at"
+          },
+          {
+            "name": "idempotency_key"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "message"
+          },
+          {
+            "name": "psp_reference"
+          },
+          {
+            "name": "available_actions"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "amount_charged"
+          },
+          {
+            "name": "charged_value"
+          },
+          {
+            "name": "amount_authorized"
+          },
+          {
+            "name": "authorized_value"
+          },
+          {
+            "name": "amount_refunded"
+          },
+          {
+            "name": "refunded_value"
+          },
+          {
+            "name": "amount_canceled"
+          },
+          {
+            "name": "canceled_value"
+          },
+          {
+            "name": "amount_refund_pending"
+          },
+          {
+            "name": "refund_pending_value"
+          },
+          {
+            "name": "amount_charge_pending"
+          },
+          {
+            "name": "charge_pending_value"
+          },
+          {
+            "name": "amount_authorize_pending"
+          },
+          {
+            "name": "authorize_pending_value"
+          },
+          {
+            "name": "cancel_pending_value"
+          },
+          {
+            "name": "amount_cancel_pending"
+          },
+          {
+            "name": "external_url"
+          },
+          {
+            "name": "checkout"
+          },
+          {
+            "name": "order"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "app"
+          },
+          {
+            "name": "app_identifier"
+          },
+          {
+            "name": "last_refund_success"
+          },
+          {
+            "name": "cc_first_digits"
+          },
+          {
+            "name": "cc_last_digits"
+          },
+          {
+            "name": "cc_brand"
+          },
+          {
+            "name": "cc_exp_month"
+          },
+          {
+            "name": "cc_exp_year"
+          },
+          {
+            "name": "payment_method_type"
+          },
+          {
+            "name": "payment_method_name"
+          },
+          {
+            "name": "gift_card_last_chars"
+          },
+          {
+            "name": "gift_card_brand"
+          },
+          {
+            "name": "gift_card"
+          }
+        ]
+      },
+      "payment_transactionevent": {
+        "name": "payment_transactionevent",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "transaction_id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "related_granted_refund_id"
+          },
+          {
+            "name": "reason_reference_id"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "idempotency_key"
+          },
+          {
+            "name": "psp_reference"
+          },
+          {
+            "name": "message"
+          },
+          {
+            "name": "transaction"
+          },
+          {
+            "name": "external_url"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "amount"
+          },
+          {
+            "name": "amount_value"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "app"
+          },
+          {
+            "name": "app_identifier"
+          },
+          {
+            "name": "include_in_calculations"
+          },
+          {
+            "name": "related_granted_refund"
+          },
+          {
+            "name": "reason_reference"
+          }
+        ]
+      },
+      "payment_payment": {
+        "name": "payment_payment",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "checkout_id"
+          },
+          {
+            "name": "order_id"
+          },
+          {
+            "name": "gateway"
+          },
+          {
+            "name": "is_active"
+          },
+          {
+            "name": "to_confirm"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "modified_at"
+          },
+          {
+            "name": "charge_status"
+          },
+          {
+            "name": "token"
+          },
+          {
+            "name": "total"
+          },
+          {
+            "name": "captured_amount"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "checkout"
+          },
+          {
+            "name": "order"
+          },
+          {
+            "name": "store_payment_method"
+          },
+          {
+            "name": "billing_email"
+          },
+          {
+            "name": "billing_first_name"
+          },
+          {
+            "name": "billing_last_name"
+          },
+          {
+            "name": "billing_company_name"
+          },
+          {
+            "name": "billing_address_1"
+          },
+          {
+            "name": "billing_address_2"
+          },
+          {
+            "name": "billing_city"
+          },
+          {
+            "name": "billing_city_area"
+          },
+          {
+            "name": "billing_postal_code"
+          },
+          {
+            "name": "billing_country_code"
+          },
+          {
+            "name": "billing_country_area"
+          },
+          {
+            "name": "cc_first_digits"
+          },
+          {
+            "name": "cc_last_digits"
+          },
+          {
+            "name": "cc_brand"
+          },
+          {
+            "name": "cc_exp_month"
+          },
+          {
+            "name": "cc_exp_year"
+          },
+          {
+            "name": "payment_method_type"
+          },
+          {
+            "name": "customer_ip_address"
+          },
+          {
+            "name": "extra_data"
+          },
+          {
+            "name": "return_url"
+          },
+          {
+            "name": "psp_reference"
+          }
+        ]
+      },
+      "payment_transaction": {
+        "name": "payment_transaction",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "payment_id"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "payment"
+          },
+          {
+            "name": "token"
+          },
+          {
+            "name": "kind"
+          },
+          {
+            "name": "is_success"
+          },
+          {
+            "name": "action_required"
+          },
+          {
+            "name": "action_required_data"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "amount"
+          },
+          {
+            "name": "error"
+          },
+          {
+            "name": "gateway_response"
+          },
+          {
+            "name": "already_processed"
+          }
+        ]
+      },
+      "permission_permission": {
+        "name": "permission_permission",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "content_type_id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "content_type"
+          },
+          {
+            "name": "codename"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "permission_permissionsmixin": {
+        "name": "permission_permissionsmixin",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "is_superuser"
+          },
+          {
+            "name": "groups"
+          },
+          {
+            "name": "user_permissions"
+          }
+        ]
+      },
+      "plugins_pluginconfiguration": {
+        "name": "plugins_pluginconfiguration",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "channel_id"
+          },
+          {
+            "name": "identifier"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "channel"
+          },
+          {
+            "name": "description"
+          },
+          {
+            "name": "active"
+          },
+          {
+            "name": "configuration"
+          }
+        ]
+      },
+      "plugins_emailtemplate": {
+        "name": "plugins_emailtemplate",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "plugin_configuration_id"
+          },
+          {
+            "name": "plugin_configuration"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "value"
+          }
+        ]
+      },
+      "product_category": {
+        "name": "product_category",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "parent_id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "slug"
+          },
+          {
+            "name": "description"
+          },
+          {
+            "name": "description_plaintext"
+          },
+          {
+            "name": "updated_at"
+          },
+          {
+            "name": "parent"
+          },
+          {
+            "name": "background_image"
+          },
+          {
+            "name": "background_image_alt"
+          },
+          {
+            "name": "objects"
+          },
+          {
+            "name": "tree"
+          }
+        ]
+      },
+      "product_categorytranslation": {
+        "name": "product_categorytranslation",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "category_id"
+          },
+          {
+            "name": "category"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "description"
+          }
+        ]
+      },
+      "product_producttype": {
+        "name": "product_producttype",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "tax_class_id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "slug"
+          },
+          {
+            "name": "kind"
+          },
+          {
+            "name": "is_shipping_required"
+          },
+          {
+            "name": "weight"
+          },
+          {
+            "name": "tax_class"
+          },
+          {
+            "name": "has_variants"
+          }
+        ]
+      },
+      "product_product": {
+        "name": "product_product",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "product_type_id"
+          },
+          {
+            "name": "category_id"
+          },
+          {
+            "name": "default_variant_id"
+          },
+          {
+            "name": "tax_class_id"
+          },
+          {
+            "name": "product_type"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "slug"
+          },
+          {
+            "name": "description"
+          },
+          {
+            "name": "description_plaintext"
+          },
+          {
+            "name": "search_document"
+          },
+          {
+            "name": "search_vector"
+          },
+          {
+            "name": "search_index_dirty"
+          },
+          {
+            "name": "category"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "updated_at"
+          },
+          {
+            "name": "weight"
+          },
+          {
+            "name": "default_variant"
+          },
+          {
+            "name": "rating"
+          },
+          {
+            "name": "tax_class"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "product_producttranslation": {
+        "name": "product_producttranslation",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "product_id"
+          },
+          {
+            "name": "product"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "description"
+          }
+        ]
+      },
+      "product_productchannellisting": {
+        "name": "product_productchannellisting",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "product_id"
+          },
+          {
+            "name": "channel_id"
+          },
+          {
+            "name": "product"
+          },
+          {
+            "name": "channel"
+          },
+          {
+            "name": "visible_in_listings"
+          },
+          {
+            "name": "available_for_purchase_at"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "discounted_price_amount"
+          },
+          {
+            "name": "discounted_price"
+          },
+          {
+            "name": "discounted_price_dirty"
+          }
+        ]
+      },
+      "product_productvariant": {
+        "name": "product_productvariant",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "product_id"
+          },
+          {
+            "name": "sku"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "product"
+          },
+          {
+            "name": "media"
+          },
+          {
+            "name": "track_inventory"
+          },
+          {
+            "name": "is_preorder"
+          },
+          {
+            "name": "preorder_end_date"
+          },
+          {
+            "name": "preorder_global_threshold"
+          },
+          {
+            "name": "quantity_limit_per_customer"
+          },
+          {
+            "name": "created_at"
+          },
+          {
+            "name": "updated_at"
+          },
+          {
+            "name": "weight"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "product_productvariantchannellisting": {
+        "name": "product_productvariantchannellisting",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "variant_id"
+          },
+          {
+            "name": "channel_id"
+          },
+          {
+            "name": "variant"
+          },
+          {
+            "name": "channel"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "price_amount"
+          },
+          {
+            "name": "price"
+          },
+          {
+            "name": "cost_price_amount"
+          },
+          {
+            "name": "cost_price"
+          },
+          {
+            "name": "prior_price_amount"
+          },
+          {
+            "name": "prior_price"
+          },
+          {
+            "name": "discounted_price_amount"
+          },
+          {
+            "name": "discounted_price"
+          },
+          {
+            "name": "promotion_rules"
+          },
+          {
+            "name": "preorder_quantity_threshold"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "product_variantchannellistingpromotionrule": {
+        "name": "product_variantchannellistingpromotionrule",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "variant_channel_listing_id"
+          },
+          {
+            "name": "promotion_rule_id"
+          },
+          {
+            "name": "variant_channel_listing"
+          },
+          {
+            "name": "promotion_rule"
+          },
+          {
+            "name": "discount_amount"
+          },
+          {
+            "name": "discount"
+          },
+          {
+            "name": "currency"
+          }
+        ]
+      },
+      "product_productmedia": {
+        "name": "product_productmedia",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "product_id"
+          },
+          {
+            "name": "product"
+          },
+          {
+            "name": "image"
+          },
+          {
+            "name": "alt"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "external_url"
+          },
+          {
+            "name": "oembed_data"
+          },
+          {
+            "name": "to_remove"
+          }
+        ]
+      },
+      "product_variantmedia": {
+        "name": "product_variantmedia",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "variant_id"
+          },
+          {
+            "name": "media_id"
+          },
+          {
+            "name": "variant"
+          },
+          {
+            "name": "media"
+          }
+        ]
+      },
+      "product_collectionproduct": {
+        "name": "product_collectionproduct",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "collection_id"
+          },
+          {
+            "name": "product_id"
+          },
+          {
+            "name": "collection"
+          },
+          {
+            "name": "product"
+          }
+        ]
+      },
+      "product_collection": {
+        "name": "product_collection",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "slug"
+          },
+          {
+            "name": "products"
+          },
+          {
+            "name": "background_image"
+          },
+          {
+            "name": "background_image_alt"
+          },
+          {
+            "name": "description"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "product_collectionchannellisting": {
+        "name": "product_collectionchannellisting",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "collection_id"
+          },
+          {
+            "name": "channel_id"
+          },
+          {
+            "name": "collection"
+          },
+          {
+            "name": "channel"
+          }
+        ]
+      },
+      "product_collectiontranslation": {
+        "name": "product_collectiontranslation",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "collection_id"
+          },
+          {
+            "name": "collection"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "description"
+          }
+        ]
+      },
+      "schedulers_customschedule": {
+        "name": "schedulers_customschedule",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "no_changes"
+          },
+          {
+            "name": "schedule_import_path"
+          }
+        ]
+      },
+      "seo_seomodel": {
+        "name": "seo_seomodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "seo_title"
+          },
+          {
+            "name": "seo_description"
+          }
+        ]
+      },
+      "seo_seomodeltranslationwithslug": {
+        "name": "seo_seomodeltranslationwithslug",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "slug"
+          }
+        ]
+      },
+      "shipping_shippingzone": {
+        "name": "shipping_shippingzone",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "countries"
+          },
+          {
+            "name": "default"
+          },
+          {
+            "name": "description"
+          },
+          {
+            "name": "channels"
+          }
+        ]
+      },
+      "shipping_shippingmethod": {
+        "name": "shipping_shippingmethod",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "shipping_zone_id"
+          },
+          {
+            "name": "tax_class_id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "shipping_zone"
+          },
+          {
+            "name": "minimum_order_weight"
+          },
+          {
+            "name": "maximum_order_weight"
+          },
+          {
+            "name": "excluded_products"
+          },
+          {
+            "name": "maximum_delivery_days"
+          },
+          {
+            "name": "minimum_delivery_days"
+          },
+          {
+            "name": "description"
+          },
+          {
+            "name": "tax_class"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "shipping_shippingmethodpostalcoderule": {
+        "name": "shipping_shippingmethodpostalcoderule",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "shipping_method_id"
+          },
+          {
+            "name": "shipping_method"
+          },
+          {
+            "name": "start"
+          },
+          {
+            "name": "end"
+          },
+          {
+            "name": "inclusion_type"
+          }
+        ]
+      },
+      "shipping_shippingmethodchannellisting": {
+        "name": "shipping_shippingmethodchannellisting",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "shipping_method_id"
+          },
+          {
+            "name": "channel_id"
+          },
+          {
+            "name": "shipping_method"
+          },
+          {
+            "name": "channel"
+          },
+          {
+            "name": "minimum_order_price_amount"
+          },
+          {
+            "name": "minimum_order_price"
+          },
+          {
+            "name": "currency"
+          },
+          {
+            "name": "maximum_order_price_amount"
+          },
+          {
+            "name": "maximum_order_price"
+          },
+          {
+            "name": "price"
+          },
+          {
+            "name": "price_amount"
+          }
+        ]
+      },
+      "site_sitesettings": {
+        "name": "site_sitesettings",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "site_id"
+          },
+          {
+            "name": "top_menu_id"
+          },
+          {
+            "name": "bottom_menu_id"
+          },
+          {
+            "name": "company_address_id"
+          },
+          {
+            "name": "refund_reason_reference_type_id"
+          },
+          {
+            "name": "return_reason_reference_type_id"
+          },
+          {
+            "name": "site"
+          },
+          {
+            "name": "header_text"
+          },
+          {
+            "name": "description"
+          },
+          {
+            "name": "top_menu"
+          },
+          {
+            "name": "bottom_menu"
+          },
+          {
+            "name": "track_inventory_by_default"
+          },
+          {
+            "name": "default_weight_unit"
+          },
+          {
+            "name": "company_address"
+          },
+          {
+            "name": "default_mail_sender_name"
+          },
+          {
+            "name": "default_mail_sender_address"
+          },
+          {
+            "name": "enable_account_confirmation_by_email"
+          },
+          {
+            "name": "allow_login_without_confirmation"
+          },
+          {
+            "name": "password_login_mode"
+          },
+          {
+            "name": "customer_set_password_url"
+          },
+          {
+            "name": "fulfillment_auto_approve"
+          },
+          {
+            "name": "fulfillment_allow_unpaid"
+          },
+          {
+            "name": "allow_storefront_traffic"
+          },
+          {
+            "name": "preserve_all_address_fields"
+          },
+          {
+            "name": "reserve_stock_duration_anonymous_user"
+          },
+          {
+            "name": "reserve_stock_duration_authenticated_user"
+          },
+          {
+            "name": "limit_quantity_per_checkout"
+          },
+          {
+            "name": "gift_card_expiry_type"
+          },
+          {
+            "name": "gift_card_expiry_period_type"
+          },
+          {
+            "name": "gift_card_expiry_period"
+          },
+          {
+            "name": "refund_reason_reference_type"
+          },
+          {
+            "name": "return_reason_reference_type"
+          },
+          {
+            "name": "usage_telemetry_reported_at"
+          },
+          {
+            "name": "charge_taxes_on_shipping"
+          },
+          {
+            "name": "include_taxes_in_prices"
+          },
+          {
+            "name": "display_gross_prices"
+          },
+          {
+            "name": "use_legacy_update_webhook_emission"
+          },
+          {
+            "name": "use_legacy_shipping_zone_stock_availability"
+          },
+          {
+            "name": "account_confirm_merge_mode"
+          }
+        ]
+      },
+      "tax_taxclass": {
+        "name": "tax_taxclass",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "name"
+          }
+        ]
+      },
+      "tax_taxclasscountryrate": {
+        "name": "tax_taxclasscountryrate",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "tax_class_id"
+          },
+          {
+            "name": "tax_class"
+          },
+          {
+            "name": "country"
+          },
+          {
+            "name": "rate"
+          }
+        ]
+      },
+      "tax_taxconfiguration": {
+        "name": "tax_taxconfiguration",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "channel_id"
+          },
+          {
+            "name": "channel"
+          },
+          {
+            "name": "charge_taxes"
+          },
+          {
+            "name": "tax_calculation_strategy"
+          },
+          {
+            "name": "display_gross_prices"
+          },
+          {
+            "name": "prices_entered_with_tax"
+          },
+          {
+            "name": "use_weighted_tax_for_shipping"
+          }
+        ]
+      },
+      "tax_taxconfigurationpercountry": {
+        "name": "tax_taxconfigurationpercountry",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "tax_configuration_id"
+          },
+          {
+            "name": "tax_configuration"
+          },
+          {
+            "name": "country"
+          },
+          {
+            "name": "charge_taxes"
+          },
+          {
+            "name": "tax_calculation_strategy"
+          },
+          {
+            "name": "display_gross_prices"
+          },
+          {
+            "name": "use_weighted_tax_for_shipping"
+          }
+        ]
+      },
+      "tests_book": {
+        "name": "tests_book",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "name"
+          }
+        ]
+      },
+      "thumbnail_thumbnail": {
+        "name": "thumbnail_thumbnail",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "category_id"
+          },
+          {
+            "name": "collection_id"
+          },
+          {
+            "name": "product_media_id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "app_installation_id"
+          },
+          {
+            "name": "image"
+          },
+          {
+            "name": "size"
+          },
+          {
+            "name": "format"
+          },
+          {
+            "name": "category"
+          },
+          {
+            "name": "collection"
+          },
+          {
+            "name": "product_media"
+          },
+          {
+            "name": "user"
+          },
+          {
+            "name": "app"
+          },
+          {
+            "name": "app_installation"
+          }
+        ]
+      },
+      "warehouse_channelwarehouse": {
+        "name": "warehouse_channelwarehouse",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "channel_id"
+          },
+          {
+            "name": "warehouse_id"
+          },
+          {
+            "name": "channel"
+          },
+          {
+            "name": "warehouse"
+          }
+        ]
+      },
+      "warehouse_warehouse": {
+        "name": "warehouse_warehouse",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "address_id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "slug"
+          },
+          {
+            "name": "channels"
+          },
+          {
+            "name": "shipping_zones"
+          },
+          {
+            "name": "address"
+          },
+          {
+            "name": "email"
+          },
+          {
+            "name": "click_and_collect_option"
+          },
+          {
+            "name": "is_private"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "warehouse_stock": {
+        "name": "warehouse_stock",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "warehouse_id"
+          },
+          {
+            "name": "product_variant_id"
+          },
+          {
+            "name": "warehouse"
+          },
+          {
+            "name": "product_variant"
+          },
+          {
+            "name": "quantity"
+          },
+          {
+            "name": "quantity_allocated"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "warehouse_allocation": {
+        "name": "warehouse_allocation",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "order_line_id"
+          },
+          {
+            "name": "stock_id"
+          },
+          {
+            "name": "order_line"
+          },
+          {
+            "name": "stock"
+          },
+          {
+            "name": "quantity_allocated"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "warehouse_preorderallocation": {
+        "name": "warehouse_preorderallocation",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "order_line_id"
+          },
+          {
+            "name": "product_variant_channel_listing_id"
+          },
+          {
+            "name": "order_line"
+          },
+          {
+            "name": "quantity"
+          },
+          {
+            "name": "product_variant_channel_listing"
+          }
+        ]
+      },
+      "warehouse_preorderreservation": {
+        "name": "warehouse_preorderreservation",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "checkout_line_id"
+          },
+          {
+            "name": "product_variant_channel_listing_id"
+          },
+          {
+            "name": "checkout_line"
+          },
+          {
+            "name": "product_variant_channel_listing"
+          },
+          {
+            "name": "quantity_reserved"
+          },
+          {
+            "name": "reserved_until"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "warehouse_reservation": {
+        "name": "warehouse_reservation",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "checkout_line_id"
+          },
+          {
+            "name": "stock_id"
+          },
+          {
+            "name": "checkout_line"
+          },
+          {
+            "name": "stock"
+          },
+          {
+            "name": "quantity_reserved"
+          },
+          {
+            "name": "reserved_until"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "webhook_webhook": {
+        "name": "webhook_webhook",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "app_id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "app"
+          },
+          {
+            "name": "target_url"
+          },
+          {
+            "name": "is_active"
+          },
+          {
+            "name": "secret_key"
+          },
+          {
+            "name": "subscription_query"
+          },
+          {
+            "name": "custom_headers"
+          },
+          {
+            "name": "filterable_channel_slugs"
+          },
+          {
+            "name": "identifier"
+          }
+        ]
+      },
+      "webhook_webhookevent": {
+        "name": "webhook_webhookevent",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "webhook_id"
+          },
+          {
+            "name": "webhook"
+          },
+          {
+            "name": "event_type"
+          }
+        ]
+      },
+      "core_strictbasemodel": {
+        "name": "core_strictbasemodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "model_config"
+          }
+        ]
+      },
+      "core_sizedatamodel": {
+        "name": "core_sizedatamodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          }
+        ]
+      },
+      "core_editorjsblock": {
+        "name": "core_editorjsblock",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          }
+        ]
+      },
+      "core_editorjsparagraphdatamodel": {
+        "name": "core_editorjsparagraphdatamodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          }
+        ]
+      },
+      "core_editorjsheaderdatamodel": {
+        "name": "core_editorjsheaderdatamodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          }
+        ]
+      },
+      "core_editorjsquotedatamodel": {
+        "name": "core_editorjsquotedatamodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          }
+        ]
+      },
+      "core_editorjsembeddatamodel": {
+        "name": "core_editorjsembeddatamodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          }
+        ]
+      },
+      "core_imagefilemodel": {
+        "name": "core_imagefilemodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          }
+        ]
+      },
+      "core_editorjsimagedatamodel": {
+        "name": "core_editorjsimagedatamodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          }
+        ]
+      },
+      "core_editorjstabledatamodel": {
+        "name": "core_editorjstabledatamodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          }
+        ]
+      },
+      "core_editorjsnestedlistitemmodel": {
+        "name": "core_editorjsnestedlistitemmodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          }
+        ]
+      },
+      "core_editorjslistdatamodel": {
+        "name": "core_editorjslistdatamodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          }
+        ]
+      },
+      "core_editorjsdocumentmodel": {
+        "name": "core_editorjsdocumentmodel",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          }
+        ]
+      }
+    }
+  }
+}
