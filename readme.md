@@ -10,6 +10,7 @@ Answers: *"What code and downstream tables touch this database entity, and how s
 1. **CI/PR Automated Impact Analysis (`systemlens ci-diff`)**
    - Automatically runs on pull requests to identify modified files, map them to database tables, and post detailed blast radius comments before code is merged.
    - Includes GitHub Actions workflow (`.github/workflows/systemlens.yml`).
+   - ⚠️ **Feature Gate Notice:** `systemlens ci-diff` is currently marked **Experimental** and requires the explicit `--experimental` flag. Its confidence scores and impact calculations are pending empirical validation against real-world repositories (Phases A–D of the rollout plan). See [ARCHITECTURE_DECISIONS.md](ARCHITECTURE_DECISIONS.md) and [ncluad/files/11-ci-diff-gate.md](ncluad/files/11-ci-diff-gate.md).
 
 2. **Full VS Code Extension Suite (v0.2.0)**
    - **Activity Bar Impact Explorer:** Persistent sidebar displaying all tables, touching functions, foreign keys, blind spots, and graph metrics.
@@ -71,15 +72,19 @@ systemlens analyze-js --src-dir ./src --schema-file raw_schema.json --merged-gra
 systemlens impact --target users --graph graph.json --depth 2
 ```
 
-### 4. Run CI Diff Impact Analysis
+### 4. Run CI Diff Impact Analysis (Experimental)
+
+> ⚠️ **Note:** `ci-diff` requires the explicit `--experimental` flag while confidence scores are being empirically calibrated against real-world repositories.
 
 ```bash
-systemlens ci-diff --base origin/main --head HEAD --graph graph.json --format markdown
+systemlens ci-diff --experimental --base origin/main --head HEAD --graph graph.json --format markdown
 ```
 
 ---
 
 ## 💻 VS Code Extension
+
+> ℹ️ **Architecture Note:** As documented in [ARCHITECTURE_DECISIONS.md](ARCHITECTURE_DECISIONS.md), the CLI is currently the primary distribution and automation surface. Further feature expansion of the VS Code extension is intentionally deferred until Phase C (Louvain clustering engine) completes.
 
 Install the packaged VSIX extension from `./extension`:
 

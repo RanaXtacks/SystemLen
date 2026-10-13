@@ -10,6 +10,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from systemlens.ci import (
+    EXPERIMENTAL_WARNING,
     CIDiffReport,
     CISummary,
     detect_affected_tables,
@@ -164,6 +165,7 @@ def test_format_markdown_report_with_impact(sample_ci_graph):
 
     md = format_markdown_report(report, high_risk_threshold=2)
     assert "## 🔍 SystemLens Impact Analysis" in md
+    assert EXPERIMENTAL_WARNING in md
     assert "Changed Files (2)" in md
     assert "Blast Radius Summary" in md
     assert "Affected Tables (2)" in md
@@ -176,6 +178,7 @@ def test_format_markdown_report_empty():
     summary = CISummary(0, 0, 0, 0, [])
     report = CIDiffReport([], [], [], summary)
     md = format_markdown_report(report)
+    assert EXPERIMENTAL_WARNING in md
     assert "No changed files detected" in md
 
 
@@ -183,6 +186,7 @@ def test_format_markdown_report_no_affected_tables():
     summary = CISummary(1, 0, 0, 0, [])
     report = CIDiffReport(["docs/readme.md"], [], [], summary)
     md = format_markdown_report(report)
+    assert EXPERIMENTAL_WARNING in md
     assert "No database tables or downstream dependencies affected" in md
 
 
@@ -193,6 +197,8 @@ def test_format_json_report(sample_ci_graph):
     )
     json_str = format_json_report(report)
     data = json.loads(json_str)
+    assert data["experimental"] is True
+    assert data["experimental_warning"] == EXPERIMENTAL_WARNING
     assert "changed_files" in data
     assert "affected_tables" in data
     assert "impact_results" in data

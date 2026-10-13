@@ -199,6 +199,7 @@ def test_cli_ci_diff_markdown(tmp_path):
 
     ret = main([
         "ci-diff",
+        "--experimental",
         "--graph", str(graph_file),
         "--changed-files", "app/auth.py",
         "--format", "markdown",
@@ -209,7 +210,25 @@ def test_cli_ci_diff_markdown(tmp_path):
     assert out_md.exists()
     content = out_md.read_text(encoding="utf-8")
     assert "## 🔍 SystemLens Impact Analysis" in content
+    assert "⚠ Experimental — impact confidence not yet validated" in content
     assert "users" in content
+
+
+def test_cli_ci_diff_gated_without_experimental(tmp_path, capsys):
+    graph_file = tmp_path / "graph.json"
+    with open(graph_file, "w", encoding="utf-8") as f:
+        json.dump({"nodes": [], "edges": []}, f)
+
+    ret = main([
+        "ci-diff",
+        "--graph", str(graph_file),
+        "--changed-files", "app/auth.py",
+    ])
+
+    assert ret == 1
+    captured = capsys.readouterr()
+    assert "is experimental and currently gated" in captured.err
+    assert "--experimental" in captured.err
 
 
 def test_cli_ci_diff_json(tmp_path):
@@ -227,6 +246,7 @@ def test_cli_ci_diff_json(tmp_path):
 
     ret = main([
         "ci-diff",
+        "--experimental",
         "--graph", str(graph_file),
         "--changed-files", "migrations/001_users.sql",
         "--format", "json",
@@ -237,6 +257,8 @@ def test_cli_ci_diff_json(tmp_path):
     assert out_json.exists()
     with open(out_json, "r", encoding="utf-8") as f:
         data = json.load(f)
+    assert data["experimental"] is True
+    assert "⚠ Experimental" in data["experimental_warning"]
     assert data["summary"]["total_affected_tables"] == 1
     assert data["affected_tables"] == ["users"]
 
@@ -244,6 +266,7 @@ def test_cli_ci_diff_json(tmp_path):
 def test_cli_ci_diff_missing_graph():
     ret = main([
         "ci-diff",
+        "--experimental",
         "--graph", "nonexistent_graph_12345.json",
         "--changed-files", "app/auth.py",
     ])
@@ -268,6 +291,7 @@ def test_cli_ci_diff_with_mocked_git(tmp_path, monkeypatch):
 
     ret = main([
         "ci-diff",
+        "--experimental",
         "--graph", str(graph_file),
         "--base", "origin/main",
         "--head", "HEAD",

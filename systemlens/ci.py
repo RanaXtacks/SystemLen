@@ -21,6 +21,11 @@ from systemlens.models import EdgeType, NodeType
 from systemlens.query.impact import ImpactEngine, ImpactResult
 
 
+EXPERIMENTAL_WARNING: str = (
+    "⚠ Experimental — impact confidence not yet validated against real-world accuracy."
+)
+
+
 @dataclass
 class CISummary:
     """Summary metrics of the CI impact analysis."""
@@ -47,9 +52,12 @@ class CIDiffReport:
     affected_tables: list[str]
     impact_results: list[ImpactResult]
     summary: CISummary
+    experimental_warning: str = EXPERIMENTAL_WARNING
 
     def to_dict(self) -> dict[str, Any]:
         return {
+            "experimental": True,
+            "experimental_warning": self.experimental_warning,
             "changed_files": self.changed_files,
             "affected_tables": self.affected_tables,
             "impact_results": [r.to_dict() for r in self.impact_results],
@@ -331,6 +339,7 @@ def format_markdown_report(
     """
     lines: list[str] = []
     lines.append("## 🔍 SystemLens Impact Analysis\n")
+    lines.append(f"> **{EXPERIMENTAL_WARNING}**\n")
 
     if not report.changed_files:
         lines.append("ℹ️ **No changed files detected between base and head refs.**\n")

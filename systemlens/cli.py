@@ -375,6 +375,12 @@ def main(args: Optional[list[str]] = None) -> int:
         default=None,
         help="Optional explicit list of changed files (bypasses git diff if provided)",
     )
+    ci_parser.add_argument(
+        "--experimental",
+        action="store_true",
+        default=False,
+        help="Explicitly opt into experimental, unvalidated CI impact analysis (required pending validation)",
+    )
 
     parsed = parser.parse_args(args)
 
@@ -653,6 +659,16 @@ def main(args: Optional[list[str]] = None) -> int:
             print("=" * 65)
 
     elif parsed.command == "ci-diff":
+        if not parsed.experimental:
+            print(
+                "Error: 'systemlens ci-diff' is experimental and currently gated pending "
+                "empirical validation of blast-radius confidence accuracy.\n"
+                "To run anyway, provide the --experimental flag.\n"
+                "See ncluad/files/11-ci-diff-gate.md and ARCHITECTURE_DECISIONS.md for gate criteria.",
+                file=sys.stderr,
+            )
+            return 1
+
         if not os.path.exists(parsed.graph):
             print(
                 f"Error: Graph file '{parsed.graph}' not found. "
