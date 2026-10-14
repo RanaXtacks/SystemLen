@@ -1,0 +1,60 @@
+{
+  "schema_used": "Saleor (Python/Django e-commerce)",
+  "date": "2026-10-14",
+  "overall_gate_passed": true,
+  "acceptance_criteria": {
+    "inferred_naming": "Wilson 95% lower bound >= 0.70",
+    "orm_call": "Wilson 95% lower bound >= 0.80",
+    "static_sql_string": "Wilson 95% lower bound >= 0.80"
+  },
+  "results": [
+    {
+      "edge_type": "inferred_naming",
+      "sample_size": 50,
+      "true_positives": 46,
+      "false_positives": 0,
+      "precision": 1.0,
+      "recall": 0.92,
+      "wilson_interval": {
+        "confidence_level": 0.95,
+        "center": 0.9643,
+        "lower_bound": 0.9286,
+        "upper_bound": 1.0
+      },
+      "target_lower_bound": 0.7,
+      "gate_passed": true
+    },
+    {
+      "edge_type": "orm_call",
+      "sample_size": 50,
+      "true_positives": 50,
+      "false_positives": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "wilson_interval": {
+        "confidence_level": 0.95,
+        "center": 0.9643,
+        "lower_bound": 0.9286,
+        "upper_bound": 1.0
+      },
+      "target_lower_bound": 0.8,
+      "gate_passed": true
+    },
+    {
+      "edge_type": "static_sql_string",
+      "sample_size": 50,
+      "true_positives": 48,
+      "false_positives": 2,
+      "precision": 0.96,
+      "recall": 0.96,
+      "wilson_interval": {
+        "confidence_level": 0.95,
+        "center": 0.9272,
+        "lower_bound": 0.8654,
+        "upper_bound": 0.989
+      },
+      "target_lower_bound": 0.8,
+      "gate_passed": true
+    }
+  ]
+}

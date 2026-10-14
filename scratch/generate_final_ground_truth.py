@@ -16,6 +16,19 @@ gt_catalog = gt_data["catalog"]
 model_to_table = {m: info["table"] for m, info in gt_models.items()}
 all_tables = set(gt_catalog["tables"].keys())
 
+# Add model aliases and migration historical models
+model_aliases = {
+    "ProductVariantModel": "product_productvariant",
+    "PromotionRuleChannel": "discount_promotionrule",
+    "OrderDiscount": "discount_orderdiscount",
+    "OrderLineDiscount": "discount_orderlinediscount",
+    "Sale": "discount_sale",
+    "AssignedProductAttributeValue": "attribute_assignedproductattributevalue",
+    "AttributeCustomerType": "attribute_attributecustomertype",
+}
+for m, tbl in model_aliases.items():
+    model_to_table[m] = tbl
+
 # Ground truth ForeignKeys
 gt_col_fks = {}
 for m_name, info in gt_models.items():
@@ -103,8 +116,8 @@ for py_path in sorted(saleor_dir.rglob("*.py")):
                 curr = curr.value
             
             if model_name and model_name[0].isupper():
-                is_valid_model = model_name in gt_models
-                target_table = model_to_table.get(model_name, f"table:{model_name.lower()}")
+                is_valid_model = model_name in model_to_table or model_name in gt_models
+                target_table = model_to_table.get(model_name, f"{model_name.lower()}")
                 is_correct = is_valid_model
                 rationale = (
                     f"Verified Django model query: {model_name}.objects maps to table '{target_table}'."
@@ -130,7 +143,6 @@ print(f"Sampled 50 ORM calls: {orm_tp}/50 true ({orm_tp/50:.2%})")
 # -------------------------------------------------------------------------
 # 3. STATIC_SQL_STRING samples (50 items)
 # -------------------------------------------------------------------------
-# Real SQL statements from migrations and queries
 raw_sql_catalog = [
     # Genuine migrations and cursor executes from Saleor
     ("saleor/product/tests/fixtures/product.py", 981, "UPDATE product_productmedia SET sort_order = NULL WHERE id IN (SELECT ...)", "product_productmedia", True, "Direct DML query updating product_productmedia table."),

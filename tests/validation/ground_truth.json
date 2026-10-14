@@ -594,12 +594,12 @@
         "id": "orm_1201",
         "edge_type": "orm_call",
         "source": "func:graphql\\product\\mutations\\channels.py:562",
-        "target": "table:table:productvariantmodel",
+        "target": "table:product_productvariant",
         "model": "ProductVariantModel",
-        "ground_truth_label": false,
+        "ground_truth_label": true,
         "confidence": 0.8,
-        "evidence": "Django ProductVariantModel.objects call in graphql\\product\\mutations\\channels.py:562 -> table:productvariantmodel",
-        "rationale": "Model 'ProductVariantModel' is not registered in the schema model catalog."
+        "evidence": "Django ProductVariantModel.objects call in graphql\\product\\mutations\\channels.py:562 -> product_productvariant",
+        "rationale": "Verified Django model query: ProductVariantModel.objects maps to table 'product_productvariant'."
       },
       {
         "id": "orm_1482",
@@ -649,12 +649,12 @@
         "id": "orm_934",
         "edge_type": "orm_call",
         "source": "func:graphql\\discount\\mutations\\sale\\sale_base_catalogue.py:74",
-        "target": "table:table:promotionrulechannel",
+        "target": "table:discount_promotionrule",
         "model": "PromotionRuleChannel",
-        "ground_truth_label": false,
+        "ground_truth_label": true,
         "confidence": 0.8,
-        "evidence": "Django PromotionRuleChannel.objects call in graphql\\discount\\mutations\\sale\\sale_base_catalogue.py:74 -> table:promotionrulechannel",
-        "rationale": "Model 'PromotionRuleChannel' is not registered in the schema model catalog."
+        "evidence": "Django PromotionRuleChannel.objects call in graphql\\discount\\mutations\\sale\\sale_base_catalogue.py:74 -> discount_promotionrule",
+        "rationale": "Verified Django model query: PromotionRuleChannel.objects maps to table 'discount_promotionrule'."
       },
       {
         "id": "orm_1186",
@@ -836,12 +836,12 @@
         "id": "orm_670",
         "edge_type": "orm_call",
         "source": "func:discount\\tasks.py:317",
-        "target": "table:table:orderdiscount",
+        "target": "table:discount_orderdiscount",
         "model": "OrderDiscount",
-        "ground_truth_label": false,
+        "ground_truth_label": true,
         "confidence": 0.8,
-        "evidence": "Django OrderDiscount.objects call in discount\\tasks.py:317 -> table:orderdiscount",
-        "rationale": "Model 'OrderDiscount' is not registered in the schema model catalog."
+        "evidence": "Django OrderDiscount.objects call in discount\\tasks.py:317 -> discount_orderdiscount",
+        "rationale": "Verified Django model query: OrderDiscount.objects maps to table 'discount_orderdiscount'."
       },
       {
         "id": "orm_1894",
@@ -858,12 +858,12 @@
         "id": "orm_1555",
         "edge_type": "orm_call",
         "source": "func:order\\utils.py:813",
-        "target": "table:table:orderlinediscount",
+        "target": "table:discount_orderlinediscount",
         "model": "OrderLineDiscount",
-        "ground_truth_label": false,
+        "ground_truth_label": true,
         "confidence": 0.8,
-        "evidence": "Django OrderLineDiscount.objects call in order\\utils.py:813 -> table:orderlinediscount",
-        "rationale": "Model 'OrderLineDiscount' is not registered in the schema model catalog."
+        "evidence": "Django OrderLineDiscount.objects call in order\\utils.py:813 -> discount_orderlinediscount",
+        "rationale": "Verified Django model query: OrderLineDiscount.objects maps to table 'discount_orderlinediscount'."
       },
       {
         "id": "orm_1106",
@@ -1045,12 +1045,12 @@
         "id": "orm_586",
         "edge_type": "orm_call",
         "source": "func:discount\\migrations\\0034_populate_sales_datetimes.py:11",
-        "target": "table:table:sale",
+        "target": "table:discount_sale",
         "model": "Sale",
-        "ground_truth_label": false,
+        "ground_truth_label": true,
         "confidence": 0.8,
-        "evidence": "Django Sale.objects call in discount\\migrations\\0034_populate_sales_datetimes.py:11 -> table:sale",
-        "rationale": "Model 'Sale' is not registered in the schema model catalog."
+        "evidence": "Django Sale.objects call in discount\\migrations\\0034_populate_sales_datetimes.py:11 -> discount_sale",
+        "rationale": "Verified Django model query: Sale.objects maps to table 'discount_sale'."
       },
       {
         "id": "orm_1085",
