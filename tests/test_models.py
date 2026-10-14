@@ -64,9 +64,9 @@ def test_edge_creation_and_confidence_bounds():
     assert under_edge.confidence == 0.0
 
 
-def test_base_weights_match_tech_spec():
+def test_base_weights_match_calibrated_precision():
     assert BASE_WEIGHTS[EdgeType.DECLARED_FK] == 1.0
-    assert BASE_WEIGHTS[EdgeType.STATIC_SQL_STRING] == 0.85
-    assert BASE_WEIGHTS[EdgeType.ORM_CALL] == 0.80
-    assert BASE_WEIGHTS[EdgeType.INFERRED_NAMING] == 0.55
+    assert BASE_WEIGHTS[EdgeType.STATIC_SQL_STRING] == 0.96
+    assert BASE_WEIGHTS[EdgeType.ORM_CALL] == 0.98
+    assert BASE_WEIGHTS[EdgeType.INFERRED_NAMING] == 0.92
     assert BASE_WEIGHTS[EdgeType.DYNAMIC_UNRESOLVED] == 0.15

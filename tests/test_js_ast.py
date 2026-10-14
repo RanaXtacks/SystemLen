@@ -74,7 +74,7 @@ def test_extract_raw_sql_literal(tmp_path):
     sql_edges = [e for e in edges if e.type == EdgeType.STATIC_SQL_STRING]
     assert len(sql_edges) == 1
     assert sql_edges[0].target == "table:invoices"
-    assert sql_edges[0].confidence == 0.85
+    assert sql_edges[0].confidence == 0.96
 
 
 def test_extract_dynamic_unresolved(tmp_path):

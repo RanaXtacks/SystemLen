@@ -1826,7 +1826,7 @@
       "source": "table:public.users",
       "target": "table:public.organizations",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.users.organization_id -> public.organizations",
       "metadata": {
         "source_column": "organization_id",
@@ -1844,7 +1844,7 @@
       "source": "table:public.user_roles",
       "target": "table:public.users",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.user_roles.user_id -> public.users",
       "metadata": {
         "source_column": "user_id",
@@ -1862,7 +1862,7 @@
       "source": "table:public.api_tokens",
       "target": "table:public.organizations",
       "type": "inferred_naming",
-      "confidence": 0.495,
+      "confidence": 0.828,
       "evidence": "Naming inference (fuzzy): public.api_tokens.org_id -> public.organizations",
       "metadata": {
         "source_column": "org_id",
@@ -1878,7 +1878,7 @@
       "source": "table:public.api_tokens",
       "target": "table:public.users",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.api_tokens.user_id -> public.users",
       "metadata": {
         "source_column": "user_id",
@@ -1896,7 +1896,7 @@
       "source": "table:public.subscriptions",
       "target": "table:public.users",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.subscriptions.user_id -> public.users",
       "metadata": {
         "source_column": "user_id",
@@ -1914,7 +1914,7 @@
       "source": "table:public.subscriptions",
       "target": "table:public.plans",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.subscriptions.plan_id -> public.plans",
       "metadata": {
         "source_column": "plan_id",
@@ -1932,7 +1932,7 @@
       "source": "table:public.payment_methods",
       "target": "table:public.users",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.payment_methods.user_id -> public.users",
       "metadata": {
         "source_column": "user_id",
@@ -1950,7 +1950,7 @@
       "source": "table:public.invoices",
       "target": "table:public.accounts",
       "type": "inferred_naming",
-      "confidence": 0.495,
+      "confidence": 0.828,
       "evidence": "Naming inference (fuzzy): public.invoices.acct_id -> public.accounts",
       "metadata": {
         "source_column": "acct_id",
@@ -1966,7 +1966,7 @@
       "source": "table:public.invoices",
       "target": "table:public.subscriptions",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.invoices.subscription_id -> public.subscriptions",
       "metadata": {
         "source_column": "subscription_id",
@@ -1984,7 +1984,7 @@
       "source": "table:public.invoice_items",
       "target": "table:public.invoices",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.invoice_items.invoice_id -> public.invoices",
       "metadata": {
         "source_column": "invoice_id",
@@ -2002,7 +2002,7 @@
       "source": "table:public.transactions",
       "target": "table:public.payment_methods",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.transactions.payment_method_id -> public.payment_methods",
       "metadata": {
         "source_column": "payment_method_id",
@@ -2018,7 +2018,7 @@
       "source": "table:public.transactions",
       "target": "table:public.invoices",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.transactions.invoice_id -> public.invoices",
       "metadata": {
         "source_column": "invoice_id",
@@ -2034,7 +2034,7 @@
       "source": "table:public.categories",
       "target": "table:public.categories",
       "type": "inferred_naming",
-      "confidence": 0.495,
+      "confidence": 0.828,
       "evidence": "Naming inference (fuzzy): public.categories.parent_category_id -> public.categories",
       "metadata": {
         "source_column": "parent_category_id",
@@ -2052,7 +2052,7 @@
       "source": "table:public.products",
       "target": "table:public.categories",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.products.category_id -> public.categories",
       "metadata": {
         "source_column": "category_id",
@@ -2070,7 +2070,7 @@
       "source": "table:public.inventory_items",
       "target": "table:public.products",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.inventory_items.product_id -> public.products",
       "metadata": {
         "source_column": "product_id",
@@ -2088,7 +2088,7 @@
       "source": "table:public.shipping_addresses",
       "target": "table:public.users",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.shipping_addresses.user_id -> public.users",
       "metadata": {
         "source_column": "user_id",
@@ -2106,7 +2106,7 @@
       "source": "table:public.orders",
       "target": "table:public.users",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.orders.user_id -> public.users",
       "metadata": {
         "source_column": "user_id",
@@ -2124,7 +2124,7 @@
       "source": "table:public.orders",
       "target": "table:public.shipping_addresses",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.orders.shipping_address_id -> public.shipping_addresses",
       "metadata": {
         "source_column": "shipping_address_id",
@@ -2140,7 +2140,7 @@
       "source": "table:public.order_items",
       "target": "table:public.orders",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.order_items.order_id -> public.orders",
       "metadata": {
         "source_column": "order_id",
@@ -2158,7 +2158,7 @@
       "source": "table:public.order_items",
       "target": "table:public.products",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.order_items.product_id -> public.products",
       "metadata": {
         "source_column": "product_id",
@@ -2176,7 +2176,7 @@
       "source": "table:public.shipments",
       "target": "table:public.orders",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.shipments.order_id -> public.orders",
       "metadata": {
         "source_column": "order_id",
@@ -2194,7 +2194,7 @@
       "source": "table:public.shipments",
       "target": "table:public.shipping_addresses",
       "type": "inferred_naming",
-      "confidence": 0.55,
+      "confidence": 0.92,
       "evidence": "Naming inference (exact): public.shipments.shipping_address_id -> public.shipping_addresses",
       "metadata": {
         "source_column": "shipping_address_id",
@@ -2210,7 +2210,7 @@
       "source": "table:public.audit_logs",
       "target": "table:public.users",
       "type": "inferred_naming",
-      "confidence": 0.495,
+      "confidence": 0.828,
       "evidence": "Naming inference (fuzzy): public.audit_logs.usr_id -> public.users",
       "metadata": {
         "source_column": "usr_id",
@@ -2237,7 +2237,7 @@
       "source": "func:audit/logger.py:log_audit_event",
       "target": "table:public.audit_logs",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in audit/logger.py:13 -> audit_logs: INSERT INTO audit_logs (usr_id, action, entity_name, entity_id, payload)\n       ",
       "metadata": {
         "lineno": 13,
@@ -2262,7 +2262,7 @@
       "source": "func:audit/logger.py:search_logs_by_user",
       "target": "table:public.audit_logs",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in audit/logger.py:19 -> audit_logs: SELECT * FROM audit_logs WHERE usr_id = %s ORDER BY created_at DESC",
       "metadata": {
         "lineno": 19,
@@ -2311,7 +2311,7 @@
       "source": "func:auth/service.py:authenticate_user",
       "target": "table:public.users",
       "type": "orm_call",
-      "confidence": 0.8,
+      "confidence": 0.98,
       "evidence": "SQLAlchemy query(User) call in auth/service.py:9 -> users",
       "metadata": {
         "lineno": 9,
@@ -2337,7 +2337,7 @@
       "source": "func:auth/service.py:get_user_organizations",
       "target": "table:public.organizations",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in auth/service.py:20 -> organizations: SELECT o.id, o.name, o.slug\n        FROM organizations o\n        JOIN users u ON",
       "metadata": {
         "lineno": 20,
@@ -2351,7 +2351,7 @@
       "source": "func:auth/service.py:get_user_organizations",
       "target": "table:public.users",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in auth/service.py:20 -> users: SELECT o.id, o.name, o.slug\n        FROM organizations o\n        JOIN users u ON",
       "metadata": {
         "lineno": 20,
@@ -2376,7 +2376,7 @@
       "source": "func:auth/service.py:create_api_token",
       "target": "table:public.api_tokens",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in auth/service.py:30 -> api_tokens: INSERT INTO api_tokens (token_hash, org_id, user_id)\n        VALUES (%s, %s, %s)",
       "metadata": {
         "lineno": 30,
@@ -2401,7 +2401,7 @@
       "source": "func:auth/service.py:verify_token",
       "target": "table:public.api_tokens",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in auth/service.py:36 -> api_tokens: SELECT * FROM api_tokens WHERE token_hash = %s",
       "metadata": {
         "lineno": 36,
@@ -2426,7 +2426,7 @@
       "source": "func:auth/service.py:assign_user_role",
       "target": "table:public.user_roles",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in auth/service.py:43 -> user_roles: INSERT INTO user_roles (user_id, role_name) VALUES (%s, %s)",
       "metadata": {
         "lineno": 43,
@@ -2451,7 +2451,7 @@
       "source": "func:billing/processor.py:process_subscription_renewals",
       "target": "table:public.subscriptions",
       "type": "orm_call",
-      "confidence": 0.8,
+      "confidence": 0.98,
       "evidence": "SQLAlchemy query(Subscription) call in billing/processor.py:9 -> subscriptions",
       "metadata": {
         "lineno": 9,
@@ -2477,7 +2477,7 @@
       "source": "func:billing/processor.py:generate_invoice",
       "target": "table:public.invoices",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in billing/processor.py:19 -> invoices: INSERT INTO invoices (acct_id, subscription_id, total_amount, due_date)\n        ",
       "metadata": {
         "lineno": 19,
@@ -2502,7 +2502,7 @@
       "source": "func:billing/processor.py:add_invoice_items",
       "target": "table:public.invoice_items",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in billing/processor.py:30 -> invoice_items: INSERT INTO invoice_items (invoice_id, description, amount, quantity)\n        VA",
       "metadata": {
         "lineno": 30,
@@ -2527,7 +2527,7 @@
       "source": "func:billing/processor.py:charge_payment_method",
       "target": "table:public.transactions",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in billing/processor.py:41 -> transactions: INSERT INTO transactions (payment_method_id, invoice_id, amount, status)\n       ",
       "metadata": {
         "lineno": 41,
@@ -2541,7 +2541,7 @@
       "source": "func:billing/processor.py:charge_payment_method",
       "target": "table:public.payment_methods",
       "type": "orm_call",
-      "confidence": 0.8,
+      "confidence": 0.98,
       "evidence": "SQLAlchemy query(PaymentMethod) call in billing/processor.py:35 -> payment_methods",
       "metadata": {
         "lineno": 35,
@@ -2567,7 +2567,7 @@
       "source": "func:billing/processor.py:get_active_subscriptions_view",
       "target": "table:public.v_active_subscriptions",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in billing/processor.py:47 -> v_active_subscriptions: SELECT * FROM v_active_subscriptions",
       "metadata": {
         "lineno": 47,
@@ -2592,7 +2592,7 @@
       "source": "func:catalog/views.py:list_products_by_category",
       "target": "table:public.products",
       "type": "orm_call",
-      "confidence": 0.8,
+      "confidence": 0.98,
       "evidence": "SQLAlchemy query(Product) call in catalog/views.py:10 -> products",
       "metadata": {
         "lineno": 10,
@@ -2618,7 +2618,7 @@
       "source": "func:catalog/views.py:get_product_detail",
       "target": "table:public.products",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in catalog/views.py:24 -> products: SELECT p.id, p.sku, p.name, p.price, c.name AS category_name\n        FROM produc",
       "metadata": {
         "lineno": 24,
@@ -2632,7 +2632,7 @@
       "source": "func:catalog/views.py:get_product_detail",
       "target": "table:public.categories",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in catalog/views.py:24 -> categories: SELECT p.id, p.sku, p.name, p.price, c.name AS category_name\n        FROM produc",
       "metadata": {
         "lineno": 24,
@@ -2657,7 +2657,7 @@
       "source": "func:catalog/views.py:check_product_inventory",
       "target": "table:public.inventory_items",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in catalog/views.py:35 -> inventory_items: SELECT COALESCE(SUM(quantity_on_hand), 0)\n        FROM inventory_items\n        W",
       "metadata": {
         "lineno": 35,
@@ -2682,7 +2682,7 @@
       "source": "func:orders/checkout.py:place_order",
       "target": "table:public.orders",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in orders/checkout.py:19 -> orders: INSERT INTO orders (user_id, shipping_address_id, total_amount, status)\n        ",
       "metadata": {
         "lineno": 19,
@@ -2696,7 +2696,7 @@
       "source": "func:orders/checkout.py:place_order",
       "target": "table:public.order_items",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in orders/checkout.py:27 -> order_items: INSERT INTO order_items (order_id, product_id, quantity, unit_price)\n           ",
       "metadata": {
         "lineno": 27,
@@ -2710,7 +2710,7 @@
       "source": "func:orders/checkout.py:place_order",
       "target": "table:public.users",
       "type": "orm_call",
-      "confidence": 0.8,
+      "confidence": 0.98,
       "evidence": "SQLAlchemy query(User) call in orders/checkout.py:10 -> users",
       "metadata": {
         "lineno": 10,
@@ -2736,7 +2736,7 @@
       "source": "func:orders/checkout.py:dispatch_shipment",
       "target": "table:public.shipments",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in orders/checkout.py:38 -> shipments: INSERT INTO shipments (order_id, shipping_address_id, tracking_number, carrier, ",
       "metadata": {
         "lineno": 38,
@@ -2750,7 +2750,7 @@
       "source": "func:orders/checkout.py:dispatch_shipment",
       "target": "table:public.orders",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in orders/checkout.py:41 -> orders: UPDATE orders SET status = 'shipped' WHERE id = %s",
       "metadata": {
         "lineno": 41,
@@ -2775,7 +2775,7 @@
       "source": "func:orders/checkout.py:get_user_order_history",
       "target": "table:public.orders",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in orders/checkout.py:53 -> orders: SELECT o.id, o.total_amount, o.status, s.tracking_number, s.carrier\n        FROM",
       "metadata": {
         "lineno": 53,
@@ -2789,7 +2789,7 @@
       "source": "func:orders/checkout.py:get_user_order_history",
       "target": "table:public.shipments",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in orders/checkout.py:53 -> shipments: SELECT o.id, o.total_amount, o.status, s.tracking_number, s.carrier\n        FROM",
       "metadata": {
         "lineno": 53,
@@ -2814,7 +2814,7 @@
       "source": "func:reports/analytics.py:get_monthly_revenue_report",
       "target": "table:public.transactions",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in reports/analytics.py:19 -> transactions: SELECT\n            DATE_TRUNC('month', t.processed_at) AS report_month,\n        ",
       "metadata": {
         "lineno": 19,
@@ -2828,7 +2828,7 @@
       "source": "func:reports/analytics.py:get_monthly_revenue_report",
       "target": "table:public.invoices",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in reports/analytics.py:19 -> invoices: SELECT\n            DATE_TRUNC('month', t.processed_at) AS report_month,\n        ",
       "metadata": {
         "lineno": 19,
@@ -2853,7 +2853,7 @@
       "source": "func:reports/analytics.py:get_top_spending_users",
       "target": "table:public.users",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in reports/analytics.py:39 -> users: SELECT\n            u.id,\n            u.email,\n            u.full_name,\n         ",
       "metadata": {
         "lineno": 39,
@@ -2867,7 +2867,7 @@
       "source": "func:reports/analytics.py:get_top_spending_users",
       "target": "table:public.orders",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in reports/analytics.py:39 -> orders: SELECT\n            u.id,\n            u.email,\n            u.full_name,\n         ",
       "metadata": {
         "lineno": 39,
@@ -2892,7 +2892,7 @@
       "source": "func:reports/analytics.py:get_low_inventory_alerts",
       "target": "table:public.products",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in reports/analytics.py:58 -> products: SELECT\n            p.id,\n            p.sku,\n            p.name,\n            c.na",
       "metadata": {
         "lineno": 58,
@@ -2906,7 +2906,7 @@
       "source": "func:reports/analytics.py:get_low_inventory_alerts",
       "target": "table:public.categories",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in reports/analytics.py:58 -> categories: SELECT\n            p.id,\n            p.sku,\n            p.name,\n            c.na",
       "metadata": {
         "lineno": 58,
@@ -2920,7 +2920,7 @@
       "source": "func:reports/analytics.py:get_low_inventory_alerts",
       "target": "table:public.inventory_items",
       "type": "static_sql_string",
-      "confidence": 0.85,
+      "confidence": 0.96,
       "evidence": "SQL literal execution in reports/analytics.py:58 -> inventory_items: SELECT\n            p.id,\n            p.sku,\n            p.name,\n            c.na",
       "metadata": {
         "lineno": 58,

@@ -179,24 +179,24 @@ def test_extract_sql_and_orm_edges(mock_codebase: Path):
     adapter = PythonASTAdapter(root_dir=mock_codebase)
     edges = adapter.extract_edges()
 
-    # 1. Static SQL: get_user_dashboard -> table:app_users (conf=0.85)
+    # 1. Static SQL: get_user_dashboard -> table:app_users (calibrated conf=0.96)
     sql_edges = [e for e in edges if e.type == EdgeType.STATIC_SQL_STRING]
     assert len(sql_edges) >= 1
     user_sql = next(e for e in sql_edges if e.target == "table:app_users")
     assert user_sql.source == "func:services.py:get_user_dashboard"
-    assert user_sql.confidence == 0.85
+    assert user_sql.confidence == 0.96
 
-    # 2. SQLAlchemy ORM: get_user_dashboard -> Order (__tablename__='customer_orders', conf=0.80)
+    # 2. SQLAlchemy ORM: get_user_dashboard -> Order (__tablename__='customer_orders', calibrated conf=0.98)
     orm_edges = [e for e in edges if e.type == EdgeType.ORM_CALL]
     assert len(orm_edges) >= 2
     order_orm = next(e for e in orm_edges if e.target == "table:customer_orders" and e.metadata.get("orm") == "sqlalchemy")
     assert order_orm.source == "func:services.py:get_user_dashboard"
-    assert order_orm.confidence == 0.80
+    assert order_orm.confidence == 0.98
 
-    # 3. SQLAlchemy select: fetch_products -> Product (pluralized to 'products')
+    # 3. SQLAlchemy select: fetch_products -> Product (calibrated conf=0.98)
     prod_orm = next(e for e in orm_edges if e.target == "table:products")
     assert prod_orm.source == "func:services.py:fetch_products"
-    assert prod_orm.confidence == 0.80
+    assert prod_orm.confidence == 0.98
 
     # 4. Django ORM: process_order -> Order (customer_orders)
     django_orm = next(e for e in orm_edges if e.source == "func:services.py:process_order")

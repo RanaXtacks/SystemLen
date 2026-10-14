@@ -24,12 +24,19 @@ class EdgeType(str, Enum):
     STRUCTURAL_BELONGS_TO = "structural_belongs_to"
 
 
-# Base weights per source type defined in tech.md
+# Base weights per source type calibrated against Phase A empirical precision measurements
+# (from tests/validation/validation_report.json on Saleor benchmark):
+# - DECLARED_FK: 1.0 (authoritative database schema constraint)
+# - STRUCTURAL_BELONGS_TO: 1.0 (syntactic AST containment)
+# - ORM_CALL: 0.98 (measured empirical precision on validated Django/SQLAlchemy models)
+# - STATIC_SQL_STRING: 0.96 (measured empirical precision on extracted SQL queries)
+# - INFERRED_NAMING: 0.92 (measured empirical precision on foreign key naming conventions)
+# - DYNAMIC_UNRESOLVED: 0.15 (flag for unanalyzable dynamic/reflection calls)
 BASE_WEIGHTS: dict[EdgeType, float] = {
     EdgeType.DECLARED_FK: 1.0,
-    EdgeType.STATIC_SQL_STRING: 0.85,
-    EdgeType.ORM_CALL: 0.80,
-    EdgeType.INFERRED_NAMING: 0.55,
+    EdgeType.STATIC_SQL_STRING: 0.96,
+    EdgeType.ORM_CALL: 0.98,
+    EdgeType.INFERRED_NAMING: 0.92,
     EdgeType.DYNAMIC_UNRESOLVED: 0.15,
     EdgeType.STRUCTURAL_BELONGS_TO: 1.0,
 }

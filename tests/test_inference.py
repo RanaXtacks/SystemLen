@@ -418,33 +418,32 @@ def test_spot_check_20_edges_kill_check(enterprise_catalog):
 
 def test_confidence_scores_exact_vs_fuzzy(enterprise_catalog):
     """
-    Day 5 requirement:
-    Verify that exact matches receive confidence 0.55 (0.55 * 1.0)
-    and fuzzy/abbreviation/role-prefix matches receive confidence 0.495 (0.55 * 0.9).
+    Verify that exact matches receive confidence calibrated to base_weight (0.92 * 1.0 = 0.92)
+    and fuzzy/abbreviation/role-prefix matches receive confidence (0.92 * 0.9 = 0.828).
     """
     edges = infer_edges_from_naming(enterprise_catalog)
     edge_map = {(e.source, e.target): e for e in edges}
 
-    # Exact matches (modifier = 1.0 -> confidence = 0.55)
+    # Exact matches (modifier = 1.0 -> confidence = 0.92)
     exact_edge = edge_map[("table:public.orders", "table:public.users")]
-    assert exact_edge.confidence == 0.55
+    assert exact_edge.confidence == 0.92
     assert exact_edge.metadata["match_type"] == "exact"
     assert exact_edge.metadata["modifier"] == 1.0
 
     # Irregular plural exact match (category_id -> categories)
     cat_edge = edge_map[("table:public.products", "table:public.categories")]
-    assert cat_edge.confidence == 0.55
+    assert cat_edge.confidence == 0.92
     assert cat_edge.metadata["match_type"] == "exact"
 
-    # Abbreviation match (usr_id -> users, modifier = 0.9 -> confidence = 0.495)
+    # Abbreviation match (usr_id -> users, modifier = 0.9 -> confidence = 0.828)
     usr_edge = edge_map[("table:public.reviews", "table:public.users")]
-    assert usr_edge.confidence == 0.495
+    assert usr_edge.confidence == 0.828
     assert usr_edge.metadata["match_type"] == "fuzzy"
     assert usr_edge.metadata["modifier"] == 0.9
 
-    # Role prefix match (shipping_address_id -> addresses, modifier = 0.9 -> confidence = 0.495)
+    # Role prefix match (shipping_address_id -> addresses, modifier = 0.9 -> confidence = 0.828)
     addr_edge = edge_map[("table:public.orders", "table:public.addresses")]
-    assert addr_edge.confidence == 0.495
+    assert addr_edge.confidence == 0.828
     assert addr_edge.metadata["match_type"] == "fuzzy"
     assert addr_edge.metadata["modifier"] == 0.9
 
