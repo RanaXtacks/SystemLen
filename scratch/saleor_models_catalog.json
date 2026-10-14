@@ -148,14 +148,10 @@
       ]
     },
     "Group": {
-      "app": "account",
-      "table": "account_group",
+      "app": "auth",
+      "table": "auth_group",
       "fields": [
-        "name",
-        "permissions",
-        "restricted_access_to_channels",
-        "channels",
-        "objects"
+        "name"
       ],
       "fks": []
     },
@@ -1648,21 +1644,13 @@
       ]
     },
     "Permission": {
-      "app": "permission",
-      "table": "permission_permission",
+      "app": "auth",
+      "table": "auth_permission",
       "fields": [
         "name",
-        "content_type",
-        "codename",
-        "objects"
+        "codename"
       ],
-      "fks": [
-        {
-          "field": "content_type",
-          "column": "content_type_id",
-          "target_model": "ContentType"
-        }
-      ]
+      "fks": []
     },
     "PermissionsMixin": {
       "app": "permission",
@@ -2292,14 +2280,6 @@
         }
       ]
     },
-    "Book": {
-      "app": "tests",
-      "table": "tests_book",
-      "fields": [
-        "name"
-      ],
-      "fks": []
-    },
     "Thumbnail": {
       "app": "thumbnail",
       "table": "thumbnail_thumbnail",
@@ -2618,6 +2598,282 @@
       "table": "core_editorjsdocumentmodel",
       "fields": [],
       "fks": []
+    },
+    "BaseAssignedAttribute": {
+      "app": "attribute",
+      "table": "attribute_baseassignedattribute",
+      "fields": [],
+      "fks": []
+    },
+    "Attribute": {
+      "app": "attribute",
+      "table": "attribute_attribute",
+      "fields": [
+        "slug",
+        "name",
+        "type",
+        "input_type",
+        "entity_type",
+        "reference_product_types",
+        "reference_page_types",
+        "product_types",
+        "product_variant_types",
+        "page_types",
+        "customer_types",
+        "unit",
+        "value_required",
+        "is_variant_only",
+        "visible_in_storefront",
+        "max_sort_order",
+        "objects"
+      ],
+      "fks": []
+    },
+    "AttributeValue": {
+      "app": "attribute",
+      "table": "attribute_attributevalue",
+      "fields": [
+        "name",
+        "value",
+        "slug",
+        "file_url",
+        "content_type",
+        "attribute",
+        "rich_text",
+        "plain_text",
+        "boolean",
+        "date_time",
+        "numeric",
+        "reference_product",
+        "reference_variant",
+        "reference_collection",
+        "reference_category",
+        "reference_page",
+        "sort_order",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "attribute",
+          "column": "attribute_id",
+          "target_model": "Attribute"
+        },
+        {
+          "field": "reference_product",
+          "column": "reference_product_id",
+          "target_model": "Product"
+        },
+        {
+          "field": "reference_variant",
+          "column": "reference_variant_id",
+          "target_model": "ProductVariant"
+        },
+        {
+          "field": "reference_collection",
+          "column": "reference_collection_id",
+          "target_model": "Collection"
+        },
+        {
+          "field": "reference_category",
+          "column": "reference_category_id",
+          "target_model": "Category"
+        },
+        {
+          "field": "reference_page",
+          "column": "reference_page_id",
+          "target_model": "Page"
+        }
+      ]
+    },
+    "AssignedUserAttributeValue": {
+      "app": "attribute",
+      "table": "attribute_assigneduserattributevalue",
+      "fields": [
+        "value",
+        "user"
+      ],
+      "fks": [
+        {
+          "field": "value",
+          "column": "value_id",
+          "target_model": "AttributeValue"
+        },
+        {
+          "field": "user",
+          "column": "user_id",
+          "target_model": "User"
+        }
+      ]
+    },
+    "AttributeCustomerType": {
+      "app": "attribute",
+      "table": "attribute_attributecustomertype",
+      "fields": [
+        "attribute",
+        "customer_type",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "attribute",
+          "column": "attribute_id",
+          "target_model": "Attribute"
+        },
+        {
+          "field": "customer_type",
+          "column": "customer_type_id",
+          "target_model": "CustomerType"
+        }
+      ]
+    },
+    "AssignedPageAttributeValue": {
+      "app": "attribute",
+      "table": "attribute_assignedpageattributevalue",
+      "fields": [
+        "value",
+        "page"
+      ],
+      "fks": [
+        {
+          "field": "value",
+          "column": "value_id",
+          "target_model": "AttributeValue"
+        },
+        {
+          "field": "page",
+          "column": "page_id",
+          "target_model": "Page"
+        }
+      ]
+    },
+    "AttributePage": {
+      "app": "attribute",
+      "table": "attribute_attributepage",
+      "fields": [
+        "attribute",
+        "page_type",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "attribute",
+          "column": "attribute_id",
+          "target_model": "Attribute"
+        },
+        {
+          "field": "page_type",
+          "column": "page_type_id",
+          "target_model": "PageType"
+        }
+      ]
+    },
+    "AssignedProductAttributeValue": {
+      "app": "attribute",
+      "table": "attribute_assignedproductattributevalue",
+      "fields": [
+        "value",
+        "product"
+      ],
+      "fks": [
+        {
+          "field": "value",
+          "column": "value_id",
+          "target_model": "AttributeValue"
+        },
+        {
+          "field": "product",
+          "column": "product_id",
+          "target_model": "Product"
+        }
+      ]
+    },
+    "AttributeProduct": {
+      "app": "attribute",
+      "table": "attribute_attributeproduct",
+      "fields": [
+        "attribute",
+        "product_type",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "attribute",
+          "column": "attribute_id",
+          "target_model": "Attribute"
+        },
+        {
+          "field": "product_type",
+          "column": "product_type_id",
+          "target_model": "ProductType"
+        }
+      ]
+    },
+    "AssignedVariantAttributeValue": {
+      "app": "attribute",
+      "table": "attribute_assignedvariantattributevalue",
+      "fields": [
+        "value",
+        "assignment",
+        "variant"
+      ],
+      "fks": [
+        {
+          "field": "value",
+          "column": "value_id",
+          "target_model": "AttributeValue"
+        },
+        {
+          "field": "assignment",
+          "column": "assignment_id",
+          "target_model": "AssignedVariantAttribute"
+        },
+        {
+          "field": "variant",
+          "column": "variant_id",
+          "target_model": "ProductVariant"
+        }
+      ]
+    },
+    "AttributeVariant": {
+      "app": "attribute",
+      "table": "attribute_attributevariant",
+      "fields": [
+        "attribute",
+        "product_type",
+        "assigned_variants",
+        "variant_selection",
+        "objects"
+      ],
+      "fks": [
+        {
+          "field": "attribute",
+          "column": "attribute_id",
+          "target_model": "Attribute"
+        },
+        {
+          "field": "product_type",
+          "column": "product_type_id",
+          "target_model": "ProductType"
+        }
+      ]
+    },
+    "Site": {
+      "app": "site",
+      "table": "django_site",
+      "fields": [
+        "name",
+        "domain"
+      ],
+      "fks": []
+    },
+    "ContentType": {
+      "app": "contenttypes",
+      "table": "django_content_type",
+      "fields": [
+        "app_label",
+        "model"
+      ],
+      "fks": []
     }
   },
   "catalog": {
@@ -2871,8 +3127,8 @@
           }
         ]
       },
-      "account_group": {
-        "name": "account_group",
+      "auth_group": {
+        "name": "auth_group",
         "schema": "public",
         "columns": [
           {
@@ -2880,18 +3136,6 @@
           },
           {
             "name": "name"
-          },
-          {
-            "name": "permissions"
-          },
-          {
-            "name": "restricted_access_to_channels"
-          },
-          {
-            "name": "channels"
-          },
-          {
-            "name": "objects"
           }
         ]
       },
@@ -5424,27 +5668,18 @@
           }
         ]
       },
-      "permission_permission": {
-        "name": "permission_permission",
+      "auth_permission": {
+        "name": "auth_permission",
         "schema": "public",
         "columns": [
           {
             "name": "id"
           },
           {
-            "name": "content_type_id"
-          },
-          {
             "name": "name"
           },
           {
-            "name": "content_type"
-          },
-          {
             "name": "codename"
-          },
-          {
-            "name": "objects"
           }
         ]
       },
@@ -6426,18 +6661,6 @@
           }
         ]
       },
-      "tests_book": {
-        "name": "tests_book",
-        "schema": "public",
-        "columns": [
-          {
-            "name": "id"
-          },
-          {
-            "name": "name"
-          }
-        ]
-      },
       "thumbnail_thumbnail": {
         "name": "thumbnail_thumbnail",
         "schema": "public",
@@ -6867,6 +7090,378 @@
         "columns": [
           {
             "name": "id"
+          }
+        ]
+      },
+      "attribute_baseassignedattribute": {
+        "name": "attribute_baseassignedattribute",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          }
+        ]
+      },
+      "attribute_attribute": {
+        "name": "attribute_attribute",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "slug"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "type"
+          },
+          {
+            "name": "input_type"
+          },
+          {
+            "name": "entity_type"
+          },
+          {
+            "name": "reference_product_types"
+          },
+          {
+            "name": "reference_page_types"
+          },
+          {
+            "name": "product_types"
+          },
+          {
+            "name": "product_variant_types"
+          },
+          {
+            "name": "page_types"
+          },
+          {
+            "name": "customer_types"
+          },
+          {
+            "name": "unit"
+          },
+          {
+            "name": "value_required"
+          },
+          {
+            "name": "is_variant_only"
+          },
+          {
+            "name": "visible_in_storefront"
+          },
+          {
+            "name": "max_sort_order"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "attribute_attributevalue": {
+        "name": "attribute_attributevalue",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "attribute_id"
+          },
+          {
+            "name": "reference_product_id"
+          },
+          {
+            "name": "reference_variant_id"
+          },
+          {
+            "name": "reference_collection_id"
+          },
+          {
+            "name": "reference_category_id"
+          },
+          {
+            "name": "reference_page_id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "value"
+          },
+          {
+            "name": "slug"
+          },
+          {
+            "name": "file_url"
+          },
+          {
+            "name": "content_type"
+          },
+          {
+            "name": "attribute"
+          },
+          {
+            "name": "rich_text"
+          },
+          {
+            "name": "plain_text"
+          },
+          {
+            "name": "boolean"
+          },
+          {
+            "name": "date_time"
+          },
+          {
+            "name": "numeric"
+          },
+          {
+            "name": "reference_product"
+          },
+          {
+            "name": "reference_variant"
+          },
+          {
+            "name": "reference_collection"
+          },
+          {
+            "name": "reference_category"
+          },
+          {
+            "name": "reference_page"
+          },
+          {
+            "name": "sort_order"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "attribute_assigneduserattributevalue": {
+        "name": "attribute_assigneduserattributevalue",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "value_id"
+          },
+          {
+            "name": "user_id"
+          },
+          {
+            "name": "value"
+          },
+          {
+            "name": "user"
+          }
+        ]
+      },
+      "attribute_attributecustomertype": {
+        "name": "attribute_attributecustomertype",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "attribute_id"
+          },
+          {
+            "name": "customer_type_id"
+          },
+          {
+            "name": "attribute"
+          },
+          {
+            "name": "customer_type"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "attribute_assignedpageattributevalue": {
+        "name": "attribute_assignedpageattributevalue",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "value_id"
+          },
+          {
+            "name": "page_id"
+          },
+          {
+            "name": "value"
+          },
+          {
+            "name": "page"
+          }
+        ]
+      },
+      "attribute_attributepage": {
+        "name": "attribute_attributepage",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "attribute_id"
+          },
+          {
+            "name": "page_type_id"
+          },
+          {
+            "name": "attribute"
+          },
+          {
+            "name": "page_type"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "attribute_assignedproductattributevalue": {
+        "name": "attribute_assignedproductattributevalue",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "value_id"
+          },
+          {
+            "name": "product_id"
+          },
+          {
+            "name": "value"
+          },
+          {
+            "name": "product"
+          }
+        ]
+      },
+      "attribute_attributeproduct": {
+        "name": "attribute_attributeproduct",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "attribute_id"
+          },
+          {
+            "name": "product_type_id"
+          },
+          {
+            "name": "attribute"
+          },
+          {
+            "name": "product_type"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "attribute_assignedvariantattributevalue": {
+        "name": "attribute_assignedvariantattributevalue",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "value_id"
+          },
+          {
+            "name": "assignment_id"
+          },
+          {
+            "name": "variant_id"
+          },
+          {
+            "name": "value"
+          },
+          {
+            "name": "assignment"
+          },
+          {
+            "name": "variant"
+          }
+        ]
+      },
+      "attribute_attributevariant": {
+        "name": "attribute_attributevariant",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "attribute_id"
+          },
+          {
+            "name": "product_type_id"
+          },
+          {
+            "name": "attribute"
+          },
+          {
+            "name": "product_type"
+          },
+          {
+            "name": "assigned_variants"
+          },
+          {
+            "name": "variant_selection"
+          },
+          {
+            "name": "objects"
+          }
+        ]
+      },
+      "django_site": {
+        "name": "django_site",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "name"
+          },
+          {
+            "name": "domain"
+          }
+        ]
+      },
+      "django_content_type": {
+        "name": "django_content_type",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id"
+          },
+          {
+            "name": "app_label"
+          },
+          {
+            "name": "model"
           }
         ]
       }

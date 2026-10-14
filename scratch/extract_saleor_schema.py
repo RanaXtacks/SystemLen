@@ -7,9 +7,15 @@ saleor_dir = pathlib.Path("d:/PythonProjects/saleor/saleor")
 
 models = {}  # model_name -> {"app": ..., "table": ..., "fields": [], "fks": []}
 
-for py_path in saleor_dir.rglob("models*.py"):
-    if ".venv" in str(py_path):
+for py_path in saleor_dir.rglob("*.py"):
+    if ".venv" in str(py_path) or "tests" in str(py_path):
         continue
+    
+    # Check if inside a models module or models.py
+    parts = [p.lower() for p in py_path.parts]
+    if "models" not in parts and not py_path.name.startswith("models"):
+        continue
+
     rel = py_path.relative_to(saleor_dir)
     app = rel.parts[0]
     
@@ -23,7 +29,7 @@ for py_path in saleor_dir.rglob("models*.py"):
         if not isinstance(node, ast.ClassDef):
             continue
         
-        # Check if inherits from Model
+        # Check if inherits from Model or ModelWithMetadata
         is_model = False
         for base in node.bases:
             if isinstance(base, ast.Attribute) and base.attr in ("Model", "ModelWithMetadata"):
@@ -54,7 +60,6 @@ for py_path in saleor_dir.rglob("models*.py"):
                 for target in item.targets:
                     if isinstance(target, ast.Name):
                         field_name = target.id
-                        # Check if ForeignKey
                         if isinstance(item.value, ast.Call):
                             func_str = ast.unparse(item.value.func)
                             if "ForeignKey" in func_str or "OneToOneField" in func_str:
@@ -81,11 +86,19 @@ for py_path in saleor_dir.rglob("models*.py"):
             "fks": fks,
         }
 
+# Add standard Django models used across Saleor
+django_contrib = {
+    "Site": {"app": "site", "table": "django_site", "fields": ["name", "domain"], "fks": []},
+    "ContentType": {"app": "contenttypes", "table": "django_content_type", "fields": ["app_label", "model"], "fks": []},
+    "Permission": {"app": "auth", "table": "auth_permission", "fields": ["name", "codename"], "fks": []},
+    "Group": {"app": "auth", "table": "auth_group", "fields": ["name"], "fks": []},
+}
+models.update(django_contrib)
+
 print(f"Extracted {len(models)} models from Saleor.")
 total_fks = sum(len(m["fks"]) for m in models.values())
 print(f"Extracted {total_fks} ForeignKeys from Saleor models.")
 
-# Build catalog format for SystemLens naming inference
 catalog = {"tables": {}}
 for m_name, m_info in models.items():
     tbl = m_info["table"]

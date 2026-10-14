@@ -8,24 +8,24 @@
       {
         "id": "naming_82",
         "edge_type": "inferred_naming",
-        "source": "table:product_productmedia",
-        "source_column": "product_id",
-        "target": "table:product_product",
-        "ground_truth_label": true,
+        "source": "table:payment_transactionitem",
+        "source_column": "user_id",
+        "target": "table:account_user",
+        "ground_truth_label": null,
         "confidence": 0.55,
-        "evidence": "Naming inference: product_productmedia.product_id -> product_product",
-        "rationale": "Verified against Django model foreign key definition in product_productmedia: product_id references product_product."
+        "evidence": "Naming inference: payment_transactionitem.user_id -> account_user",
+        "rationale": "False positive: column user_id in payment_transactionitem does not declare a foreign key to account_user."
       },
       {
         "id": "naming_15",
         "edge_type": "inferred_naming",
-        "source": "table:checkout_checkout",
-        "source_column": "shipping_address_id",
-        "target": "table:account_address",
+        "source": "table:attribute_attributecustomertype",
+        "source_column": "attribute_id",
+        "target": "table:attribute_attribute",
         "ground_truth_label": true,
-        "confidence": 0.495,
-        "evidence": "Naming inference: checkout_checkout.shipping_address_id -> account_address",
-        "rationale": "Verified against Django model foreign key definition in checkout_checkout: shipping_address_id references account_address."
+        "confidence": 0.55,
+        "evidence": "Naming inference: attribute_attributecustomertype.attribute_id -> attribute_attribute",
+        "rationale": "Verified against Django model foreign key definition in attribute_attributecustomertype: attribute_id references attribute_attribute."
       },
       {
         "id": "naming_4",
@@ -41,123 +41,145 @@
       {
         "id": "naming_95",
         "edge_type": "inferred_naming",
-        "source": "table:warehouse_allocation",
-        "source_column": "stock_id",
-        "target": "table:warehouse_stock",
+        "source": "table:product_producttranslation",
+        "source_column": "product_id",
+        "target": "table:product_product",
         "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: warehouse_allocation.stock_id -> warehouse_stock",
-        "rationale": "Verified against Django model foreign key definition in warehouse_allocation: stock_id references warehouse_stock."
+        "evidence": "Naming inference: product_producttranslation.product_id -> product_product",
+        "rationale": "Verified against Django model foreign key definition in product_producttranslation: product_id references product_product."
       },
       {
         "id": "naming_36",
         "edge_type": "inferred_naming",
-        "source": "table:giftcard_giftcardevent",
-        "source_column": "order_id",
-        "target": "table:order_order",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: giftcard_giftcardevent.order_id -> order_order",
-        "rationale": "Verified against Django model foreign key definition in giftcard_giftcardevent: order_id references order_order."
-      },
-      {
-        "id": "naming_32",
-        "edge_type": "inferred_naming",
-        "source": "table:giftcard_giftcard",
+        "source": "table:discount_promotionevent",
         "source_column": "app_id",
         "target": "table:app_app",
         "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: giftcard_giftcard.app_id -> app_app",
-        "rationale": "Verified against Django model foreign key definition in giftcard_giftcard: app_id references app_app."
+        "evidence": "Naming inference: discount_promotionevent.app_id -> app_app",
+        "rationale": "Verified against Django model foreign key definition in discount_promotionevent: app_id references app_app."
+      },
+      {
+        "id": "naming_32",
+        "edge_type": "inferred_naming",
+        "source": "table:csv_exportevent",
+        "source_column": "user_id",
+        "target": "table:account_user",
+        "ground_truth_label": true,
+        "confidence": 0.55,
+        "evidence": "Naming inference: csv_exportevent.user_id -> account_user",
+        "rationale": "Verified against Django model foreign key definition in csv_exportevent: user_id references account_user."
       },
       {
         "id": "naming_29",
         "edge_type": "inferred_naming",
-        "source": "table:discount_voucherchannellisting",
-        "source_column": "voucher_id",
-        "target": "table:discount_voucher",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: discount_voucherchannellisting.voucher_id -> discount_voucher",
-        "rationale": "Verified against Django model foreign key definition in discount_voucherchannellisting: voucher_id references discount_voucher."
-      },
-      {
-        "id": "naming_18",
-        "edge_type": "inferred_naming",
-        "source": "table:checkout_checkoutmetadata",
+        "source": "table:checkout_checkoutline",
         "source_column": "checkout_id",
         "target": "table:checkout_checkout",
         "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: checkout_checkoutmetadata.checkout_id -> checkout_checkout",
-        "rationale": "Verified against Django model foreign key definition in checkout_checkoutmetadata: checkout_id references checkout_checkout."
+        "evidence": "Naming inference: checkout_checkoutline.checkout_id -> checkout_checkout",
+        "rationale": "Verified against Django model foreign key definition in checkout_checkoutline: checkout_id references checkout_checkout."
+      },
+      {
+        "id": "naming_18",
+        "edge_type": "inferred_naming",
+        "source": "table:attribute_attributevalue",
+        "source_column": "attribute_id",
+        "target": "table:attribute_attribute",
+        "ground_truth_label": true,
+        "confidence": 0.55,
+        "evidence": "Naming inference: attribute_attributevalue.attribute_id -> attribute_attribute",
+        "rationale": "Verified against Django model foreign key definition in attribute_attributevalue: attribute_id references attribute_attribute."
+      },
+      {
+        "id": "naming_112",
+        "edge_type": "inferred_naming",
+        "source": "table:warehouse_stock",
+        "source_column": "warehouse_id",
+        "target": "table:warehouse_warehouse",
+        "ground_truth_label": true,
+        "confidence": 0.55,
+        "evidence": "Naming inference: warehouse_stock.warehouse_id -> warehouse_warehouse",
+        "rationale": "Verified against Django model foreign key definition in warehouse_stock: warehouse_id references warehouse_warehouse."
       },
       {
         "id": "naming_14",
         "edge_type": "inferred_naming",
-        "source": "table:checkout_checkout",
-        "source_column": "billing_address_id",
-        "target": "table:account_address",
+        "source": "table:attribute_assigneduserattributevalue",
+        "source_column": "user_id",
+        "target": "table:account_user",
         "ground_truth_label": true,
-        "confidence": 0.495,
-        "evidence": "Naming inference: checkout_checkout.billing_address_id -> account_address",
-        "rationale": "Verified against Django model foreign key definition in checkout_checkout: billing_address_id references account_address."
+        "confidence": 0.55,
+        "evidence": "Naming inference: attribute_assigneduserattributevalue.user_id -> account_user",
+        "rationale": "Verified against Django model foreign key definition in attribute_assigneduserattributevalue: user_id references account_user."
       },
       {
         "id": "naming_87",
         "edge_type": "inferred_naming",
-        "source": "table:site_sitesettings",
-        "source_column": "top_menu_id",
-        "target": "table:menu_menu",
+        "source": "table:product_collectionchannellisting",
+        "source_column": "channel_id",
+        "target": "table:channel_channel",
         "ground_truth_label": true,
-        "confidence": 0.495,
-        "evidence": "Naming inference: site_sitesettings.top_menu_id -> menu_menu",
-        "rationale": "Verified against Django model foreign key definition in site_sitesettings: top_menu_id references menu_menu."
+        "confidence": 0.55,
+        "evidence": "Naming inference: product_collectionchannellisting.channel_id -> channel_channel",
+        "rationale": "Verified against Django model foreign key definition in product_collectionchannellisting: channel_id references channel_channel."
+      },
+      {
+        "id": "naming_107",
+        "edge_type": "inferred_naming",
+        "source": "table:thumbnail_thumbnail",
+        "source_column": "app_id",
+        "target": "table:app_app",
+        "ground_truth_label": true,
+        "confidence": 0.55,
+        "evidence": "Naming inference: thumbnail_thumbnail.app_id -> app_app",
+        "rationale": "Verified against Django model foreign key definition in thumbnail_thumbnail: app_id references app_app."
       },
       {
         "id": "naming_70",
         "edge_type": "inferred_naming",
-        "source": "table:payment_transactionitem",
-        "source_column": "user_id",
-        "target": "table:account_user",
-        "ground_truth_label": null,
+        "source": "table:order_ordergrantedrefund",
+        "source_column": "app_id",
+        "target": "table:app_app",
+        "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: payment_transactionitem.user_id -> account_user",
-        "rationale": "False positive: column user_id in payment_transactionitem does not declare a foreign key to account_user."
+        "evidence": "Naming inference: order_ordergrantedrefund.app_id -> app_app",
+        "rationale": "Verified against Django model foreign key definition in order_ordergrantedrefund: app_id references app_app."
       },
       {
         "id": "naming_12",
         "edge_type": "inferred_naming",
-        "source": "table:checkout_checkout",
-        "source_column": "user_id",
-        "target": "table:account_user",
-        "ground_truth_label": null,
+        "source": "table:attribute_assignedpageattributevalue",
+        "source_column": "page_id",
+        "target": "table:page_page",
+        "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: checkout_checkout.user_id -> account_user",
-        "rationale": "False positive: column user_id in checkout_checkout does not declare a foreign key to account_user."
+        "evidence": "Naming inference: attribute_assignedpageattributevalue.page_id -> page_page",
+        "rationale": "Verified against Django model foreign key definition in attribute_assignedpageattributevalue: page_id references page_page."
       },
       {
         "id": "naming_76",
         "edge_type": "inferred_naming",
-        "source": "table:product_collectionproduct",
-        "source_column": "collection_id",
-        "target": "table:product_collection",
+        "source": "table:payment_transaction",
+        "source_column": "payment_id",
+        "target": "table:payment_payment",
         "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: product_collectionproduct.collection_id -> product_collection",
-        "rationale": "Verified against Django model foreign key definition in product_collectionproduct: collection_id references product_collection."
+        "evidence": "Naming inference: payment_transaction.payment_id -> payment_payment",
+        "rationale": "Verified against Django model foreign key definition in payment_transaction: payment_id references payment_payment."
       },
       {
         "id": "naming_55",
         "edge_type": "inferred_naming",
-        "source": "table:order_orderevent",
-        "source_column": "user_id",
-        "target": "table:account_user",
-        "ground_truth_label": null,
+        "source": "table:menu_menuitem",
+        "source_column": "category_id",
+        "target": "table:product_category",
+        "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: order_orderevent.user_id -> account_user",
-        "rationale": "False positive: column user_id in order_orderevent does not declare a foreign key to account_user."
+        "evidence": "Naming inference: menu_menuitem.category_id -> product_category",
+        "rationale": "Verified against Django model foreign key definition in menu_menuitem: category_id references product_category."
       },
       {
         "id": "naming_5",
@@ -171,7 +193,7 @@
         "rationale": "Verified against Django model foreign key definition in account_staffnotificationrecipient: user_id references account_user."
       },
       {
-        "id": "naming_100",
+        "id": "naming_113",
         "edge_type": "inferred_naming",
         "source": "table:warehouse_warehouse",
         "source_column": "address_id",
@@ -182,73 +204,95 @@
         "rationale": "Verified against Django model foreign key definition in warehouse_warehouse: address_id references account_address."
       },
       {
-        "id": "naming_91",
+        "id": "naming_102",
         "edge_type": "inferred_naming",
-        "source": "table:thumbnail_thumbnail",
-        "source_column": "category_id",
-        "target": "table:product_category",
+        "source": "table:site_sitesettings",
+        "source_column": "company_address_id",
+        "target": "table:account_address",
         "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: thumbnail_thumbnail.category_id -> product_category",
-        "rationale": "Verified against Django model foreign key definition in thumbnail_thumbnail: category_id references product_category."
+        "confidence": 0.495,
+        "evidence": "Naming inference: site_sitesettings.company_address_id -> account_address",
+        "rationale": "Verified against Django model foreign key definition in site_sitesettings: company_address_id references account_address."
       },
       {
         "id": "naming_28",
         "edge_type": "inferred_naming",
-        "source": "table:discount_promotionrule_variants",
-        "source_column": "productvariant_id",
-        "target": "table:product_productvariant",
+        "source": "table:checkout_checkoutdelivery",
+        "source_column": "checkout_id",
+        "target": "table:checkout_checkout",
         "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: discount_promotionrule_variants.productvariant_id -> product_productvariant",
-        "rationale": "Verified against Django model foreign key definition in discount_promotionrule_variants: productvariant_id references product_productvariant."
+        "evidence": "Naming inference: checkout_checkoutdelivery.checkout_id -> checkout_checkout",
+        "rationale": "Verified against Django model foreign key definition in checkout_checkoutdelivery: checkout_id references checkout_checkout."
       },
       {
         "id": "naming_30",
         "edge_type": "inferred_naming",
-        "source": "table:discount_voucherchannellisting",
-        "source_column": "channel_id",
-        "target": "table:channel_channel",
+        "source": "table:checkout_checkoutmetadata",
+        "source_column": "checkout_id",
+        "target": "table:checkout_checkout",
         "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: discount_voucherchannellisting.channel_id -> channel_channel",
-        "rationale": "Verified against Django model foreign key definition in discount_voucherchannellisting: channel_id references channel_channel."
+        "evidence": "Naming inference: checkout_checkoutmetadata.checkout_id -> checkout_checkout",
+        "rationale": "Verified against Django model foreign key definition in checkout_checkoutmetadata: checkout_id references checkout_checkout."
       },
       {
         "id": "naming_65",
         "edge_type": "inferred_naming",
-        "source": "table:payment_transactionevent",
-        "source_column": "transaction_id",
-        "target": "table:payment_transaction",
-        "ground_truth_label": false,
+        "source": "table:order_order",
+        "source_column": "voucher_id",
+        "target": "table:discount_voucher",
+        "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: payment_transactionevent.transaction_id -> payment_transaction",
-        "rationale": "False positive: column transaction_id in payment_transactionevent does not declare a foreign key to payment_transaction."
+        "evidence": "Naming inference: order_order.voucher_id -> discount_voucher",
+        "rationale": "Verified against Django model foreign key definition in order_order: voucher_id references discount_voucher."
       },
       {
         "id": "naming_78",
         "edge_type": "inferred_naming",
-        "source": "table:product_collectiontranslation",
-        "source_column": "collection_id",
-        "target": "table:product_collection",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: product_collectiontranslation.collection_id -> product_collection",
-        "rationale": "Verified against Django model foreign key definition in product_collectiontranslation: collection_id references product_collection."
-      },
-      {
-        "id": "naming_93",
-        "edge_type": "inferred_naming",
-        "source": "table:thumbnail_thumbnail",
+        "source": "table:payment_transactionevent",
         "source_column": "user_id",
         "target": "table:account_user",
+        "ground_truth_label": null,
+        "confidence": 0.55,
+        "evidence": "Naming inference: payment_transactionevent.user_id -> account_user",
+        "rationale": "False positive: column user_id in payment_transactionevent does not declare a foreign key to account_user."
+      },
+      {
+        "id": "naming_98",
+        "edge_type": "inferred_naming",
+        "source": "table:shipping_shippingmethodchannellisting",
+        "source_column": "channel_id",
+        "target": "table:channel_channel",
         "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: thumbnail_thumbnail.user_id -> account_user",
-        "rationale": "Verified against Django model foreign key definition in thumbnail_thumbnail: user_id references account_user."
+        "evidence": "Naming inference: shipping_shippingmethodchannellisting.channel_id -> channel_channel",
+        "rationale": "Verified against Django model foreign key definition in shipping_shippingmethodchannellisting: channel_id references channel_channel."
       },
       {
         "id": "naming_72",
+        "edge_type": "inferred_naming",
+        "source": "table:order_orderline",
+        "source_column": "order_id",
+        "target": "table:order_order",
+        "ground_truth_label": true,
+        "confidence": 0.55,
+        "evidence": "Naming inference: order_orderline.order_id -> order_order",
+        "rationale": "Verified against Django model foreign key definition in order_orderline: order_id references order_order."
+      },
+      {
+        "id": "naming_26",
+        "edge_type": "inferred_naming",
+        "source": "table:checkout_checkout",
+        "source_column": "billing_address_id",
+        "target": "table:account_address",
+        "ground_truth_label": true,
+        "confidence": 0.495,
+        "evidence": "Naming inference: checkout_checkout.billing_address_id -> account_address",
+        "rationale": "Verified against Django model foreign key definition in checkout_checkout: billing_address_id references account_address."
+      },
+      {
+        "id": "naming_84",
         "edge_type": "inferred_naming",
         "source": "table:plugins_pluginconfiguration",
         "source_column": "channel_id",
@@ -259,40 +303,29 @@
         "rationale": "Verified against Django model foreign key definition in plugins_pluginconfiguration: channel_id references channel_channel."
       },
       {
-        "id": "naming_26",
+        "id": "naming_103",
         "edge_type": "inferred_naming",
-        "source": "table:discount_promotionrule",
-        "source_column": "promotion_id",
-        "target": "table:discount_promotion",
+        "source": "table:tax_taxconfiguration",
+        "source_column": "channel_id",
+        "target": "table:channel_channel",
         "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: discount_promotionrule.promotion_id -> discount_promotion",
-        "rationale": "Verified against Django model foreign key definition in discount_promotionrule: promotion_id references discount_promotion."
-      },
-      {
-        "id": "naming_92",
-        "edge_type": "inferred_naming",
-        "source": "table:thumbnail_thumbnail",
-        "source_column": "collection_id",
-        "target": "table:product_collection",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: thumbnail_thumbnail.collection_id -> product_collection",
-        "rationale": "Verified against Django model foreign key definition in thumbnail_thumbnail: collection_id references product_collection."
+        "evidence": "Naming inference: tax_taxconfiguration.channel_id -> channel_channel",
+        "rationale": "Verified against Django model foreign key definition in tax_taxconfiguration: channel_id references channel_channel."
       },
       {
         "id": "naming_54",
         "edge_type": "inferred_naming",
-        "source": "table:order_orderevent",
-        "source_column": "order_id",
-        "target": "table:order_order",
+        "source": "table:menu_menuitem",
+        "source_column": "menu_id",
+        "target": "table:menu_menu",
         "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: order_orderevent.order_id -> order_order",
-        "rationale": "Verified against Django model foreign key definition in order_orderevent: order_id references order_order."
+        "evidence": "Naming inference: menu_menuitem.menu_id -> menu_menu",
+        "rationale": "Verified against Django model foreign key definition in menu_menuitem: menu_id references menu_menu."
       },
       {
-        "id": "naming_96",
+        "id": "naming_109",
         "edge_type": "inferred_naming",
         "source": "table:warehouse_channelwarehouse",
         "source_column": "channel_id",
@@ -305,16 +338,27 @@
       {
         "id": "naming_58",
         "edge_type": "inferred_naming",
-        "source": "table:order_ordergrantedrefund",
-        "source_column": "app_id",
-        "target": "table:app_app",
+        "source": "table:order_fulfillment",
+        "source_column": "order_id",
+        "target": "table:order_order",
         "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: order_ordergrantedrefund.app_id -> app_app",
-        "rationale": "Verified against Django model foreign key definition in order_ordergrantedrefund: app_id references app_app."
+        "evidence": "Naming inference: order_fulfillment.order_id -> order_order",
+        "rationale": "Verified against Django model foreign key definition in order_fulfillment: order_id references order_order."
       },
       {
-        "id": "naming_98",
+        "id": "naming_101",
+        "edge_type": "inferred_naming",
+        "source": "table:site_sitesettings",
+        "source_column": "bottom_menu_id",
+        "target": "table:menu_menu",
+        "ground_truth_label": true,
+        "confidence": 0.495,
+        "evidence": "Naming inference: site_sitesettings.bottom_menu_id -> menu_menu",
+        "rationale": "Verified against Django model foreign key definition in site_sitesettings: bottom_menu_id references menu_menu."
+      },
+      {
+        "id": "naming_111",
         "edge_type": "inferred_naming",
         "source": "table:warehouse_reservation",
         "source_column": "stock_id",
@@ -338,137 +382,38 @@
       {
         "id": "naming_21",
         "edge_type": "inferred_naming",
-        "source": "table:csv_exportevent",
-        "source_column": "app_id",
-        "target": "table:app_app",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: csv_exportevent.app_id -> app_app",
-        "rationale": "Verified against Django model foreign key definition in csv_exportevent: app_id references app_app."
-      },
-      {
-        "id": "naming_89",
-        "edge_type": "inferred_naming",
-        "source": "table:site_sitesettings",
-        "source_column": "company_address_id",
-        "target": "table:account_address",
+        "source": "table:attribute_attributevalue",
+        "source_column": "reference_category_id",
+        "target": "table:product_category",
         "ground_truth_label": true,
         "confidence": 0.495,
-        "evidence": "Naming inference: site_sitesettings.company_address_id -> account_address",
-        "rationale": "Verified against Django model foreign key definition in site_sitesettings: company_address_id references account_address."
+        "evidence": "Naming inference: attribute_attributevalue.reference_category_id -> product_category",
+        "rationale": "Verified against Django model foreign key definition in attribute_attributevalue: reference_category_id references product_category."
+      },
+      {
+        "id": "naming_100",
+        "edge_type": "inferred_naming",
+        "source": "table:site_sitesettings",
+        "source_column": "top_menu_id",
+        "target": "table:menu_menu",
+        "ground_truth_label": true,
+        "confidence": 0.495,
+        "evidence": "Naming inference: site_sitesettings.top_menu_id -> menu_menu",
+        "rationale": "Verified against Django model foreign key definition in site_sitesettings: top_menu_id references menu_menu."
       },
       {
         "id": "naming_44",
         "edge_type": "inferred_naming",
-        "source": "table:menu_menuitem",
-        "source_column": "collection_id",
-        "target": "table:product_collection",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: menu_menuitem.collection_id -> product_collection",
-        "rationale": "Verified against Django model foreign key definition in menu_menuitem: collection_id references product_collection."
-      },
-      {
-        "id": "naming_74",
-        "edge_type": "inferred_naming",
-        "source": "table:product_collectionchannellisting",
-        "source_column": "collection_id",
-        "target": "table:product_collection",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: product_collectionchannellisting.collection_id -> product_collection",
-        "rationale": "Verified against Django model foreign key definition in product_collectionchannellisting: collection_id references product_collection."
-      },
-      {
-        "id": "naming_20",
-        "edge_type": "inferred_naming",
-        "source": "table:csv_exportevent",
-        "source_column": "user_id",
-        "target": "table:account_user",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: csv_exportevent.user_id -> account_user",
-        "rationale": "Verified against Django model foreign key definition in csv_exportevent: user_id references account_user."
-      },
-      {
-        "id": "naming_85",
-        "edge_type": "inferred_naming",
-        "source": "table:product_productvariantchannellisting",
-        "source_column": "channel_id",
-        "target": "table:channel_channel",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: product_productvariantchannellisting.channel_id -> channel_channel",
-        "rationale": "Verified against Django model foreign key definition in product_productvariantchannellisting: channel_id references channel_channel."
-      },
-      {
-        "id": "naming_102",
-        "edge_type": "inferred_naming",
-        "source": "table:webhook_webhookevent",
-        "source_column": "webhook_id",
-        "target": "table:webhook_webhook",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: webhook_webhookevent.webhook_id -> webhook_webhook",
-        "rationale": "Verified against Django model foreign key definition in webhook_webhookevent: webhook_id references webhook_webhook."
-      },
-      {
-        "id": "naming_94",
-        "edge_type": "inferred_naming",
-        "source": "table:thumbnail_thumbnail",
+        "source": "table:giftcard_giftcard",
         "source_column": "app_id",
         "target": "table:app_app",
         "ground_truth_label": true,
         "confidence": 0.55,
-        "evidence": "Naming inference: thumbnail_thumbnail.app_id -> app_app",
-        "rationale": "Verified against Django model foreign key definition in thumbnail_thumbnail: app_id references app_app."
+        "evidence": "Naming inference: giftcard_giftcard.app_id -> app_app",
+        "rationale": "Verified against Django model foreign key definition in giftcard_giftcard: app_id references app_app."
       },
       {
-        "id": "naming_86",
-        "edge_type": "inferred_naming",
-        "source": "table:shipping_shippingmethodchannellisting",
-        "source_column": "channel_id",
-        "target": "table:channel_channel",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: shipping_shippingmethodchannellisting.channel_id -> channel_channel",
-        "rationale": "Verified against Django model foreign key definition in shipping_shippingmethodchannellisting: channel_id references channel_channel."
-      },
-      {
-        "id": "naming_25",
-        "edge_type": "inferred_naming",
-        "source": "table:discount_promotionevent",
-        "source_column": "promotion_id",
-        "target": "table:discount_promotion",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: discount_promotionevent.promotion_id -> discount_promotion",
-        "rationale": "Verified against Django model foreign key definition in discount_promotionevent: promotion_id references discount_promotion."
-      },
-      {
-        "id": "naming_7",
-        "edge_type": "inferred_naming",
-        "source": "table:account_user",
-        "source_column": "default_billing_address_id",
-        "target": "table:account_address",
-        "ground_truth_label": true,
-        "confidence": 0.495,
-        "evidence": "Naming inference: account_user.default_billing_address_id -> account_address",
-        "rationale": "Verified against Django model foreign key definition in account_user: default_billing_address_id references account_address."
-      },
-      {
-        "id": "naming_23",
-        "edge_type": "inferred_naming",
-        "source": "table:discount_promotionevent",
-        "source_column": "user_id",
-        "target": "table:account_user",
-        "ground_truth_label": null,
-        "confidence": 0.55,
-        "evidence": "Naming inference: discount_promotionevent.user_id -> account_user",
-        "rationale": "False positive: column user_id in discount_promotionevent does not declare a foreign key to account_user."
-      },
-      {
-        "id": "naming_71",
+        "id": "naming_83",
         "edge_type": "inferred_naming",
         "source": "table:payment_transactionitem",
         "source_column": "app_id",
@@ -479,73 +424,18 @@
         "rationale": "Verified against Django model foreign key definition in payment_transactionitem: app_id references app_app."
       },
       {
-        "id": "naming_61",
+        "id": "naming_20",
         "edge_type": "inferred_naming",
-        "source": "table:page_pagetranslation",
-        "source_column": "page_id",
-        "target": "table:page_page",
+        "source": "table:attribute_attributevalue",
+        "source_column": "reference_collection_id",
+        "target": "table:product_collection",
         "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: page_pagetranslation.page_id -> page_page",
-        "rationale": "Verified against Django model foreign key definition in page_pagetranslation: page_id references page_page."
+        "confidence": 0.495,
+        "evidence": "Naming inference: attribute_attributevalue.reference_collection_id -> product_collection",
+        "rationale": "Verified against Django model foreign key definition in attribute_attributevalue: reference_collection_id references product_collection."
       },
       {
-        "id": "naming_39",
-        "edge_type": "inferred_naming",
-        "source": "table:invoice_invoiceevent",
-        "source_column": "order_id",
-        "target": "table:order_order",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: invoice_invoiceevent.order_id -> order_order",
-        "rationale": "Verified against Django model foreign key definition in invoice_invoiceevent: order_id references order_order."
-      },
-      {
-        "id": "naming_17",
-        "edge_type": "inferred_naming",
-        "source": "table:checkout_checkoutline",
-        "source_column": "checkout_id",
-        "target": "table:checkout_checkout",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: checkout_checkoutline.checkout_id -> checkout_checkout",
-        "rationale": "Verified against Django model foreign key definition in checkout_checkoutline: checkout_id references checkout_checkout."
-      },
-      {
-        "id": "naming_52",
-        "edge_type": "inferred_naming",
-        "source": "table:order_order",
-        "source_column": "channel_id",
-        "target": "table:channel_channel",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: order_order.channel_id -> channel_channel",
-        "rationale": "Verified against Django model foreign key definition in order_order: channel_id references channel_channel."
-      },
-      {
-        "id": "naming_3",
-        "edge_type": "inferred_naming",
-        "source": "table:account_customerevent",
-        "source_column": "app_id",
-        "target": "table:app_app",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: account_customerevent.app_id -> app_app",
-        "rationale": "Verified against Django model foreign key definition in account_customerevent: app_id references app_app."
-      },
-      {
-        "id": "naming_47",
-        "edge_type": "inferred_naming",
-        "source": "table:order_fulfillmentline",
-        "source_column": "fulfillment_id",
-        "target": "table:order_fulfillment",
-        "ground_truth_label": true,
-        "confidence": 0.55,
-        "evidence": "Naming inference: order_fulfillmentline.fulfillment_id -> order_fulfillment",
-        "rationale": "Verified against Django model foreign key definition in order_fulfillmentline: fulfillment_id references order_fulfillment."
-      },
-      {
-        "id": "naming_84",
+        "id": "naming_96",
         "edge_type": "inferred_naming",
         "source": "table:product_productvariant",
         "source_column": "product_id",
@@ -554,6 +444,116 @@
         "confidence": 0.55,
         "evidence": "Naming inference: product_productvariant.product_id -> product_product",
         "rationale": "Verified against Django model foreign key definition in product_productvariant: product_id references product_product."
+      },
+      {
+        "id": "naming_79",
+        "edge_type": "inferred_naming",
+        "source": "table:payment_transactionevent",
+        "source_column": "app_id",
+        "target": "table:app_app",
+        "ground_truth_label": true,
+        "confidence": 0.55,
+        "evidence": "Naming inference: payment_transactionevent.app_id -> app_app",
+        "rationale": "Verified against Django model foreign key definition in payment_transactionevent: app_id references app_app."
+      },
+      {
+        "id": "naming_106",
+        "edge_type": "inferred_naming",
+        "source": "table:thumbnail_thumbnail",
+        "source_column": "user_id",
+        "target": "table:account_user",
+        "ground_truth_label": true,
+        "confidence": 0.55,
+        "evidence": "Naming inference: thumbnail_thumbnail.user_id -> account_user",
+        "rationale": "Verified against Django model foreign key definition in thumbnail_thumbnail: user_id references account_user."
+      },
+      {
+        "id": "naming_97",
+        "edge_type": "inferred_naming",
+        "source": "table:product_productvariantchannellisting",
+        "source_column": "channel_id",
+        "target": "table:channel_channel",
+        "ground_truth_label": true,
+        "confidence": 0.55,
+        "evidence": "Naming inference: product_productvariantchannellisting.channel_id -> channel_channel",
+        "rationale": "Verified against Django model foreign key definition in product_productvariantchannellisting: channel_id references channel_channel."
+      },
+      {
+        "id": "naming_49",
+        "edge_type": "inferred_naming",
+        "source": "table:invoice_invoice",
+        "source_column": "order_id",
+        "target": "table:order_order",
+        "ground_truth_label": true,
+        "confidence": 0.55,
+        "evidence": "Naming inference: invoice_invoice.order_id -> order_order",
+        "rationale": "Verified against Django model foreign key definition in invoice_invoice: order_id references order_order."
+      },
+      {
+        "id": "naming_13",
+        "edge_type": "inferred_naming",
+        "source": "table:attribute_assignedproductattributevalue",
+        "source_column": "product_id",
+        "target": "table:product_product",
+        "ground_truth_label": true,
+        "confidence": 0.55,
+        "evidence": "Naming inference: attribute_assignedproductattributevalue.product_id -> product_product",
+        "rationale": "Verified against Django model foreign key definition in attribute_assignedproductattributevalue: product_id references product_product."
+      },
+      {
+        "id": "naming_46",
+        "edge_type": "inferred_naming",
+        "source": "table:giftcard_giftcardevent",
+        "source_column": "user_id",
+        "target": "table:account_user",
+        "ground_truth_label": null,
+        "confidence": 0.55,
+        "evidence": "Naming inference: giftcard_giftcardevent.user_id -> account_user",
+        "rationale": "False positive: column user_id in giftcard_giftcardevent does not declare a foreign key to account_user."
+      },
+      {
+        "id": "naming_45",
+        "edge_type": "inferred_naming",
+        "source": "table:giftcard_giftcard",
+        "source_column": "product_id",
+        "target": "table:product_product",
+        "ground_truth_label": true,
+        "confidence": 0.55,
+        "evidence": "Naming inference: giftcard_giftcard.product_id -> product_product",
+        "rationale": "Verified against Django model foreign key definition in giftcard_giftcard: product_id references product_product."
+      },
+      {
+        "id": "naming_34",
+        "edge_type": "inferred_naming",
+        "source": "table:discount_basediscount",
+        "source_column": "voucher_id",
+        "target": "table:discount_voucher",
+        "ground_truth_label": true,
+        "confidence": 0.55,
+        "evidence": "Naming inference: discount_basediscount.voucher_id -> discount_voucher",
+        "rationale": "Verified against Django model foreign key definition in discount_basediscount: voucher_id references discount_voucher."
+      },
+      {
+        "id": "naming_6",
+        "edge_type": "inferred_naming",
+        "source": "table:account_user",
+        "source_column": "default_shipping_address_id",
+        "target": "table:account_address",
+        "ground_truth_label": true,
+        "confidence": 0.495,
+        "evidence": "Naming inference: account_user.default_shipping_address_id -> account_address",
+        "rationale": "Verified against Django model foreign key definition in account_user: default_shipping_address_id references account_address."
+      },
+      {
+        "id": "naming_59",
+        "edge_type": "inferred_naming",
+        "source": "table:order_fulfillmentline",
+        "source_column": "fulfillment_id",
+        "target": "table:order_fulfillment",
+        "ground_truth_label": true,
+        "confidence": 0.55,
+        "evidence": "Naming inference: order_fulfillmentline.fulfillment_id -> order_fulfillment",
+        "rationale": "Verified against Django model foreign key definition in order_fulfillmentline: fulfillment_id references order_fulfillment."
       }
     ],
     "orm_call": [
@@ -616,12 +616,12 @@
         "id": "orm_788",
         "edge_type": "orm_call",
         "source": "func:graphql\\account\\filters.py:222",
-        "target": "table:table:attributecustomertype",
+        "target": "table:attribute_attributecustomertype",
         "model": "AttributeCustomerType",
-        "ground_truth_label": false,
+        "ground_truth_label": true,
         "confidence": 0.8,
-        "evidence": "Django AttributeCustomerType.objects call in graphql\\account\\filters.py:222 -> table:attributecustomertype",
-        "rationale": "Model 'AttributeCustomerType' is not registered in the schema model catalog."
+        "evidence": "Django AttributeCustomerType.objects call in graphql\\account\\filters.py:222 -> attribute_attributecustomertype",
+        "rationale": "Verified Django model query: AttributeCustomerType.objects maps to table 'attribute_attributecustomertype'."
       },
       {
         "id": "orm_285",
@@ -638,12 +638,12 @@
         "id": "orm_188",
         "edge_type": "orm_call",
         "source": "func:channel\\migrations\\0001_initial.py:24",
-        "target": "table:permission_permission",
+        "target": "table:auth_permission",
         "model": "Permission",
         "ground_truth_label": true,
         "confidence": 0.8,
-        "evidence": "Django Permission.objects call in channel\\migrations\\0001_initial.py:24 -> permission_permission",
-        "rationale": "Verified Django model query: Permission.objects maps to table 'permission_permission'."
+        "evidence": "Django Permission.objects call in channel\\migrations\\0001_initial.py:24 -> auth_permission",
+        "rationale": "Verified Django model query: Permission.objects maps to table 'auth_permission'."
       },
       {
         "id": "orm_934",
@@ -781,12 +781,12 @@
         "id": "orm_859",
         "edge_type": "orm_call",
         "source": "func:graphql\\attribute\\shared_filters.py:521",
-        "target": "table:table:attribute",
+        "target": "table:attribute_attribute",
         "model": "Attribute",
-        "ground_truth_label": false,
+        "ground_truth_label": true,
         "confidence": 0.8,
-        "evidence": "Django Attribute.objects call in graphql\\attribute\\shared_filters.py:521 -> table:attribute",
-        "rationale": "Model 'Attribute' is not registered in the schema model catalog."
+        "evidence": "Django Attribute.objects call in graphql\\attribute\\shared_filters.py:521 -> attribute_attribute",
+        "rationale": "Verified Django model query: Attribute.objects maps to table 'attribute_attribute'."
       },
       {
         "id": "orm_1094",
@@ -891,12 +891,12 @@
         "id": "orm_1329",
         "edge_type": "orm_call",
         "source": "func:order\\actions.py:400",
-        "target": "table:table:site",
+        "target": "table:django_site",
         "model": "Site",
-        "ground_truth_label": false,
+        "ground_truth_label": true,
         "confidence": 0.8,
-        "evidence": "Django Site.objects call in order\\actions.py:400 -> table:site",
-        "rationale": "Model 'Site' is not registered in the schema model catalog."
+        "evidence": "Django Site.objects call in order\\actions.py:400 -> django_site",
+        "rationale": "Verified Django model query: Site.objects maps to table 'django_site'."
       },
       {
         "id": "orm_230",
@@ -924,12 +924,12 @@
         "id": "orm_132",
         "edge_type": "orm_call",
         "source": "func:attribute\\migrations\\0005_add_assignedattributevalues.py:18",
-        "target": "table:table:assignedproductattributevalue",
+        "target": "table:attribute_assignedproductattributevalue",
         "model": "AssignedProductAttributeValue",
-        "ground_truth_label": false,
+        "ground_truth_label": true,
         "confidence": 0.8,
-        "evidence": "Django AssignedProductAttributeValue.objects call in attribute\\migrations\\0005_add_assignedattributevalues.py:18 -> table:assignedproductattributevalue",
-        "rationale": "Model 'AssignedProductAttributeValue' is not registered in the schema model catalog."
+        "evidence": "Django AssignedProductAttributeValue.objects call in attribute\\migrations\\0005_add_assignedattributevalues.py:18 -> attribute_assignedproductattributevalue",
+        "rationale": "Verified Django model query: AssignedProductAttributeValue.objects maps to table 'attribute_assignedproductattributevalue'."
       },
       {
         "id": "orm_1293",
@@ -946,12 +946,12 @@
         "id": "orm_1644",
         "edge_type": "orm_call",
         "source": "func:permission\\models.py:36",
-        "target": "table:table:contenttype",
+        "target": "table:django_content_type",
         "model": "ContentType",
-        "ground_truth_label": false,
+        "ground_truth_label": true,
         "confidence": 0.8,
-        "evidence": "Django ContentType.objects call in permission\\models.py:36 -> table:contenttype",
-        "rationale": "Model 'ContentType' is not registered in the schema model catalog."
+        "evidence": "Django ContentType.objects call in permission\\models.py:36 -> django_content_type",
+        "rationale": "Verified Django model query: ContentType.objects maps to table 'django_content_type'."
       },
       {
         "id": "orm_1097",
@@ -1100,12 +1100,12 @@
         "id": "orm_1755",
         "edge_type": "orm_call",
         "source": "func:product\\migrations\\0136_add_attribute_type_and_page_to_attribute_relation.py:9",
-        "target": "table:table:attribute",
+        "target": "table:attribute_attribute",
         "model": "Attribute",
-        "ground_truth_label": false,
+        "ground_truth_label": true,
         "confidence": 0.8,
-        "evidence": "Django Attribute.objects call in product\\migrations\\0136_add_attribute_type_and_page_to_attribute_relation.py:9 -> table:attribute",
-        "rationale": "Model 'Attribute' is not registered in the schema model catalog."
+        "evidence": "Django Attribute.objects call in product\\migrations\\0136_add_attribute_type_and_page_to_attribute_relation.py:9 -> attribute_attribute",
+        "rationale": "Verified Django model query: Attribute.objects maps to table 'attribute_attribute'."
       }
     ],
     "static_sql_string": [
