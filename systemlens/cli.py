@@ -15,6 +15,7 @@ from systemlens.ci import (
     parse_git_diff,
     run_ci_impact,
 )
+from systemlens.cluster import cluster_catalog
 from systemlens.graph import assemble_unified_graph
 from systemlens.inference.merge import compute_merge_stats, merge_edges
 from systemlens.inference.naming import infer_edges_from_naming
@@ -382,6 +383,51 @@ def main(args: Optional[list[str]] = None) -> int:
         help="Explicitly opt into experimental, unvalidated CI impact analysis (required pending validation)",
     )
 
+    # Subcommand 6: cluster (Phase C: Catalog Clustering Engine)
+    cluster_parser = subparsers.add_parser(
+        "cluster",
+        help="Cluster database tables into logical architectural modules using Louvain community detection",
+    )
+    cluster_parser.add_argument(
+        "--graph",
+        "-g",
+        type=str,
+        default="graph.json",
+        help="Path to the unified cross-layer graph JSON file (default: graph.json)",
+    )
+    cluster_parser.add_argument(
+        "--output",
+        "-o",
+        type=str,
+        default=None,
+        help="Optional output file path to write catalog clustering JSON result",
+    )
+    cluster_parser.add_argument(
+        "--resolution",
+        "-r",
+        type=float,
+        default=1.0,
+        help="Louvain community resolution parameter (higher produces smaller modules, default: 1.0)",
+    )
+    cluster_parser.add_argument(
+        "--no-prefix",
+        action="store_true",
+        default=False,
+        help="Disable table prefix clustering heuristic",
+    )
+    cluster_parser.add_argument(
+        "--no-code",
+        action="store_true",
+        default=False,
+        help="Disable code co-occurrence projection heuristic",
+    )
+    cluster_parser.add_argument(
+        "--json",
+        action="store_true",
+        dest="as_json",
+        help="Output raw JSON result to stdout",
+    )
+
     parsed = parser.parse_args(args)
 
     if parsed.command == "ingest-postgres":
@@ -709,6 +755,51 @@ def main(args: Optional[list[str]] = None) -> int:
             print(f"CI diff report successfully written to {parsed.output}")
         else:
             print(output_content)
+
+    elif parsed.command == "cluster":
+        if not os.path.exists(parsed.graph):
+            print(
+                f"Error: Graph file '{parsed.graph}' not found. "
+                "Run schema ingestion and code analysis first to generate graph.json.",
+                file=sys.stderr,
+            )
+            return 1
+
+        with open(parsed.graph, "r", encoding="utf-8") as f:
+            graph_data = json.load(f)
+
+        result = cluster_catalog(
+            graph_data=graph_data,
+            resolution=parsed.resolution,
+            include_code_cooccurrence=not parsed.no_code,
+            include_naming_prefix=not parsed.no_prefix,
+        )
+
+        if parsed.as_json:
+            print(json.dumps(result.to_dict(), indent=2))
+        else:
+            print("=" * 65)
+            print("SystemLens Catalog Clustering Engine (Phase C)")
+            print("=" * 65)
+            print(f"Target Graph:     {parsed.graph}")
+            print(f"Total Tables:     {result.total_tables}")
+            print(f"Detected Modules: {result.total_clusters}")
+            print(f"Modularity Q:     {result.modularity_q:.4f} (Q > 0.3 indicates strong structural modularity)")
+            print("-" * 65)
+            for cluster in result.clusters:
+                print(f"\n[{cluster.id.upper()}] {cluster.label}")
+                print(f"  Hub Table:  {cluster.hub_table}")
+                print(f"  Tables ({cluster.size}): {', '.join(cluster.tables)}")
+            if result.isolated_tables:
+                print(f"\n[ISOLATED TABLES] ({len(result.isolated_tables)}):")
+                print(f"  {', '.join(result.isolated_tables)}")
+            print("=" * 65)
+
+        if parsed.output:
+            _ensure_parent_dir(parsed.output)
+            with open(parsed.output, "w", encoding="utf-8") as f:
+                json.dump(result.to_dict(), f, indent=2)
+            print(f"\nCatalog clustering report successfully written to {parsed.output}")
 
     return 0
 

@@ -1,0 +1,218 @@
+{
+  "target_schema": "Saleor",
+  "total_tables": 122,
+  "total_clusters": 10,
+  "modularity_q": 0.721,
+  "modularity_threshold": 0.3,
+  "modularity_passed": true,
+  "adjusted_rand_index": 0.6086,
+  "ari_threshold": 0.6,
+  "ari_passed": true,
+  "all_gates_passed": true,
+  "clusters": [
+    {
+      "id": "cluster_1",
+      "label": "Order & Account Domain",
+      "hub_table": "account_user",
+      "size": 32,
+      "tables": [
+        "account_address",
+        "account_customerevent",
+        "account_customernote",
+        "account_customertype",
+        "account_staffnotificationrecipient",
+        "account_user",
+        "app_app",
+        "app_appextension",
+        "app_appproblem",
+        "app_apptoken",
+        "csv_exportevent",
+        "giftcard_giftcard",
+        "giftcard_giftcardevent",
+        "giftcard_giftcardtag",
+        "invoice_invoice",
+        "invoice_invoiceevent",
+        "order_fulfillment",
+        "order_fulfillmentline",
+        "order_order",
+        "order_orderevent",
+        "order_ordergrantedrefund",
+        "order_ordergrantedrefundline",
+        "order_orderline",
+        "page_page",
+        "page_pagetranslation",
+        "page_pagetype",
+        "payment_payment",
+        "payment_transaction",
+        "payment_transactionevent",
+        "payment_transactionitem",
+        "webhook_webhook",
+        "webhook_webhookevent"
+      ]
+    },
+    {
+      "id": "cluster_2",
+      "label": "Core & Editorjsblock Domain",
+      "hub_table": "core_eventdelivery",
+      "size": 21,
+      "tables": [
+        "core_editorjsblock",
+        "core_editorjsdocumentmodel",
+        "core_editorjsembeddatamodel",
+        "core_editorjsheaderdatamodel",
+        "core_editorjsimagedatamodel",
+        "core_editorjslistdatamodel",
+        "core_editorjsnestedlistitemmodel",
+        "core_editorjsparagraphdatamodel",
+        "core_editorjsquotedatamodel",
+        "core_editorjstabledatamodel",
+        "core_eventdelivery",
+        "core_eventdeliveryattempt",
+        "core_eventpayload",
+        "core_imagefilemodel",
+        "core_job",
+        "core_modelwithexternalreference",
+        "core_modelwithmetadata",
+        "core_publishablemodel",
+        "core_sizedatamodel",
+        "core_sortablemodel",
+        "core_strictbasemodel"
+      ]
+    },
+    {
+      "id": "cluster_3",
+      "label": "Product & Channel Domain",
+      "hub_table": "product_product",
+      "size": 19,
+      "tables": [
+        "channel_channel",
+        "plugins_emailtemplate",
+        "plugins_pluginconfiguration",
+        "product_category",
+        "product_categorytranslation",
+        "product_collection",
+        "product_collectionchannellisting",
+        "product_collectionproduct",
+        "product_collectiontranslation",
+        "product_product",
+        "product_productchannellisting",
+        "product_productmedia",
+        "product_producttranslation",
+        "product_producttype",
+        "product_productvariant",
+        "product_productvariantchannellisting",
+        "product_variantchannellistingpromotionrule",
+        "product_variantmedia",
+        "thumbnail_thumbnail"
+      ]
+    },
+    {
+      "id": "cluster_4",
+      "label": "Warehouse & Checkout Domain",
+      "hub_table": "warehouse_warehouse",
+      "size": 11,
+      "tables": [
+        "checkout_checkout",
+        "checkout_checkoutdelivery",
+        "checkout_checkoutline",
+        "checkout_checkoutmetadata",
+        "warehouse_allocation",
+        "warehouse_channelwarehouse",
+        "warehouse_preorderallocation",
+        "warehouse_preorderreservation",
+        "warehouse_reservation",
+        "warehouse_stock",
+        "warehouse_warehouse"
+      ]
+    },
+    {
+      "id": "cluster_5",
+      "label": "Attribute & Assignedpageattributevalue Domain",
+      "hub_table": "attribute_attribute",
+      "size": 11,
+      "tables": [
+        "attribute_assignedpageattributevalue",
+        "attribute_assignedproductattributevalue",
+        "attribute_assigneduserattributevalue",
+        "attribute_assignedvariantattributevalue",
+        "attribute_attribute",
+        "attribute_attributecustomertype",
+        "attribute_attributepage",
+        "attribute_attributeproduct",
+        "attribute_attributevalue",
+        "attribute_attributevariant",
+        "attribute_baseassignedattribute"
+      ]
+    },
+    {
+      "id": "cluster_6",
+      "label": "Discount & Promotionrule Domain",
+      "hub_table": "discount_voucher",
+      "size": 9,
+      "tables": [
+        "discount_basediscount",
+        "discount_promotion",
+        "discount_promotionevent",
+        "discount_promotionrule",
+        "discount_promotionrule_variants",
+        "discount_voucher",
+        "discount_voucherchannellisting",
+        "discount_vouchercode",
+        "discount_vouchercustomer"
+      ]
+    },
+    {
+      "id": "cluster_7",
+      "label": "Shipping & Shippingmethod Domain",
+      "hub_table": "shipping_shippingmethod",
+      "size": 8,
+      "tables": [
+        "shipping_shippingmethod",
+        "shipping_shippingmethodchannellisting",
+        "shipping_shippingmethodpostalcoderule",
+        "shipping_shippingzone",
+        "tax_taxclass",
+        "tax_taxclasscountryrate",
+        "tax_taxconfiguration",
+        "tax_taxconfigurationpercountry"
+      ]
+    },
+    {
+      "id": "cluster_8",
+      "label": "Django & Menu Domain",
+      "hub_table": "menu_menu",
+      "size": 5,
+      "tables": [
+        "django_content_type",
+        "django_site",
+        "menu_menu",
+        "menu_menuitem",
+        "site_sitesettings"
+      ]
+    },
+    {
+      "id": "cluster_9",
+      "label": "Auth & Group Domain",
+      "hub_table": "auth_permission",
+      "size": 2,
+      "tables": [
+        "auth_group",
+        "auth_permission"
+      ]
+    },
+    {
+      "id": "cluster_10",
+      "label": "Seo & Seomodel Domain",
+      "hub_table": "seo_seomodel",
+      "size": 2,
+      "tables": [
+        "seo_seomodel",
+        "seo_seomodeltranslationwithslug"
+      ]
+    }
+  ],
+  "isolated_tables": [
+    "permission_permissionsmixin",
+    "schedulers_customschedule"
+  ]
+}
