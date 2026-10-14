@@ -166,8 +166,15 @@ def run_validation(
 
 def print_validation_report(report: dict[str, Any]) -> None:
     """Print formatted validation results to stdout."""
+    # Ensure UTF-8 console encoding on Windows
+    if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+        try:
+            sys.stdout.reconfigure(encoding="utf-8")
+        except Exception:
+            pass
+
     print("=" * 80)
-    print("🔬 SystemLens Empirical Validation Report (Phase A)")
+    print("SystemLens Empirical Validation Report (Phase A)")
     print("=" * 80)
     print(f"Target Project: {report['schema_used']}")
     print(f"Report Date:    {report['date']}")
@@ -177,16 +184,16 @@ def print_validation_report(report: dict[str, Any]) -> None:
 
     for r in report["results"]:
         interval_str = f"[{r['wilson_interval']['lower_bound']:.4f}, {r['wilson_interval']['upper_bound']:.4f}]"
-        status_str = "✅ PASS" if r["gate_passed"] else "❌ FAIL"
+        status_str = "[PASS]" if r["gate_passed"] else "[FAIL]"
         prec_str = f"{r['precision'] * 100:.1f}%"
         thresh_str = f">= {r['target_lower_bound']:.2f}"
         print(f"{r['edge_type']:<20} {r['sample_size']:<5} {prec_str:<10} {interval_str:<22} {thresh_str:<11} {status_str}")
 
     print("=" * 80)
     if report["overall_gate_passed"]:
-        print("🏆 VERDICT: ALL PHASE A VALIDATION GATES PASSED! Unlocked for Phase B (Calibration).")
+        print("VERDICT: ALL PHASE A VALIDATION GATES PASSED! Unlocked for Phase B (Calibration).")
     else:
-        print("🚨 VERDICT: VALIDATION FAILED. One or more edge types fell below the Wilson threshold.")
+        print("VERDICT: VALIDATION FAILED. One or more edge types fell below the Wilson threshold.")
     print("=" * 80)
 
 
