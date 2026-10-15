@@ -6,15 +6,11 @@ export function getWebviewContent(data: any): string {
   const tables = data.impacted_tables || [];
   const blindSpots = data.blind_spots || [];
 
-  const getConfBadge = (conf: number) => {
+  const getConfBadge = (conf: number, tier?: string) => {
+    const t = tier || (conf >= 0.90 ? "High" : conf >= 0.70 ? "Medium" : "Low");
     const pct = Math.round(conf * 100);
-    if (pct >= 80) {
-      return `<span class="badge badge-high">${pct}% Confidence</span>`;
-    } else if (pct >= 50) {
-      return `<span class="badge badge-medium">${pct}% Confidence</span>`;
-    } else {
-      return `<span class="badge badge-low">${pct}% Confidence</span>`;
-    }
+    const cssClass = t.toLowerCase() === "high" ? "badge-high" : t.toLowerCase() === "medium" ? "badge-medium" : "badge-low";
+    return `<span class="badge ${cssClass}">[${t.toUpperCase()}] ${pct}%</span>`;
   };
 
   const funcRows = funcs.map((fn: any) => `
@@ -23,18 +19,22 @@ export function getWebviewContent(data: any): string {
         <div class="item-title">
           <span class="icon">⚡</span>
           <strong>${fn.name}</strong>
-          ${getConfBadge(fn.confidence)}
+          ${getConfBadge(fn.confidence, fn.tier)}
         </div>
         <span class="hop-tag">Hop ${fn.depth}</span>
       </div>
       <div class="item-meta">
         <code>${fn.metadata?.file || ""}${fn.metadata?.lineno ? ":" + fn.metadata.lineno : ""}</code>
       </div>
-      ${fn.evidence_chain && fn.evidence_chain.length > 0 ? `
+      ${fn.formatted_evidence ? `
+        <div class="evidence-preview">
+          ${fn.formatted_evidence}
+        </div>
+      ` : (fn.evidence_chain && fn.evidence_chain.length > 0 ? `
         <div class="evidence-preview">
           ${fn.evidence_chain[0]}
         </div>
-      ` : ""}
+      ` : "")}
     </div>
   `).join("") || `<div class="empty-state">No directly impacted functions detected.</div>`;
 
@@ -44,10 +44,15 @@ export function getWebviewContent(data: any): string {
         <div class="item-title">
           <span class="icon">📄</span>
           <strong>${fl.name}</strong>
-          ${getConfBadge(fl.confidence)}
+          ${getConfBadge(fl.confidence, fl.tier)}
         </div>
         <span class="hop-tag">Hop ${fl.depth}</span>
       </div>
+      ${fl.formatted_evidence ? `
+        <div class="evidence-preview">
+          ${fl.formatted_evidence}
+        </div>
+      ` : ""}
     </div>
   `).join("") || `<div class="empty-state">No directly impacted files detected.</div>`;
 
@@ -57,10 +62,15 @@ export function getWebviewContent(data: any): string {
         <div class="item-title">
           <span class="icon">🗄️</span>
           <strong>${tb.name}</strong>
-          ${getConfBadge(tb.confidence)}
+          ${getConfBadge(tb.confidence, tb.tier)}
         </div>
         <span class="hop-tag">Hop ${tb.depth}</span>
       </div>
+      ${tb.formatted_evidence ? `
+        <div class="evidence-preview">
+          ${tb.formatted_evidence}
+        </div>
+      ` : ""}
     </div>
   `).join("") || `<div class="empty-state">No downstream tables impacted.</div>`;
 

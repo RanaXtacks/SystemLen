@@ -4,9 +4,9 @@ exports.BASE_WEIGHTS = void 0;
 exports.BASE_WEIGHTS = {
     declared_fk: 1.0,
     structural_belongs_to: 1.0,
-    static_sql_string: 0.85,
-    orm_call: 0.80,
-    inferred_naming: 0.55,
+    static_sql_string: 0.96,
+    orm_call: 0.98,
+    inferred_naming: 0.92,
     dynamic_unresolved: 0.15,
 };
 //# sourceMappingURL=models.js.map
