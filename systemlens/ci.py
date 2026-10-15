@@ -379,7 +379,7 @@ def format_markdown_report(
             lines.append("*No downstream code or relational dependencies detected.*\n")
             continue
 
-        lines.append("| Type | Name | Confidence | Hop | Evidence / Location |")
+        lines.append("| Type | Name | Tier | Hop | Evidence / Location |")
         lines.append("|:---|:---|:---:|:---:|:---|")
 
         type_icons = {
@@ -394,30 +394,34 @@ def format_markdown_report(
         displayed_items = res.ranked_items[:12]
         for item in displayed_items:
             icon_type = type_icons.get(item.node_type, item.node_type.capitalize())
-            conf_str = f"{item.confidence * 100:.1f}%"
+            tier_str = f"**{item.tier}**"
             location = ""
             if item.metadata.get("file"):
                 lineno = f":{item.metadata.get('lineno')}" if item.metadata.get("lineno") else ""
                 location = f"`{item.metadata.get('file')}{lineno}`"
             elif item.evidence_chain:
                 location = f"`{item.evidence_chain[-1]}`"
+            if item.formatted_evidence:
+                location = f"{location} ({item.formatted_evidence})" if location else item.formatted_evidence
 
-            lines.append(f"| {icon_type} | `{item.name}` | {conf_str} | {item.depth} | {location} |")
+            lines.append(f"| {icon_type} | `{item.name}` | {tier_str} | {item.depth} | {location} |")
 
         if len(res.ranked_items) > 12:
             lines.append(f"\n<details><summary>View {len(res.ranked_items) - 12} more impacted entities...</summary>\n")
-            lines.append("| Type | Name | Confidence | Hop | Evidence / Location |")
+            lines.append("| Type | Name | Tier | Hop | Evidence / Location |")
             lines.append("|:---|:---|:---:|:---:|:---|")
             for item in res.ranked_items[12:]:
                 icon_type = type_icons.get(item.node_type, item.node_type.capitalize())
-                conf_str = f"{item.confidence * 100:.1f}%"
+                tier_str = f"**{item.tier}**"
                 location = ""
                 if item.metadata.get("file"):
                     lineno = f":{item.metadata.get('lineno')}" if item.metadata.get("lineno") else ""
                     location = f"`{item.metadata.get('file')}{lineno}`"
                 elif item.evidence_chain:
                     location = f"`{item.evidence_chain[-1]}`"
-                lines.append(f"| {icon_type} | `{item.name}` | {conf_str} | {item.depth} | {location} |")
+                if item.formatted_evidence:
+                    location = f"{location} ({item.formatted_evidence})" if location else item.formatted_evidence
+                lines.append(f"| {icon_type} | `{item.name}` | {tier_str} | {item.depth} | {location} |")
             lines.append("\n</details>\n")
         else:
             lines.append("")

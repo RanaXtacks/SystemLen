@@ -18,6 +18,7 @@ from typing import Any
 import networkx as nx
 
 from systemlens.models import EdgeType, NodeType
+from systemlens.tiers import ConfidenceTier, classify_confidence_tier, format_evidence_chain
 
 
 @dataclass
@@ -30,6 +31,9 @@ class ImpactedNode:
     depth: int
     path: list[str]
     evidence_chain: list[str] = field(default_factory=list)
+    tier: str = ConfidenceTier.MEDIUM.value
+    edge_types: list[str] = field(default_factory=list)
+    formatted_evidence: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -38,8 +42,11 @@ class ImpactedNode:
             "node_type": self.node_type,
             "name": self.name,
             "confidence": round(self.confidence, 4),
+            "tier": self.tier,
             "depth": self.depth,
             "path": self.path,
+            "edge_types": self.edge_types,
+            "formatted_evidence": self.formatted_evidence,
             "evidence_chain": self.evidence_chain,
             "metadata": self.metadata,
         }
@@ -236,15 +243,15 @@ class ImpactEngine:
         target_type = target_node.get("type", "unknown")
 
         # BFS tracking highest confidence path to each reachable node
-        # best_reach: node_id -> (confidence, depth, path, evidence_chain)
-        best_reach: dict[str, tuple[float, int, list[str], list[str]]] = {}
+        # best_reach: node_id -> (confidence, depth, path, evidence_chain, edge_types)
+        best_reach: dict[str, tuple[float, int, list[str], list[str], list[str]]] = {}
 
-        # Queue items: (current_node, current_depth, current_conf, path, evidence_chain)
-        queue: deque[tuple[str, int, float, list[str], list[str]]] = deque()
-        queue.append((resolved_id, 0, 1.0, [resolved_id], []))
+        # Queue items: (current_node, current_depth, current_conf, path, evidence_chain, edge_types)
+        queue: deque[tuple[str, int, float, list[str], list[str], list[str]]] = deque()
+        queue.append((resolved_id, 0, 1.0, [resolved_id], [], []))
 
         while queue:
-            curr_id, curr_depth, curr_conf, curr_path, curr_evidence = queue.popleft()
+            curr_id, curr_depth, curr_conf, curr_path, curr_evidence, curr_edge_types = queue.popleft()
 
             if curr_depth >= max_depth:
                 continue
@@ -257,6 +264,7 @@ class ImpactEngine:
                 edge_data = self.propagation_graph.get_edge_data(curr_id, neighbor)
                 edge_conf = float(edge_data.get("confidence", 1.0))
                 edge_evid = edge_data.get("evidence", "")
+                edge_type = edge_data.get("type", "")
 
                 # Multiplicative path confidence decay: c(path) = Π c(edge_i)
                 new_conf = round(curr_conf * edge_conf, 4)
@@ -266,16 +274,19 @@ class ImpactEngine:
                 new_depth = curr_depth + 1
                 new_path = curr_path + [neighbor]
                 new_evidence = curr_evidence + [edge_evid]
+                new_edge_types = curr_edge_types + ([edge_type] if edge_type else [])
 
                 # If neighbor not visited or found higher confidence path
                 if neighbor not in best_reach or new_conf > best_reach[neighbor][0]:
-                    best_reach[neighbor] = (new_conf, new_depth, new_path, new_evidence)
-                    queue.append((neighbor, new_depth, new_conf, new_path, new_evidence))
+                    best_reach[neighbor] = (new_conf, new_depth, new_path, new_evidence, new_edge_types)
+                    queue.append((neighbor, new_depth, new_conf, new_path, new_evidence, new_edge_types))
 
         # Convert reached nodes to ImpactedNode objects
         impacted_nodes: list[ImpactedNode] = []
-        for n_id, (conf, depth, path, evid) in best_reach.items():
+        for n_id, (conf, depth, path, evid, e_types) in best_reach.items():
             n_data = self.node_map.get(n_id, {})
+            tier_val = classify_confidence_tier(e_types, conf).value
+            formatted_evid = format_evidence_chain(e_types)
             impacted_nodes.append(
                 ImpactedNode(
                     node_id=n_id,
@@ -285,6 +296,9 @@ class ImpactEngine:
                     depth=depth,
                     path=path,
                     evidence_chain=evid,
+                    tier=tier_val,
+                    edge_types=e_types,
+                    formatted_evidence=formatted_evid,
                     metadata=n_data.get("metadata", {}),
                 )
             )

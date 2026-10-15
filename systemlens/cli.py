@@ -306,6 +306,13 @@ def main(args: Optional[list[str]] = None) -> int:
         help="Output raw JSON result to stdout",
     )
     impact_parser.add_argument(
+        "--verbose",
+        "-v",
+        action="store_true",
+        default=False,
+        help="Display raw numeric path confidence percentages alongside tiers",
+    )
+    impact_parser.add_argument(
         "--output",
         "-o",
         type=str,
@@ -680,22 +687,31 @@ def main(args: Optional[list[str]] = None) -> int:
             if result.impacted_functions:
                 print("\nImpacted Functions (Ranked by Path Confidence):")
                 for fn in result.impacted_functions[:15]:
-                    conf_pct = f"{fn.confidence:.1%}"
+                    tier_str = f"[{fn.tier.upper()}]"
+                    if parsed.verbose:
+                        tier_str = f"[{fn.tier.upper()} ({fn.confidence:.1%})]"
                     file_info = fn.metadata.get("file", "")
                     line_info = f":{fn.metadata.get('lineno')}" if fn.metadata.get("lineno") else ""
-                    print(f"  [{conf_pct:>6}] {fn.name} ({file_info}{line_info}) [hop {fn.depth}]")
+                    evid_str = f" — {fn.formatted_evidence}" if fn.formatted_evidence else ""
+                    print(f"  {tier_str:<8} {fn.name} ({file_info}{line_info}){evid_str} [hop {fn.depth}]")
 
             if result.impacted_files:
                 print("\nImpacted Files:")
                 for fl in result.impacted_files[:10]:
-                    conf_pct = f"{fl.confidence:.1%}"
-                    print(f"  [{conf_pct:>6}] {fl.name} [hop {fl.depth}]")
+                    tier_str = f"[{fl.tier.upper()}]"
+                    if parsed.verbose:
+                        tier_str = f"[{fl.tier.upper()} ({fl.confidence:.1%})]"
+                    evid_str = f" — {fl.formatted_evidence}" if fl.formatted_evidence else ""
+                    print(f"  {tier_str:<8} {fl.name}{evid_str} [hop {fl.depth}]")
 
             if result.impacted_tables:
                 print("\nImpacted Downstream Tables (FKs / Views):")
                 for tb in result.impacted_tables[:10]:
-                    conf_pct = f"{tb.confidence:.1%}"
-                    print(f"  [{conf_pct:>6}] {tb.name} [hop {tb.depth}]")
+                    tier_str = f"[{tb.tier.upper()}]"
+                    if parsed.verbose:
+                        tier_str = f"[{tb.tier.upper()} ({tb.confidence:.1%})]"
+                    evid_str = f" — {tb.formatted_evidence}" if tb.formatted_evidence else ""
+                    print(f"  {tier_str:<8} {tb.name}{evid_str} [hop {tb.depth}]")
 
             print("\nBlind Spots (Not Visible / Unanalyzed Boundaries):")
             for bs in result.blind_spots:
